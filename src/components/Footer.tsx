@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom';
+import { HashLink } from "react-router-hash-link";
 import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
@@ -48,11 +49,6 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/sites-confiance" className="text-white/70 hover:text-white transition-colors">
-                  Sites de confiance
-                </Link>
-              </li>
-              <li>
                 <Link to="/a-propos" className="text-white/70 hover:text-white transition-colors">
                   A propos
                 </Link>
@@ -68,9 +64,9 @@ const Footer = () => {
                 <MapPin className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0" />
                 <span>123 Rue de l'Exemple<br />75000 Paris, France</span>
               </div>
-              <Link to="/contact" className="inline-block text-sm text-white hover:underline">
+              <HashLink to="/#contact" className="inline-block text-sm text-white hover:underline">
                 Formulaire de contact
-              </Link>
+              </HashLink>
             </div>
           </div>
         </div>

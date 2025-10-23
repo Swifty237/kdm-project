@@ -1,4 +1,4 @@
-// import { Link } from 'react-router-dom';
+import { HashLink } from "react-router-hash-link";
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { MapPin, Mail, Phone, Clock, Send, HandCoins, ShieldCheck, Handshake } from 'lucide-react';
+import { MapPin, Mail, Phone, Clock, Send, HandCoins, ShieldCheck, Handshake, ArrowBigRight } from 'lucide-react';
 import { useState } from 'react';
 
 const Accueil = () => {
@@ -217,7 +217,7 @@ const Accueil = () => {
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-[#001964] rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4">
                   <Handshake className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
-                <h3 className="font-bold text-[#001964] mb-2 text-base lg:text-lg">Equipe courtoise & profésionnelle</h3>
+                <h3 className="font-bold text-[#001964] mb-2 text-base lg:text-lg">Equipe courtoise & proféssionnelle</h3>
                 <p className="text-gray-700 text-xs lg:text-sm">
                 </p>
               </CardContent>
@@ -234,7 +234,7 @@ const Accueil = () => {
             <div className="space-y-6 lg:space-y-8 order-2 lg:order-1">
               {/* Step 1 */}
               <div>
-                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-3 lg:mb-4">Envoyez le lien de votre article</h3>
+                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-3 lg:mb-4">Envoyez une demande de devis</h3>
                 <p className="text-muted-foreground mb-3 lg:mb-4 text-sm lg:text-base">
                   Vous choisissez vos produits sur n'importe quelle boutique en ligne et nous transmettez le lien sur WhatsApp pour obtenir un devis sécurisé
                 </p>
@@ -250,15 +250,23 @@ const Accueil = () => {
 
               {/* Step 3 */}
               <div>
-                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-3 lg:mb-4">Tenez vous disponible pour la livraison</h3>
+                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-3 lg:mb-4">On s'occupe du reste</h3>
                 <p className="text-muted-foreground mb-3 lg:mb-4 text-sm lg:text-base">
                   Dès l'arrivée de votre commande, nous vous informons immédiatement afin que vous puissiez vous organiser pour la réception.
                 </p>
-                <Button
-                  className="bg-[#001964] hover:bg-[#001964]/90 text-white rounded-full px-4 lg:px-6 text-sm lg:text-base"
-                >
-                  Comment ça marche
-                </Button>
+
+                <div className="flex items-center justify-around w-full">
+                  <p className="text-muted-foreground text-xl">
+                    Pour plus d'informations.
+                  </p>
+
+                  <ArrowBigRight className="h-12 w-12 text-[#001964]" />
+
+                  <HashLink to="#contact" className="bg-[#001964] hover:bg-[#001964]/90 text-white rounded-full px-4 py-2 lg:px-6 lg:text-xl"
+                  >
+                    Contactez nous
+                  </HashLink>
+                </div>
               </div>
             </div>
 
@@ -289,8 +297,8 @@ const Accueil = () => {
           </div>
         </div>
 
-        <Button className="bg-[#001964] text-white hover:bg-[#001964]/90 rounded-full px-6 lg:px-8 text-sm lg:text-base">
-          Voir toutes les annonces
+        <Button className="bg-[#001964] text-white hover:bg-[#001964]/90 rounded-full px-6 lg:px-8 text-xl">
+          Découvrez tous les avis
         </Button>
       </section>
 

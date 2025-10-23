@@ -9,9 +9,10 @@ const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { label: 'Offres', path: '/offres' },
+    { label: 'Accueil', path: '/' },
+    { label: 'Offres & Services', path: '/offres' },
     { label: 'A propos', path: '/a-propos' },
-    { label: 'Contact', path: '/#contact' }
+    // { label: 'Contact', path: '/#contact' }
   ];
 
   const handleAnchorClick = (path: string) => {
