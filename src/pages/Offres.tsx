@@ -45,32 +45,32 @@ const Offres = () => {
             <div className="space-y-6 lg:space-y-8 order-1 lg:order-2">
               {/* Benefit 1 */}
               <div>
-                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-2 lg:mb-3">Économique</h3>
-                <p className="text-gray-700 text-sm lg:text-base">
+                <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-2 lg:mb-3">Économique</h3>
+                <p className="text-gray-700 text-lg lg:text-xl">
                   Chaque commande fait l'objet d'une estimation. Un devis clair est établi et vous avez une idée précise du prix final. Pas de frais cachés, ni de surprise à la livraison.
                 </p>
               </div>
 
               {/* Benefit 2 */}
               <div>
-                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-2 lg:mb-3">Standard</h3>
-                <p className="text-gray-700 text-sm lg:text-base">
+                <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-2 lg:mb-3">Standard</h3>
+                <p className="text-gray-700 text-lg lg:text-xl">
                   Parce que chaque utilisateur nous compte pour nous. Vous obtenez une réponse en moins d'1h, avec un accueil chaleureux, humain et respectueux. Et pas d'un robot !
                 </p>
               </div>
 
               {/* Benefit 3 */}
               <div>
-                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-2 lg:mb-3">Prémium</h3>
-                <p className="text-gray-700 text-sm lg:text-base">
+                <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-2 lg:mb-3">Prémium</h3>
+                <p className="text-gray-700 text-lg lg:text-xl">
                   CDLM paie à votre place à l'étranger, vous évitant des frais bancaire, les virements coûteux et les conversions compliquées
                 </p>
               </div>
 
               {/* Benefit 4 */}
               <div>
-                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-2 lg:mb-3">Prémium avec option emménagement</h3>
-                <p className="text-gray-700 text-sm lg:text-base">
+                <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-2 lg:mb-3">Prémium avec option emménagement</h3>
+                <p className="text-gray-700 text-lg lg:text-xl">
                   Grâce aux achats répétitifs de CDLM, vous bénéficiez de prix préférentiels et de réductions que vous ne trouverez nulle part ailleurs.
                 </p>
               </div>

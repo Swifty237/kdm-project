@@ -234,24 +234,24 @@ const Accueil = () => {
             <div className="space-y-6 lg:space-y-8 order-2 lg:order-1">
               {/* Step 1 */}
               <div>
-                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-3 lg:mb-4">Envoyez une demande de devis</h3>
-                <p className="text-muted-foreground mb-3 lg:mb-4 text-sm lg:text-base">
+                <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-3 lg:mb-4">Envoyez une demande de devis</h3>
+                <p className="text-muted-foreground mb-3 lg:mb-4 text-lg lg:text-xl">
                   Vous choisissez vos produits sur n'importe quelle boutique en ligne et nous transmettez le lien sur WhatsApp pour obtenir un devis sécurisé
                 </p>
               </div>
 
               {/* Step 2 */}
               <div>
-                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-3 lg:mb-4">Validez votre devis</h3>
-                <p className="text-muted-foreground mb-3 lg:mb-4 text-sm lg:text-base">
+                <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-3 lg:mb-4">Validez votre devis</h3>
+                <p className="text-muted-foreground mb-3 lg:mb-4 text-lg lg:text-xl">
                   Confirmez votre commande en réglant le devis via Orange Money, Mobile Money, virement bancaire ou PayPal, puis indiquez l'adresse de livraison souhaitée
                 </p>
               </div>
 
               {/* Step 3 */}
               <div>
-                <h3 className="text-lg lg:text-xl font-bold text-[#001964] mb-3 lg:mb-4">On s'occupe du reste</h3>
-                <p className="text-muted-foreground mb-3 lg:mb-4 text-sm lg:text-base">
+                <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-3 lg:mb-4">On s'occupe du reste</h3>
+                <p className="text-muted-foreground mb-3 lg:mb-4 text-lg lg:text-xl">
                   Dès l'arrivée de votre commande, nous vous informons immédiatement afin que vous puissiez vous organiser pour la réception.
                 </p>
 
@@ -303,7 +303,7 @@ const Accueil = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-8 lg:py-16 px-4 sm:px-8 lg:px-16 my-8 lg:my-16 bg-muted/30 w-full">
+      <section id="contact" className="py-8 lg:py-16 px-4 sm:px-8 lg:px-16 mt-8 lg:mt-16 bg-muted/30 w-full">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 lg:mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-3xl font-bold text-[#001964] mb-4 lg:mb-6">

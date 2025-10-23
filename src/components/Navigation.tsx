@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { Menu, Phone, X } from 'lucide-react';
+import { HashLink } from "react-router-hash-link";
 
 const Navigation = () => {
   const location = useLocation();
@@ -66,12 +67,13 @@ const Navigation = () => {
 
           {/* Right side - Secondary links and CTA (Desktop) */}
           <div className="hidden lg:flex items-center space-x-6">
-            <Button size="sm" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 text-sm">
+            <Button size="sm" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 text-lg">
               Demander un devis
             </Button>
-            <Button className="h-12 bg-[#001964] hover:bg-[#001964]/90 rounded-full flex items-center justify-center">
-              <Phone className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
-            </Button>
+            <HashLink to="/#contact" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full p-4 flex items-center justify-center"
+            >
+              <Phone className="h-6 w-6 text-white" />
+            </HashLink>
           </div>
 
           {/* Mobile CTA and Menu button */}
