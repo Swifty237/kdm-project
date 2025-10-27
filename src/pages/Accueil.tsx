@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { MapPin, Mail, Phone, Clock, Send, HandCoins, Handshake, ArrowBigRight, Award } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Accueil = () => {
   const { toast } = useToast();
@@ -23,6 +23,8 @@ const Accueil = () => {
     date: '',
     surface: '',
   });
+
+  const [currentIndex, setCurrentIndex] = useState(0);
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -91,94 +93,114 @@ const Accueil = () => {
     }
   ];
 
+  // 🔹 Liste des images du carrousel
+  const images = [
+    "img/demenageurs.png",
+    "img/packers-and-movers.jpg",
+    "img/homme-meubles-en-mouvement.jpg",
+    "img/nouvel-appartement.jpg",
+    "img/livreur-de-coup-moyen-tenant-la-boite.jpg"
+  ];
+
+  // 🔹 Fait défiler automatiquement les images
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 4000); // change toutes les 4 secondes
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
   return (
     <div className="flex flex-col items-center justify-center">
       {/* Hero Section */}
-      <section className="header-section-bg-img py-16 sm:py-20 lg:py-32 px-4 sm:px-8 lg:px-32 w-full">
-        <div className="max-w-6xl mx-auto">
-          <div className="items-center">
 
-            {/* Left Column - Content */}
-            <div className="text-center lg:text-left order-2 lg:order-1">
+      <section className="relative w-full h-[80vh] overflow-hidden py-16 sm:py-20 lg:py-32 px-4 sm:px-8 lg:px-32">
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start h-[50vh] items-center">
+        {/* 🔹 Arrière-plan avec effet de fondu */}
+        {images.map((img, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${index === currentIndex ? "opacity-100" : "opacity-0"
+              }`}
+            style={{ backgroundImage: `url(${img})` }}
+          />
+        ))}
 
-                <Card className="bg-[#ecf0f1d7] border-0 shadow-lg ">
-                  <CardHeader>
-                    <CardTitle className="text-4xl lg:text-5xl text-center text-[#001964]">
-                      Confiez nous vos cartons sans stress et nous nous occupons du reste
-                    </CardTitle>
-                    <CardDescription className="italic text-center text-xl text-[#001964]">
-                      Remplissez le formulaire ci-dessous et obtenez un devis rapidement.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
+        {/* 🔹 Contenu au-dessus du carrousel */}
+        <div className="relative z-10 bg-black/40 w-full h-full flex flex-col justify-center items-center text-white text-center rounded-2xl">
+          <Card className="bg-[#ecf0f1d7] border-0 shadow-lg ">
+            <CardHeader>
+              <CardTitle className="text-4xl lg:text-5xl text-center text-[#001964]">
+                Confiez nous vos cartons sans stress et nous nous occupons du reste
+              </CardTitle>
+              <CardDescription className="italic text-center text-xl text-[#001964]">
+                Remplissez le formulaire ci-dessous et obtenez un devis rapidement.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
 
-                    <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
-                        <div className="space-y-2">
-                          <Input
-                            id="departure"
-                            name="departure"
-                            type="text"
-                            required
-                            value={formData.departure}
-                            onChange={handleInputChange}
-                            placeholder="Adresse de départ"
-                            className="text-sm lg:text-base"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Input
-                            id="arrival"
-                            name="arrival"
-                            type="text"
-                            required
-                            value={formData.arrival}
-                            onChange={handleInputChange}
-                            placeholder="Adresse d'arrivée"
-                            className="text-sm lg:text-base"
-                          />
-                        </div>
-                      </div>
+              <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
+                  <div className="space-y-2">
+                    <Input
+                      id="departure"
+                      name="departure"
+                      type="text"
+                      required
+                      value={formData.departure}
+                      onChange={handleInputChange}
+                      placeholder="Adresse de départ"
+                      className="text-sm lg:text-base"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Input
+                      id="arrival"
+                      name="arrival"
+                      type="text"
+                      required
+                      value={formData.arrival}
+                      onChange={handleInputChange}
+                      placeholder="Adresse d'arrivée"
+                      className="text-sm lg:text-base"
+                    />
+                  </div>
+                </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
-                        <div className="space-y-2">
-                          <Input
-                            id="date"
-                            name="date"
-                            type="text"
-                            value={formData.date}
-                            onChange={handleInputChange}
-                            placeholder="Date de départ"
-                            className="text-sm lg:text-base"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Input
-                            id="surface"
-                            name="surface"
-                            type="text"
-                            value={formData.surface}
-                            onChange={handleInputChange}
-                            placeholder="Surface en m2"
-                            className="text-sm lg:text-base"
-                          />
-                        </div>
-                      </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
+                  <div className="space-y-2">
+                    <Input
+                      id="date"
+                      name="date"
+                      type="text"
+                      value={formData.date}
+                      onChange={handleInputChange}
+                      placeholder="Date de départ"
+                      className="text-sm lg:text-base"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Input
+                      id="surface"
+                      name="surface"
+                      type="text"
+                      value={formData.surface}
+                      onChange={handleInputChange}
+                      placeholder="Surface en m2"
+                      className="text-sm lg:text-base"
+                    />
+                  </div>
+                </div>
 
-                      <Button type="submit" className="w-full bg-[#001964] hover:bg-[#001964]/90 text-sm lg:text-base" size="lg">
-                        <Send className="mr-2 h-4 w-4" />
-                        C'est parti !
-                      </Button>
-                    </form>
+                <Button type="submit" className="w-full bg-[#001964] hover:bg-[#001964]/90 text-sm lg:text-base" size="lg">
+                  <Send className="mr-2 h-4 w-4" />
+                  C'est parti !
+                </Button>
+              </form>
 
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
