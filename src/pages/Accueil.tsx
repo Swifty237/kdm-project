@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { MapPin, Mail, Phone, Clock, Send, HandCoins, ShieldCheck, Handshake, ArrowBigRight } from 'lucide-react';
+import { MapPin, Mail, Phone, Clock, Send, HandCoins, Handshake, ArrowBigRight, Award } from 'lucide-react';
 import { useState } from 'react';
 
 const Accueil = () => {
@@ -193,8 +193,8 @@ const Accueil = () => {
                   <HandCoins className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
                 <h3 className="font-bold text-[#001964] mb-2 text-base lg:text-lg">Formule économique</h3>
-                <p className="text-gray-700 text-xs lg:text-sm">
-
+                <p className="text-gray-700 text-xs lg:text-sm text-justify">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque iure culpa adipisci velit vero, numquam tempora veniam debitis assumenda quo!
                 </p>
               </CardContent>
             </Card>
@@ -203,10 +203,12 @@ const Accueil = () => {
             <Card className="backdrop-blur-sm hover:scale-105 transition-transform duration-300 shadow-lg">
               <CardContent className="p-4 lg:p-6 text-center">
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-[#001964] rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4">
-                  <ShieldCheck className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
+                  <Award className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
                 <h3 className="font-bold text-[#001964] mb-2 text-base lg:text-lg">Service de qualité</h3>
-                <p className="text-gray-700 text-xs lg:text-sm text-white">
+                <p className="text-gray-700 text-xs lg:text-sm text-justify">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque iure culpa adipisci velit vero, numquam tempora veniam debitis assumenda quo!
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
               </CardContent>
             </Card>
@@ -218,7 +220,8 @@ const Accueil = () => {
                   <Handshake className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
                 <h3 className="font-bold text-[#001964] mb-2 text-base lg:text-lg">Equipe courtoise & proféssionnelle</h3>
-                <p className="text-gray-700 text-xs lg:text-sm">
+                <p className="text-gray-700 text-xs lg:text-sm text-justify">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque iure culpa adipisci velit vero.
                 </p>
               </CardContent>
             </Card>

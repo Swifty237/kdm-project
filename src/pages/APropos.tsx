@@ -29,13 +29,18 @@ const APropos = () => {
     }
   ];
 
+  const team = [
+    { pic: <img src="/img/user-placeholder.jpg" alt="User placeholder" /> },
+    { pic: <img src="/img/default-placeholder-woman.jpg" alt="Woman placeholder" /> },
+  ];
+
   return (
     <div className="py-16">
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-[#001964] mb-6">
-            À Propos de KDM
+            À Propos de KDM Logistique
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Commandez Dans Le Monde - Votre partenaire de confiance pour tous vos achats internationaux
@@ -117,6 +122,24 @@ const APropos = () => {
           <h2 className="text-3xl font-bold text-[#001964] mb-4">
             Une équipe dédiée à votre service
           </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 my-8">
+            {team.map((teamMember, index) => (
+              <Card
+                key={index}
+                className={`text-center pt-7 ${index === 0 ? "md:col-start-2" : ""
+                  }`}
+              >
+                <CardContent className="">
+                  <div className="">
+                    {teamMember.pic}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
             Notre équipe multiculturelle combine expertise logistique internationale et
             connaissance approfondie du marché camerounais pour vous offrir le meilleur service.
