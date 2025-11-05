@@ -54,10 +54,13 @@ const Accueil = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const API_URL = import.meta.env.VITE_CONTACT_SERVER_URI; // pour Vite
+
     console.log('Données du formulaire:', messageData);
 
+
     try {
-      const response = await fetch("http://localhost:5000/api/contact", {
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(messageData),
