@@ -11,7 +11,16 @@ import { useEffect, useState } from 'react';
 
 const Accueil = () => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const [messageData, setMessageData] = useState({
+    nom: '',
+    email: '',
+    entreprise: '',
+    telephone: '',
+    service: '',
+    message: '',
+  });
+
+  const [devisData, setDevisData] = useState({
     nom: '',
     email: '',
     entreprise: '',
@@ -29,30 +38,69 @@ const Accueil = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setMessageData(prev => ({
       ...prev,
       [name]: value
     }));
   };
 
   const handleSelectChange = (value: string) => {
-    setFormData(prev => ({
+    setMessageData(prev => ({
       ...prev,
       service: value
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log('Données du formulaire:', formData);
+    console.log('Données du formulaire:', messageData);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(messageData),
+      });
+
+
+      const result = await response.json();
+
+      toast({
+        title: "Message envoyé !",
+        description: "Nous vous recontacterons dans les plus brefs délais.",
+      });
+
+      if (response.ok) {
+        alert("Message envoyé avec succès !");
+        setMessageData({
+          nom: "",
+          email: "",
+          entreprise: "",
+          telephone: "",
+          service: "",
+          message: "",
+        });
+      } else {
+        alert("Erreur : " + result.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Erreur réseau lors de l'envoi du message.");
+    }
+  };
+
+  const handleSubmitDevis = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    console.log('Données du formulaire:', devisData);
 
     toast({
       title: "Message envoyé !",
       description: "Nous vous recontacterons dans les plus brefs délais.",
     });
 
-    setFormData({
+    setDevisData({
       nom: '',
       email: '',
       entreprise: '',
@@ -140,7 +188,7 @@ const Accueil = () => {
             </CardHeader>
             <CardContent>
 
-              <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
+              <form onSubmit={handleSubmitDevis} className="space-y-4 lg:space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                   <div className="space-y-2">
                     <Input
@@ -148,7 +196,7 @@ const Accueil = () => {
                       name="departure"
                       type="text"
                       required
-                      value={formData.departure}
+                      value={devisData.departure}
                       onChange={handleInputChange}
                       placeholder="Adresse de départ"
                       className="text-sm lg:text-base"
@@ -160,7 +208,7 @@ const Accueil = () => {
                       name="arrival"
                       type="text"
                       required
-                      value={formData.arrival}
+                      value={devisData.arrival}
                       onChange={handleInputChange}
                       placeholder="Adresse d'arrivée"
                       className="text-sm lg:text-base"
@@ -174,7 +222,7 @@ const Accueil = () => {
                       id="date"
                       name="date"
                       type="text"
-                      value={formData.date}
+                      value={devisData.date}
                       onChange={handleInputChange}
                       placeholder="Date de départ"
                       className="text-sm lg:text-base"
@@ -185,7 +233,7 @@ const Accueil = () => {
                       id="surface"
                       name="surface"
                       type="text"
-                      value={formData.surface}
+                      value={devisData.surface}
                       onChange={handleInputChange}
                       placeholder="Surface en m2"
                       className="text-sm lg:text-base"
@@ -401,7 +449,7 @@ const Accueil = () => {
                           name="nom"
                           type="text"
                           required
-                          value={formData.nom}
+                          value={messageData.nom}
                           onChange={handleInputChange}
                           placeholder="Votre nom"
                           className="text-sm lg:text-base"
@@ -414,7 +462,7 @@ const Accueil = () => {
                           name="email"
                           type="email"
                           required
-                          value={formData.email}
+                          value={messageData.email}
                           onChange={handleInputChange}
                           placeholder="votre@email.com"
                           className="text-sm lg:text-base"
@@ -424,12 +472,13 @@ const Accueil = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="entreprise" className="text-sm lg:text-base">Entreprise</Label>
+                        <Label htmlFor="entreprise" className="text-sm lg:text-base">Entreprise</Label> <br />
+                        <span className="text-sm italic text-[#636e72]">(* Si vous nous contactez pour le compte d'une entreprise)</span>
                         <Input
                           id="entreprise"
                           name="entreprise"
                           type="text"
-                          value={formData.entreprise}
+                          value={messageData.entreprise}
                           onChange={handleInputChange}
                           placeholder="Nom de votre entreprise"
                           className="text-sm lg:text-base"
@@ -441,7 +490,7 @@ const Accueil = () => {
                           id="telephone"
                           name="telephone"
                           type="tel"
-                          value={formData.telephone}
+                          value={messageData.telephone}
                           onChange={handleInputChange}
                           placeholder="+33 1 23 45 67 89"
                           className="text-sm lg:text-base"
@@ -451,15 +500,15 @@ const Accueil = () => {
 
                     <div className="space-y-2">
                       <Label htmlFor="service" className="text-sm lg:text-base">Service souhaité</Label>
-                      <Select onValueChange={handleSelectChange} value={formData.service}>
+                      <Select onValueChange={handleSelectChange} value={messageData.service}>
                         <SelectTrigger className="text-sm lg:text-base">
                           <SelectValue placeholder="Sélectionnez un service" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="achat">Achat personnalisé</SelectItem>
-                          <SelectItem value="paiement">Paiement simplifié</SelectItem>
-                          <SelectItem value="livraison">Livraison économique</SelectItem>
-                          <SelectItem value="autre">Autre</SelectItem>
+                          <SelectItem value="Demenagement">Service de déménagement</SelectItem>
+                          <SelectItem value="transport">Service de transport marchandises</SelectItem>
+                          <SelectItem value="nettoyage">Service de nettoyage et rangement</SelectItem>
+                          <SelectItem value="renovation">Service de peinture et rénovation</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -470,7 +519,7 @@ const Accueil = () => {
                         id="message"
                         name="message"
                         required
-                        value={formData.message}
+                        value={messageData.message}
                         onChange={handleInputChange}
                         placeholder="Décrivez votre projet ou vos besoins..."
                         rows={5}
