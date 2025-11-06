@@ -53,7 +53,7 @@ const Accueil = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const API_URL = import.meta.env.VITE_CONTACT_SERVER_URI; // pour Vite
+    const API_URL = import.meta.env.VITE_KDM_SERVER_URI; // pour Vite
 
     console.log('Données du formulaire:', messageData);
 

@@ -102,13 +102,13 @@ const FormulaireDevis = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const API_URL = import.meta.env.VITE_CONTACT_SERVER_URI; // pour Vite
+    const API_URL = import.meta.env.VITE_KDM_SERVER_URI; // pour Vite
 
     console.log('Données du formulaire:', devisData);
 
 
     try {
-      const response = await fetch(`${API_URL}/api/contact`, {
+      const response = await fetch(`${API_URL}/api/devis`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(devisData),
