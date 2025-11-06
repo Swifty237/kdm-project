@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+// import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { Menu, Phone, X } from 'lucide-react';
 import { HashLink } from "react-router-hash-link";
@@ -67,9 +67,9 @@ const Navigation = () => {
 
           {/* Right side - Secondary links and CTA (Desktop) */}
           <div className="hidden lg:flex items-center space-x-6">
-            <Button size="sm" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 text-lg">
+            <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-lg text-muted">
               Demander un devis
-            </Button>
+            </Link>
             <HashLink to="/#contact" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full p-4 flex items-center justify-center"
             >
               <Phone className="h-6 w-6 text-white" />
@@ -79,9 +79,9 @@ const Navigation = () => {
 
         {/* Mobile CTA and Menu button */}
         <div className="flex items-center w-full justify-between mt-12 lg:hidden">
-          <Button size="sm" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-3 sm:px-4 text-xs sm:text-sm">
+          <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-3 sm:px-4 text-xs sm:text-sm text-muted">
             Devis
-          </Button>
+          </Link>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="p-2 rounded-md text-muted-foreground hover:text-[#001964] hover:bg-[#001964]/5"

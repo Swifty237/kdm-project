@@ -16,7 +16,7 @@ const Footer = () => {
                 alt="CDLM Logo blanc"
                 className="h-20 bg-white rounded me-2"
               />
-              <span>Commandez Dans Le Monde</span>
+              <span>Qualité - Simplicité - Sérénité</span>
             </Link>
             <p className="text-white/80 mb-4">
               Votre partenaire de confiance pour tous vos besoins professionnels.
@@ -29,7 +29,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center text-sm text-white/70">
                 <Mail className="h-4 w-4 mr-2" />
-                contact@monentreprise.fr
+                kdmlogistique@gmail.com
               </div>
             </div>
           </div>

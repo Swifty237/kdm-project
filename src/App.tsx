@@ -9,7 +9,7 @@ import Accueil from "./pages/Accueil";
 import Offres from "./pages/Offres";
 // import Services from "./pages/Services";
 import APropos from "./pages/APropos";
-// import SitesConfiance from "./pages/SitesConfiance";
+import FormulaireDevis from "./pages/FormulaireDevis";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,7 +25,7 @@ const App = () => (
             <Route path="/" element={<Accueil />} />
             <Route path="/offres" element={<Offres />} />
             <Route path="/a-propos" element={<APropos />} />
-            {/* <Route path="/sites-confiance" element={<SitesConfiance />} /> */}
+            <Route path="/devis" element={<FormulaireDevis />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

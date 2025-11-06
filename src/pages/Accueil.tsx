@@ -26,7 +26,6 @@ const Accueil = () => {
     entreprise: '',
     telephone: '',
     service: '',
-    message: '',
     departure: '',
     arrival: '',
     date: '',
@@ -75,7 +74,7 @@ const Accueil = () => {
       });
 
       if (response.ok) {
-        alert("Message envoyé avec succès !");
+        // alert("Message envoyé avec succès !");
         setMessageData({
           nom: "",
           email: "",
@@ -89,7 +88,7 @@ const Accueil = () => {
       }
     } catch (err) {
       console.error(err);
-      alert("Erreur réseau lors de l'envoi du message.");
+      // alert("Erreur réseau lors de l'envoi du message.");
     }
   };
 
@@ -99,7 +98,7 @@ const Accueil = () => {
     console.log('Données du formulaire:', devisData);
 
     toast({
-      title: "Message envoyé !",
+      title: "Demande de devis envoyée !",
       description: "Nous vous recontacterons dans les plus brefs délais.",
     });
 
@@ -109,7 +108,6 @@ const Accueil = () => {
       entreprise: '',
       telephone: '',
       service: '',
-      message: '',
       departure: '',
       arrival: '',
       date: '',
@@ -157,7 +155,7 @@ const Accueil = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 4000); // change toutes les 4 secondes
+    }, 5000); // change toutes les 4 secondes
 
     return () => clearInterval(interval);
   }, [images.length]);
