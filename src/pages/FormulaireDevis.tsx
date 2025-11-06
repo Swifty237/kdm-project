@@ -99,6 +99,22 @@ const FormulaireDevis = () => {
     }));
   };
 
+  const handleSelectDepartStairsChange = (value: string) => {
+    setDepartData(prev => ({
+      ...prev,
+      stairsSize: value
+    }));
+  };
+
+
+  const handleSelectArrivalStairsChange = (value: string) => {
+    setDevisData(prev => ({
+      ...prev,
+      stairsSize: value
+    }));
+  };
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -378,8 +394,8 @@ const FormulaireDevis = () => {
 
 
                       <div>
-                        <Label htmlFor="postalCode" className="text-sm">Escalier</Label>
-                        <Select onValueChange={handleSelectChange} value={departData.stairsSize}>
+                        <Label htmlFor="departStairsSize" className="text-sm">Escalier</Label>
+                        <Select onValueChange={handleSelectDepartStairsChange} value={departData.stairsSize}>
                           <SelectTrigger className="text-sm lg:text-base">
                             <SelectValue placeholder="Taille de l'escalier" />
                           </SelectTrigger>
@@ -396,7 +412,7 @@ const FormulaireDevis = () => {
                           id="address"
                           name="address"
                           type="text"
-                          value={devisData.departure.address}
+                          value={departData.address}
                           onChange={handleDepartInputChange}
                           placeholder="123 Rue de Départ 75010 Paris"
                           className="text-sm lg:text-base"
@@ -521,8 +537,8 @@ const FormulaireDevis = () => {
 
 
                         <div>
-                          <Label htmlFor="postalCode" className="text-sm">Escalier</Label>
-                          <Select onValueChange={handleSelectChange} value={arrivalData.stairsSize}>
+                          <Label htmlFor="arrivalStairsSize" className="text-sm">Escalier</Label>
+                          <Select onValueChange={handleSelectArrivalStairsChange} value={arrivalData.stairsSize}>
                             <SelectTrigger className="text-sm lg:text-base">
                               <SelectValue placeholder="Taille de l'escalier" />
                             </SelectTrigger>
