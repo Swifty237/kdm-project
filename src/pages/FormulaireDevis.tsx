@@ -9,11 +9,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { Send } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useToast } from '@/hooks/use-toast';
 
 const FormulaireDevis = () => {
-
+  const { toast } = useToast();
   const [departElevator, setDepartElevator] = useState(false);
-
   const [arrivalElevator, setArrivalElevator] = useState(false);
 
   const [departData, setDepartData] = useState({
@@ -33,7 +33,7 @@ const FormulaireDevis = () => {
     elevatorSize: '',
     stairsSize: '',
     address: '',
-    name: '',
+    contactName: '',
     entreprise: '',
     date: ''
   })
@@ -60,7 +60,7 @@ const FormulaireDevis = () => {
       elevatorSize: arrivalData.elevatorSize,
       stairsSize: arrivalData.stairsSize,
       address: arrivalData.address,
-      name: arrivalData.name,
+      contactName: arrivalData.contactName,
       entreprise: arrivalData.entreprise,
       date: arrivalData.date
     },
@@ -82,6 +82,11 @@ const FormulaireDevis = () => {
       ...prev,
       [name]: value
     }));
+
+    setDevisData(prev => ({
+      ...prev,
+      departure: departData
+    }))
   };
 
   const handleArrivalInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -90,6 +95,11 @@ const FormulaireDevis = () => {
       ...prev,
       [name]: value
     }));
+
+    setDevisData(prev => ({
+      ...prev,
+      arrival: arrivalData
+    }))
   };
 
   const handleSelectChange = (value: string) => {
@@ -133,10 +143,10 @@ const FormulaireDevis = () => {
 
       const result = await response.json();
 
-      // toast({
-      //   title: "Message envoyé !",
-      //   description: "Nous vous recontacterons dans les plus brefs délais.",
-      // });
+      toast({
+        title: "Demande de devis envoyée !",
+        description: "Nous vous recontacterons dans les plus brefs délais.",
+      });
 
       if (response.ok) {
         // alert("Message envoyé avec succès !");
@@ -160,7 +170,7 @@ const FormulaireDevis = () => {
           elevatorSize: '',
           stairsSize: '',
           address: '',
-          name: '',
+          contactName: '',
           entreprise: '',
           date: ''
         })
@@ -187,7 +197,7 @@ const FormulaireDevis = () => {
             elevatorSize: '',
             stairsSize: '',
             address: '',
-            name: '',
+            contactName: '',
             entreprise: '',
             date: ''
           },
@@ -217,7 +227,7 @@ const FormulaireDevis = () => {
             <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm lg:text-base font-bold">Nom complet *</Label>
+                  <Label htmlFor="name" className="text-sm lg:text-base font-bold">Nom complet</Label>
                   <Input
                     id="name"
                     name="name"
@@ -229,8 +239,9 @@ const FormulaireDevis = () => {
                     className="text-sm lg:text-base"
                   />
                 </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm lg:text-base font-bold">Email *</Label>
+                  <Label htmlFor="email" className="text-sm lg:text-base font-bold">Email</Label>
                   <Input
                     id="email"
                     name="email"
@@ -351,61 +362,69 @@ const FormulaireDevis = () => {
                       </div>
 
                       {departData.floor && departData.floor !== "0" && (
-                        <div>
-                          <Label htmlFor="elevator" className="text-sm">Ascenceur</Label>
-                          <div className="h-[40px] flex items-center justify-around">
-                            <div className="space-x-2">
-                              <Checkbox
-                                id="elevator"
-                                checked={departElevator}
-                                onCheckedChange={(checked) => setDepartElevator(checked === true)}
-                              />
-                              <label
-                                htmlFor="elevator"
-                                className="text-sm text-gray-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Oui
-                              </label>
-                            </div>
-
-                            {departElevator && (
+                        <>
+                          <div>
+                            <Label htmlFor="elevator" className="text-sm">Ascenceur</Label>
+                            <div className="h-[40px] flex items-center justify-around">
                               <div className="space-x-2">
-                                <Select
-                                  onValueChange={(value) =>
-                                    setDepartData((prev) => ({ ...prev, elevatorSize: value }))
-                                  }
-                                  value={departData.elevatorSize}
+                                <Checkbox
+                                  id="elevator"
+                                  checked={departElevator}
+                                  onCheckedChange={(checked) => {
+                                    setDepartElevator(checked === true)
+                                    setDepartData(prev => ({
+                                      ...prev,
+                                      elevator: departElevator
+                                    }));
+                                  }}
+                                />
+                                <label
+                                  htmlFor="elevator"
+                                  className="text-sm text-gray-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 >
-                                  <SelectTrigger className="text-sm lg:text-base">
-                                    <SelectValue placeholder="Taille de l'ascenceur" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    <SelectItem value="2">2 personnes</SelectItem>
-                                    <SelectItem value="3">3 personnes</SelectItem>
-                                    <SelectItem value="4">4 personnes</SelectItem>
-                                    <SelectItem value="5">5 pers. ou plus</SelectItem>
-                                  </SelectContent>
-                                </Select>
+                                  Oui
+                                </label>
                               </div>
-                            )}
+
+                              {departElevator && (
+                                <div className="space-x-2">
+                                  <Select
+                                    onValueChange={(value) =>
+                                      setDepartData((prev) => ({ ...prev, elevatorSize: value }))
+                                    }
+                                    value={departData.elevatorSize}
+                                  >
+                                    <SelectTrigger className="text-sm lg:text-base">
+                                      <SelectValue placeholder="Taille de l'ascenceur" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="2">2 personnes</SelectItem>
+                                      <SelectItem value="3">3 personnes</SelectItem>
+                                      <SelectItem value="4">4 personnes</SelectItem>
+                                      <SelectItem value="5">5 pers. ou plus</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </div>
+
+                          <div>
+                            <Label htmlFor="departStairsSize" className="text-sm">Escalier</Label>
+                            <Select onValueChange={handleSelectDepartStairsChange} value={departData.stairsSize}>
+                              <SelectTrigger className="text-sm lg:text-base">
+                                <SelectValue placeholder="Taille de l'escalier" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="small">Petit</SelectItem>
+                                <SelectItem value="average">Moyen</SelectItem>
+                                <SelectItem value="wide">Large</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </>
                       )}
 
-
-                      <div>
-                        <Label htmlFor="departStairsSize" className="text-sm">Escalier</Label>
-                        <Select onValueChange={handleSelectDepartStairsChange} value={departData.stairsSize}>
-                          <SelectTrigger className="text-sm lg:text-base">
-                            <SelectValue placeholder="Taille de l'escalier" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="small">Petit</SelectItem>
-                            <SelectItem value="average">Moyen</SelectItem>
-                            <SelectItem value="wide">Large</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
                       <div>
                         <Label htmlFor="address" className="text-sm">Adresse</Label>
                         <Input
@@ -430,7 +449,7 @@ const FormulaireDevis = () => {
                           id="volume"
                           name="volume"
                           type="text"
-                          value={devisData.departure.volume}
+                          value={departData.volume}
                           onChange={handleDepartInputChange}
                           placeholder="20 m3"
                           className="text-sm lg:text-base"
@@ -442,7 +461,7 @@ const FormulaireDevis = () => {
                           id="address"
                           name="address"
                           type="text"
-                          value={devisData.departure.address}
+                          value={departData.address}
                           onChange={handleDepartInputChange}
                           placeholder="123 Rue de Départ 75010 Paris"
                           className="text-sm lg:text-base"
@@ -460,7 +479,7 @@ const FormulaireDevis = () => {
                           id="address"
                           name="address"
                           type="text"
-                          value={devisData.departure.address}
+                          value={departData.address}
                           onChange={handleInputChange}
                           placeholder="123 Rue de Départ 75010 Paris"
                           className="text-sm lg:text-base"
@@ -493,62 +512,71 @@ const FormulaireDevis = () => {
                         </div>
 
                         {arrivalData.floor && arrivalData.floor !== "0" && (
-                          <div>
-                            <Label htmlFor="elevator" className="text-sm">Ascenceur</Label>
+                          <>
+                            <div>
+                              <Label htmlFor="elevator" className="text-sm">Ascenceur</Label>
 
-                            <div className="h-[40px] flex items-center justify-around">
-                              <div className="space-x-2">
-                                <Checkbox
-                                  id="elevator"
-                                  checked={arrivalElevator}
-                                  onCheckedChange={(checked) => setArrivalElevator(checked === true)}
-                                />
-                                <label
-                                  htmlFor="elevator"
-                                  className="text-sm text-gray-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                >
-                                  Oui
-                                </label>
-                              </div>
-
-                              {arrivalElevator && (
+                              <div className="h-[40px] flex items-center justify-around">
                                 <div className="space-x-2">
-                                  <Select
-                                    onValueChange={(value) =>
-                                      setArrivalData((prev) => ({ ...prev, elevatorSize: value }))
-                                    }
-                                    value={arrivalData.elevatorSize}
+                                  <Checkbox
+                                    id="elevator"
+                                    checked={arrivalElevator}
+                                    onCheckedChange={(checked) => {
+                                      setArrivalElevator(checked === true)
+                                      setArrivalData(prev => ({
+                                        ...prev,
+                                        elevator: arrivalElevator
+                                      }));
+
+                                    }}
+                                  />
+                                  <label
+                                    htmlFor="elevator"
+                                    className="text-sm text-gray-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                   >
-                                    <SelectTrigger className="text-sm lg:text-base">
-                                      <SelectValue placeholder="Taille de l'ascenceur" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectItem value="2">2 personnes</SelectItem>
-                                      <SelectItem value="3">3 personnes</SelectItem>
-                                      <SelectItem value="4">4 personnes</SelectItem>
-                                      <SelectItem value="5">5 pers. ou plus</SelectItem>
-                                    </SelectContent>
-                                  </Select>
+                                    Oui
+                                  </label>
                                 </div>
-                              )}
+
+                                {arrivalElevator && (
+                                  <div className="space-x-2">
+                                    <Select
+                                      onValueChange={(value) =>
+                                        setArrivalData((prev) => ({ ...prev, elevatorSize: value }))
+                                      }
+                                      value={arrivalData.elevatorSize}
+                                    >
+                                      <SelectTrigger className="text-sm lg:text-base">
+                                        <SelectValue placeholder="Taille de l'ascenceur" />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        <SelectItem value="2">2 personnes</SelectItem>
+                                        <SelectItem value="3">3 personnes</SelectItem>
+                                        <SelectItem value="4">4 personnes</SelectItem>
+                                        <SelectItem value="5">5 pers. ou plus</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                )}
+                              </div>
                             </div>
-                          </div>
+
+                            <div>
+                              <Label htmlFor="arrivalStairsSize" className="text-sm">Escalier</Label>
+                              <Select onValueChange={handleSelectArrivalStairsChange} value={arrivalData.stairsSize}>
+                                <SelectTrigger className="text-sm lg:text-base">
+                                  <SelectValue placeholder="Taille de l'escalier" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="small">Petit</SelectItem>
+                                  <SelectItem value="average">Moyen</SelectItem>
+                                  <SelectItem value="wide">Large</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </>
                         )}
 
-
-                        <div>
-                          <Label htmlFor="arrivalStairsSize" className="text-sm">Escalier</Label>
-                          <Select onValueChange={handleSelectArrivalStairsChange} value={arrivalData.stairsSize}>
-                            <SelectTrigger className="text-sm lg:text-base">
-                              <SelectValue placeholder="Taille de l'escalier" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="small">Petit</SelectItem>
-                              <SelectItem value="average">Moyen</SelectItem>
-                              <SelectItem value="wide">Large</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
                         <div>
                           <Label htmlFor="address" className="text-sm">Adresse</Label>
                           <Input
@@ -573,20 +601,21 @@ const FormulaireDevis = () => {
                             id="entreprise"
                             name="entreprise"
                             type="text"
-                            value={devisData.arrival.entreprise}
+                            value={arrivalData.entreprise}
                             onChange={handleArrivalInputChange}
                             placeholder="Nom de l'entreprise à l'arrivée"
                             className="text-sm lg:text-base"
                           />
                         </div>
+
                         <div>
-                          <Label htmlFor="nom" className="text-sm lg:text-base font-bold">Nom du contact</Label>
+                          <Label htmlFor="contactName" className="text-sm lg:text-base font-bold">Nom du contact</Label>
                           <Input
-                            id="nom"
-                            name="nom"
+                            id="contactName"
+                            name="contactName"
                             type="text"
                             required
-                            value={devisData.arrival.name}
+                            value={arrivalData.contactName}
                             onChange={handleArrivalInputChange}
                             placeholder="Nom du contact à l'arrivée"
                             className="text-sm lg:text-base"
@@ -599,7 +628,7 @@ const FormulaireDevis = () => {
                             id="address"
                             name="address"
                             type="text"
-                            value={devisData.arrival.address}
+                            value={arrivalData.address}
                             onChange={handleArrivalInputChange}
                             placeholder="34 Rue de l'Arrivée 76000 Rouen"
                             className="text-sm lg:text-base"
@@ -613,7 +642,7 @@ const FormulaireDevis = () => {
                               id="date"
                               name="date"
                               type="date"
-                              value={devisData.arrival.date}
+                              value={arrivalData.date}
                               onChange={handleArrivalInputChange}
                               className="text-sm lg:text-base flex justify-center w-[46%]"
                             />

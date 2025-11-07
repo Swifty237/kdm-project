@@ -97,10 +97,7 @@ const Accueil = () => {
 
     console.log('Données du formulaire:', devisData);
 
-    toast({
-      title: "Demande de devis envoyée !",
-      description: "Nous vous recontacterons dans les plus brefs délais.",
-    });
+
 
     setDevisData({
       nom: '',
