@@ -13,15 +13,13 @@ import { useToast } from '@/hooks/use-toast';
 
 const FormulaireDevis = () => {
   const { toast } = useToast();
-  const [departElevator, setDepartElevator] = useState(false);
-  const [arrivalElevator, setArrivalElevator] = useState(false);
 
   const [departData, setDepartData] = useState({
     surface: '',
     volume: '',
     rooms: '',
     floor: '',
-    elevator: departElevator,
+    elevator: false,
     elevatorSize: '',
     stairsSize: '',
     address: ''
@@ -29,7 +27,7 @@ const FormulaireDevis = () => {
 
   const [arrivalData, setArrivalData] = useState({
     floor: '',
-    elevator: arrivalElevator,
+    elevator: false,
     elevatorSize: '',
     stairsSize: '',
     address: '',
@@ -45,24 +43,24 @@ const FormulaireDevis = () => {
     telephone: '',
     service: '',
     departure: {
-      surface: departData.surface,
-      volume: departData.volume,
-      rooms: departData.rooms,
-      floor: departData.floor,
-      elevator: departData.elevator,
-      elevatorSize: departData.elevatorSize,
-      stairsSize: departData.stairsSize,
-      address: departData.address
+      surface: '',
+      volume: '',
+      rooms: '',
+      floor: '',
+      elevator: false,
+      elevatorSize: '',
+      stairsSize: '',
+      address: ''
     },
     arrival: {
-      floor: arrivalData.floor,
-      elevator: arrivalData.elevator,
-      elevatorSize: arrivalData.elevatorSize,
-      stairsSize: arrivalData.stairsSize,
-      address: arrivalData.address,
-      contactName: arrivalData.contactName,
-      entreprise: arrivalData.entreprise,
-      date: arrivalData.date
+      floor: '',
+      elevator: false,
+      elevatorSize: '',
+      stairsSize: '',
+      address: '',
+      contactName: '',
+      entreprise: '',
+      date: ''
     },
     date: '',
   });
@@ -78,29 +76,25 @@ const FormulaireDevis = () => {
 
   const handleDepartInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setDepartData(prev => ({
-      ...prev,
-      [name]: value
-    }));
 
-    setDevisData(prev => ({
-      ...prev,
-      departure: departData
-    }))
+    setDepartData(prev => {
+      const updated = { ...prev, [name]: value };
+      setDevisData(d => ({ ...d, departure: updated }));
+      return updated;
+    });
   };
+
 
   const handleArrivalInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setArrivalData(prev => ({
-      ...prev,
-      [name]: value
-    }));
 
-    setDevisData(prev => ({
-      ...prev,
-      arrival: arrivalData
-    }))
+    setArrivalData(prev => {
+      const updated = { ...prev, [name]: value };
+      setDevisData(d => ({ ...d, arrival: updated }));
+      return updated;
+    });
   };
+
 
   const handleSelectChange = (value: string) => {
     setDevisData(prev => ({
@@ -108,6 +102,7 @@ const FormulaireDevis = () => {
       service: value
     }));
   };
+
 
   const handleSelectDepartStairsChange = (value: string) => {
     setDepartData(prev => ({
@@ -118,7 +113,7 @@ const FormulaireDevis = () => {
 
 
   const handleSelectArrivalStairsChange = (value: string) => {
-    setDevisData(prev => ({
+    setArrivalData(prev => ({
       ...prev,
       stairsSize: value
     }));
@@ -150,15 +145,13 @@ const FormulaireDevis = () => {
 
       if (response.ok) {
         // alert("Message envoyé avec succès !");
-        setDepartElevator(false);
-        setArrivalElevator(false);
 
         setDepartData({
           surface: '',
           volume: '',
           rooms: '',
           floor: '',
-          elevator: departElevator,
+          elevator: false,
           elevatorSize: '',
           stairsSize: '',
           address: ''
@@ -166,7 +159,7 @@ const FormulaireDevis = () => {
 
         setArrivalData({
           floor: '',
-          elevator: arrivalElevator,
+          elevator: false,
           elevatorSize: '',
           stairsSize: '',
           address: '',
@@ -186,14 +179,14 @@ const FormulaireDevis = () => {
             volume: '',
             rooms: '',
             floor: '',
-            elevator: departData.elevator,
+            elevator: false,
             elevatorSize: '',
             stairsSize: '',
             address: ''
           },
           arrival: {
             floor: '',
-            elevator: arrivalData.elevator,
+            elevator: false,
             elevatorSize: '',
             stairsSize: '',
             address: '',
@@ -369,12 +362,16 @@ const FormulaireDevis = () => {
                               <div className="space-x-2">
                                 <Checkbox
                                   id="elevator"
-                                  checked={departElevator}
+                                  checked={departData.elevator}
                                   onCheckedChange={(checked) => {
-                                    setDepartElevator(checked === true)
                                     setDepartData(prev => ({
                                       ...prev,
-                                      elevator: departElevator
+                                      elevator: checked === true
+                                    }));
+
+                                    setDevisData(prev => ({
+                                      ...prev,
+                                      departure: departData
                                     }));
                                   }}
                                 />
@@ -386,7 +383,7 @@ const FormulaireDevis = () => {
                                 </label>
                               </div>
 
-                              {departElevator && (
+                              {departData.elevator && (
                                 <div className="space-x-2">
                                   <Select
                                     onValueChange={(value) =>
@@ -480,7 +477,7 @@ const FormulaireDevis = () => {
                           name="address"
                           type="text"
                           value={departData.address}
-                          onChange={handleInputChange}
+                          onChange={handleDepartInputChange}
                           placeholder="123 Rue de Départ 75010 Paris"
                           className="text-sm lg:text-base"
                         />
@@ -520,14 +517,17 @@ const FormulaireDevis = () => {
                                 <div className="space-x-2">
                                   <Checkbox
                                     id="elevator"
-                                    checked={arrivalElevator}
+                                    checked={arrivalData.elevator}
                                     onCheckedChange={(checked) => {
-                                      setArrivalElevator(checked === true)
                                       setArrivalData(prev => ({
                                         ...prev,
-                                        elevator: arrivalElevator
+                                        elevator: checked === true
                                       }));
 
+                                      setDevisData(prev => ({
+                                        ...prev,
+                                        arrival: arrivalData
+                                      }));
                                     }}
                                   />
                                   <label
@@ -538,7 +538,7 @@ const FormulaireDevis = () => {
                                   </label>
                                 </div>
 
-                                {arrivalElevator && (
+                                {arrivalData.elevator && (
                                   <div className="space-x-2">
                                     <Select
                                       onValueChange={(value) =>
@@ -636,10 +636,10 @@ const FormulaireDevis = () => {
                         </div>
 
                         <div>
-                          <Label htmlFor="date" className="text-sm lg:text-base font-bold">Date d'arrivée souhaitée</Label>
+                          <Label htmlFor="arrivalDate" className="text-sm lg:text-base font-bold">Date d'arrivée souhaitée</Label>
                           <div className="w-full flex justify-center">
                             <Input
-                              id="date"
+                              id="arrivalDate"
                               name="date"
                               type="date"
                               value={arrivalData.date}
