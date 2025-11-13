@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 // import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -10,60 +10,58 @@ import { Button } from '@/components/ui/button';
 import { Send } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
+import { useLocation } from "react-router-dom";
 
 const FormulaireDevis = () => {
   const { toast } = useToast();
+  const location = useLocation();
 
+  // Récupère les données transmises depuis Accueil
+  const initialDevisData = location.state?.devisData || {};
+
+  // États initiaux (pré-remplis si données reçues)
   const [departData, setDepartData] = useState({
-    surface: '',
-    volume: '',
-    rooms: '',
-    floor: '',
+    surface: initialDevisData.surface || "",
+    volume: "",
+    rooms: "",
+    floor: "",
     elevator: false,
-    elevatorSize: '',
-    stairsSize: '',
-    address: ''
-  })
+    elevatorSize: "",
+    stairsSize: "",
+    address: initialDevisData.departure || "",
+  });
 
   const [arrivalData, setArrivalData] = useState({
-    floor: '',
+    floor: "",
     elevator: false,
-    elevatorSize: '',
-    stairsSize: '',
-    address: '',
-    contactName: '',
-    entreprise: '',
-    date: ''
-  })
+    elevatorSize: "",
+    stairsSize: "",
+    address: initialDevisData.arrival || "",
+    contactName: "",
+    entreprise: "",
+    date: initialDevisData.date || "",
+  });
 
   const [devisData, setDevisData] = useState({
-    name: '',
-    email: '',
-    entreprise: '',
-    telephone: '',
-    service: '',
-    departure: {
-      surface: '',
-      volume: '',
-      rooms: '',
-      floor: '',
-      elevator: false,
-      elevatorSize: '',
-      stairsSize: '',
-      address: ''
-    },
-    arrival: {
-      floor: '',
-      elevator: false,
-      elevatorSize: '',
-      stairsSize: '',
-      address: '',
-      contactName: '',
-      entreprise: '',
-      date: ''
-    },
-    date: '',
+    name: "",
+    email: "",
+    entreprise: "",
+    telephone: "",
+    service: "Demenagement",
+    departure: departData,
+    arrival: arrivalData,
+    date: initialDevisData.date || "",
   });
+
+  // Synchronise les sous-objets départ/arrivée avec devisData
+  useEffect(() => {
+    setDevisData(prev => ({
+      ...prev,
+      departure: departData,
+      arrival: arrivalData,
+    }));
+  }, [departData, arrivalData]);
+
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

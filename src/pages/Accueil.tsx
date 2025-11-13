@@ -8,8 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { MapPin, Mail, Phone, Clock, Send, HandCoins, Handshake, ArrowBigRight, Award } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const Accueil = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [messageData, setMessageData] = useState({
     nom: '',
@@ -21,11 +23,7 @@ const Accueil = () => {
   });
 
   const [devisData, setDevisData] = useState({
-    nom: '',
-    email: '',
-    entreprise: '',
-    telephone: '',
-    service: '',
+    service: 'demenagement',
     departure: '',
     arrival: '',
     date: '',
@@ -42,6 +40,15 @@ const Accueil = () => {
       [name]: value
     }));
   };
+
+  const handleDevisInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setDevisData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
 
   const handleSelectChange = (value: string) => {
     setMessageData(prev => ({
@@ -97,14 +104,11 @@ const Accueil = () => {
 
     console.log('Données du formulaire:', devisData);
 
-
+    // Redirige vers /devis en transmettant les infos
+    navigate("/devis", { state: { devisData } });
 
     setDevisData({
-      nom: '',
-      email: '',
-      entreprise: '',
-      telephone: '',
-      service: '',
+      service: 'demenagement',
       departure: '',
       arrival: '',
       date: '',
@@ -173,14 +177,16 @@ const Accueil = () => {
           />
         ))}
 
-        {/* 🔹 Contenu au-dessus du carrousel */}
-        <div className="relative z-10 bg-black/40 w-full h-full flex flex-col justify-center items-center text-white text-center rounded-2xl">
+        {/* Contenu au-dessus du carrousel */}
+        {/* <div className="relative z-10 bg-black/40 w-full h-full flex flex-col justify-center items-center text-white text-center rounded-2xl"> */}
+        <div className="relative z-10 w-full h-full flex flex-col justify-center items-center text-white text-center rounded-2xl">
+
           <Card className="bg-[#ecf0f1d7] border-0 shadow-lg ">
             <CardHeader>
               <CardTitle className="text-4xl lg:text-5xl text-center text-[#001964]">
                 Confiez nous vos cartons sans stress et nous nous occupons du reste
               </CardTitle>
-              <CardDescription className="italic text-center text-xl text-[#001964]">
+              <CardDescription className="italic text-center text-2xl text-[#001964]">
                 Remplissez le formulaire ci-dessous et obtenez un devis rapidement.
               </CardDescription>
             </CardHeader>
@@ -195,21 +201,21 @@ const Accueil = () => {
                       type="text"
                       required
                       value={devisData.departure}
-                      onChange={handleInputChange}
+                      onChange={handleDevisInputChange}
                       placeholder="Adresse de départ"
-                      className="text-sm lg:text-base"
+                      className="text-sm lg:text-xl"
                     />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-2 flex">
                     <Input
                       id="arrival"
                       name="arrival"
                       type="text"
                       required
                       value={devisData.arrival}
-                      onChange={handleInputChange}
+                      onChange={handleDevisInputChange}
                       placeholder="Adresse d'arrivée"
-                      className="text-sm lg:text-base"
+                      className="text-sm lg:text-xl"
                     />
                   </div>
                 </div>
@@ -219,22 +225,23 @@ const Accueil = () => {
                     <Input
                       id="date"
                       name="date"
-                      type="text"
+                      type="date"
                       value={devisData.date}
-                      onChange={handleInputChange}
+                      onChange={handleDevisInputChange}
                       placeholder="Date de départ"
-                      className="text-sm lg:text-base"
+                      className="text-sm lg:text-xl"
                     />
                   </div>
+
                   <div className="space-y-2">
                     <Input
                       id="surface"
                       name="surface"
                       type="text"
                       value={devisData.surface}
-                      onChange={handleInputChange}
+                      onChange={handleDevisInputChange}
                       placeholder="Surface en m2"
-                      className="text-sm lg:text-base"
+                      className="text-sm lg:text-xl"
                     />
                   </div>
                 </div>
@@ -377,7 +384,7 @@ const Accueil = () => {
       <section id="contact" className="py-8 lg:py-16 px-4 sm:px-8 lg:px-16 mt-8 lg:mt-16 bg-muted/30 w-full">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-3xl font-bold text-[#001964] mb-4 lg:mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#001964] mb-4 lg:mb-6">
               Contactez-nous
             </h2>
             <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto">

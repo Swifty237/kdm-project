@@ -2,7 +2,7 @@
 // import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 // import { Button } from '@/components/ui/button';
 // import { Link } from 'react-router-dom';
-import { Check, Minus, Info, Truck, BrushCleaning, PaintRoller } from 'lucide-react';
+import { Check, Minus, Info } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -18,11 +18,11 @@ const Offres = () => {
       description: "Chaque commande fait l'objet d'une estimation. Un devis clair est établi et vous avez une idée précise du prix final. Pas de frais cachés, ni de surprise à la livraison."
     },
     {
-      title: "Prémium",
+      title: "Premium",
       description: "Chaque commande fait l'objet d'une estimation. Un devis clair est établi et vous avez une idée précise du prix final. Pas de frais cachés, ni de surprise à la livraison."
     },
     {
-      title: "prémium avec option emménagement",
+      title: "Premium avec option emménagement",
       description: "Chaque commande fait l'objet d'une estimation. Un devis clair est établi et vous avez une idée précise du prix final. Pas de frais cachés, ni de surprise à la livraison."
     }
   ];
@@ -49,8 +49,8 @@ const Offres = () => {
             {values.map((value, index) => (
               <Card key={index}>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-[#001964] mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground">{value.description}</p>
+                  <h3 className="text-2xl font-bold text-[#001964] mb-3">{value.title}</h3>
+                  <p className="text-xl text-muted-foreground">{value.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -182,7 +182,7 @@ const Offres = () => {
 
               <TableRow className="hover:bg-gray-50">
                 <TableCell className="font-medium py-4 px-6 text-lg">
-                  Emballage et déballage des objets fragiles
+                  Emballage et protection des objets fragiles
                 </TableCell>
                 <TableCell className="text-center py-4 px-4">
                   <Minus className="h-5 w-5 text-gray-400 mx-auto" />
@@ -200,26 +200,7 @@ const Offres = () => {
 
               <TableRow className="hover:bg-gray-50">
                 <TableCell className="font-medium py-4 px-6 flex items-center gap-2 text-lg">
-                  Emballage et déballage de la vaisselle fragile
-                  <Info className="h-5 w-5 text-gray-400" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 flex items-center gap-2 text-lg">
-                  Protection des éléments fragiles
+                  Emballage et protection de la vaisselle fragile
                   <Info className="h-5 w-5 text-gray-400" />
                 </TableCell>
                 <TableCell className="text-center py-4 px-4">
@@ -414,7 +395,7 @@ const Offres = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#001964] my-4">
-              Autres services
+              Transport de marchadises
             </h1>
           </div>
         </div>
@@ -425,10 +406,9 @@ const Offres = () => {
 
         <div className="max-w-6xl mx-auto mb-16">
           <div className="flex items-center gap-3">
-            <Truck className="h-10 w-10 text-[#001964] mx-8" />
-            <span className="text-3xl font-semibold text-[#001964]">Transport de marchadises</span>
+            <span className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#001964]">Offre pour le transport de marchandises</span>
           </div>
-          <div className="space-y-4 text-muted-foreground mt-8">
+          <div className="space-y-4 text-xl text-muted-foreground mt-8">
             <p>
               CDLM est née d'un constat simple : les frais d'expédition internationale sont souvent
               prohibitifs et les moyens de paiement inadaptés au marché camerounais. Fondée en 2020, notre entreprise s'est donnée pour mission de démocratiser l'accès
@@ -448,54 +428,6 @@ const Offres = () => {
           </div>
         </div>
 
-
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="flex items-center gap-3">
-            <BrushCleaning className="h-10 w-10 text-[#001964] mx-8" />
-            <span className="text-3xl font-semibold text-[#001964]">Nettoyage et rangement </span>
-          </div>
-          <div className="space-y-4 text-muted-foreground mt-8">
-            <p>
-              CDLM est née d'un constat simple : les frais d'expédition internationale sont souvent
-              prohibitifs et les moyens de paiement inadaptés au marché camerounais. Fondée en 2020, notre entreprise s'est donnée pour mission de démocratiser l'accès
-              aux achats internationaux en proposant des solutions simples, économiques et sécurisées.
-            </p>
-            <p>
-              Fondée en 2020, notre entreprise s'est donnée pour mission de démocratiser l'accès
-              aux achats internationaux en proposant des solutions simples, économiques et sécurisées.
-            </p>
-            <p>
-              Aujourd'hui, nous sommes fiers d'avoir aidé des centaines de clients à réaliser
-              leurs achats dans le monde entier, avec des économies pouvant aller jusqu'à 50%
-              par rapport aux transporteurs traditionnels. CDLM est née d'un constat simple : les frais d'expédition internationale sont souvent
-              prohibitifs et les moyens de paiement inadaptés au marché camerounais. Fondée en 2020, notre entreprise s'est donnée pour mission de démocratiser l'accès
-              aux achats internationaux en proposant des solutions simples, économiques et sécurisées.
-            </p>
-          </div>
-        </div>
-
-        <div className="max-w-6xl mx-auto mb-8">
-          <div className="flex items-center gap-3">
-            <PaintRoller className="h-10 w-10 text-[#001964] mx-8" />
-            <span className="text-3xl font-semibold text-[#001964]">Peinture et rénovation</span>
-          </div>
-          <div className="space-y-4 text-muted-foreground mt-8">
-            <p>
-              CDLM est née d'un constat simple : les frais d'expédition internationale sont souvent
-              prohibitifs et les moyens de paiement inadaptés au marché camerounais.
-            </p>
-            <p>
-              Fondée en 2020, notre entreprise s'est donnée pour mission de démocratiser l'accès
-              aux achats internationaux en proposant des solutions simples, économiques et sécurisées. CDLM est née d'un constat simple : les frais d'expédition internationale sont souvent
-              prohibitifs et les moyens de paiement inadaptés au marché camerounais. Aujourd'hui, nous sommes fiers d'avoir aidé des centaines de clients à réaliser.
-            </p>
-            <p>
-              Aujourd'hui, nous sommes fiers d'avoir aidé des centaines de clients à réaliser
-              leurs achats dans le monde entier, avec des économies pouvant aller jusqu'à 50%
-              par rapport aux transporteurs traditionnels.
-            </p>
-          </div>
-        </div>
       </section>
     </div>
   );

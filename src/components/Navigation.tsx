@@ -54,7 +54,7 @@ const Navigation = () => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`font-medium transition-colors duration-200 hover:text-[#001964] ${location.pathname === item.path
+                  className={`font-medium transition-colors duration-200 hover:text-[#001964] text-xl ${location.pathname === item.path
                     ? 'text-[#001964]'
                     : 'text-muted-foreground'
                     }`}
@@ -108,7 +108,7 @@ const Navigation = () => {
                     key={item.path}
                     to={item.path}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`block px-3 py-2 text-base font-medium rounded-md ${location.pathname === item.path
+                    className={`block px-3 py-2 text-base font-medium rounded-md text-xl ${location.pathname === item.path
                       ? 'text-[#25423d] bg-[#25423d]/5'
                       : 'text-muted-foreground hover:text-[#25423d] hover:bg-[#25423d]/5'
                       }`}
