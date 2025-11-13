@@ -11,6 +11,7 @@ import { Send } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { useLocation } from "react-router-dom";
+import InputAdress from '@/components/InputAdress';
 
 const FormulaireDevis = () => {
   const { toast } = useToast();
@@ -284,8 +285,6 @@ const FormulaireDevis = () => {
                     <SelectContent>
                       <SelectItem value="Demenagement">Service de déménagement</SelectItem>
                       <SelectItem value="transport">Service de transport marchandises</SelectItem>
-                      <SelectItem value="nettoyage">Service de nettoyage et rangement</SelectItem>
-                      <SelectItem value="renovation">Service de peinture et rénovation</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -421,16 +420,18 @@ const FormulaireDevis = () => {
                       )}
 
                       <div>
+
                         <Label htmlFor="address" className="text-sm">Adresse</Label>
-                        <Input
+                        <InputAdress
                           id="address"
                           name="address"
-                          type="text"
+                          required
                           value={departData.address}
-                          onChange={handleDepartInputChange}
-                          placeholder="123 Rue de Départ 75010 Paris"
+                          onChange={(val) => setDepartData({ ...departData, address: val })}
+                          placeholder="Adresse de départ"
                           className="text-sm lg:text-base"
                         />
+
                       </div>
                     </div>
                   )}
@@ -452,13 +453,13 @@ const FormulaireDevis = () => {
                       </div>
                       <div>
                         <Label htmlFor="address" className="text-sm">Adresse</Label>
-                        <Input
+                        <InputAdress
                           id="address"
                           name="address"
-                          type="text"
+                          required
                           value={departData.address}
-                          onChange={handleDepartInputChange}
-                          placeholder="123 Rue de Départ 75010 Paris"
+                          onChange={(val) => setDepartData({ ...departData, address: val })}
+                          placeholder="Adresse de départ"
                           className="text-sm lg:text-base"
                         />
                       </div>
@@ -466,7 +467,7 @@ const FormulaireDevis = () => {
                   )}
 
                   {/* Nettoyage et rénovation */}
-                  {(devisData.service === "nettoyage" || devisData.service === "renovation") && (
+                  {/* {(devisData.service === "nettoyage" || devisData.service === "renovation") && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                       <div>
                         <Label htmlFor="address" className="text-sm">Adresse</Label>
@@ -481,7 +482,7 @@ const FormulaireDevis = () => {
                         />
                       </div>
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
 
@@ -577,12 +578,12 @@ const FormulaireDevis = () => {
 
                         <div>
                           <Label htmlFor="address" className="text-sm">Adresse</Label>
-                          <Input
+                          <InputAdress
                             id="address"
                             name="address"
                             type="text"
                             value={arrivalData.address}
-                            onChange={handleArrivalInputChange}
+                            onChange={(val) => setArrivalData({ ...arrivalData, address: val })}
                             placeholder="34 Rue de l'Arrivée 76000 Rouen"
                             className="text-sm lg:text-base"
                           />
@@ -622,12 +623,12 @@ const FormulaireDevis = () => {
 
                         <div>
                           <Label htmlFor="address" className="text-sm">Adresse</Label>
-                          <Input
+                          <InputAdress
                             id="address"
                             name="address"
                             type="text"
                             value={arrivalData.address}
-                            onChange={handleArrivalInputChange}
+                            onChange={(val) => setArrivalData({ ...arrivalData, address: val })}
                             placeholder="34 Rue de l'Arrivée 76000 Rouen"
                             className="text-sm lg:text-base"
                           />

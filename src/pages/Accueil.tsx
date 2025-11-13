@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { MapPin, Mail, Phone, Clock, Send, HandCoins, Handshake, ArrowBigRight, Award } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import InputAdress from "@/components/InputAdress";
 
 const Accueil = () => {
   const navigate = useNavigate();
@@ -195,25 +196,24 @@ const Accueil = () => {
               <form onSubmit={handleSubmitDevis} className="space-y-4 lg:space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                   <div className="space-y-2">
-                    <Input
+                    <InputAdress
                       id="departure"
                       name="departure"
-                      type="text"
                       required
                       value={devisData.departure}
-                      onChange={handleDevisInputChange}
+                      onChange={(val) => setDevisData({ ...devisData, departure: val })}
                       placeholder="Adresse de départ"
                       className="text-sm lg:text-xl"
                     />
                   </div>
-                  <div className="space-y-2 flex">
-                    <Input
+
+                  <div className="space-y-2">
+                    <InputAdress
                       id="arrival"
                       name="arrival"
-                      type="text"
                       required
                       value={devisData.arrival}
-                      onChange={handleDevisInputChange}
+                      onChange={(val) => setDevisData({ ...devisData, arrival: val })}
                       placeholder="Adresse d'arrivée"
                       className="text-sm lg:text-xl"
                     />
@@ -512,14 +512,12 @@ const Accueil = () => {
                         <SelectContent>
                           <SelectItem value="Demenagement">Service de déménagement</SelectItem>
                           <SelectItem value="transport">Service de transport marchandises</SelectItem>
-                          <SelectItem value="nettoyage">Service de nettoyage et rangement</SelectItem>
-                          <SelectItem value="renovation">Service de peinture et rénovation</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message" className="text-sm lg:text-base">Message *</Label>
+                      <Label htmlFor="message" className="text-sm lg:text-base">Message</Label>
                       <Textarea
                         id="message"
                         name="message"

@@ -47,10 +47,10 @@ const Offres = () => {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#001964] text-center mb-12">Choisissez l'offre la plus adaptée à votre déménagement</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {values.map((value, index) => (
-              <Card key={index}>
+              <Card key={index} className="hover:scale-105 transition-transform duration-300 shadow-lg">
                 <CardContent className="p-6">
                   <h3 className="text-2xl font-bold text-[#001964] mb-3">{value.title}</h3>
-                  <p className="text-xl text-muted-foreground">{value.description}</p>
+                  <p className="text-lg text-muted-foreground">{value.description}</p>
                 </CardContent>
               </Card>
             ))}

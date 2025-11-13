@@ -51,7 +51,7 @@ const APropos = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div>
             <h2 className="text-3xl font-bold text-[#001964] mb-6">Notre Histoire</h2>
-            <div className="space-y-4 text-muted-foreground">
+            <div className="space-y-4 text-muted-foreground text-lg">
               <p>
                 CDLM est née d'un constat simple : les frais d'expédition internationale sont souvent
                 prohibitifs et les moyens de paiement inadaptés au marché camerounais.
@@ -69,7 +69,7 @@ const APropos = () => {
           </div>
           <div>
             <h2 className="text-3xl font-bold text-[#001964] mb-6">Notre Mission</h2>
-            <div className="space-y-4 text-muted-foreground">
+            <div className="space-y-4 text-muted-foreground text-lg">
               <p>
                 Rendre accessible à tous les Camerounais la richesse du commerce international,
                 sans les contraintes habituelles de distance et de paiement.
@@ -107,10 +107,10 @@ const APropos = () => {
           <h2 className="text-3xl font-bold text-[#001964] text-center mb-12">Nos Valeurs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {values.map((value, index) => (
-              <Card key={index}>
+              <Card key={index} className="hover:scale-105 transition-transform duration-300 shadow-lg">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold text-[#001964] mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground">{value.description}</p>
+                  <p className="text-muted-foreground text-lg">{value.description}</p>
                 </CardContent>
               </Card>
             ))}
