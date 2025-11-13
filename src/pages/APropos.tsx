@@ -1,14 +1,7 @@
 
 import { Card, CardContent } from '@/components/ui/card';
-import { Users, Target, Award, Globe } from 'lucide-react';
 
 const APropos = () => {
-  const stats = [
-    { icon: <Users className="h-8 w-8 text-[#25423d]" />, value: "500+", label: "Clients satisfaits" },
-    { icon: <Globe className="h-8 w-8 text-[#2980b9]" />, value: "50+", label: "Pays couverts" },
-    { icon: <Target className="h-8 w-8 text-[#e67e22]" />, value: "2000+", label: "Colis livrés" },
-    { icon: <Award className="h-8 w-8 text-[#27ae60]" />, value: "99%", label: "Taux de satisfaction" }
-  ];
 
   const values = [
     {
@@ -87,23 +80,8 @@ const APropos = () => {
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
-          {stats.map((stat, index) => (
-            <Card key={index} className="text-center">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4 mx-auto">
-                  {stat.icon}
-                </div>
-                <div className="text-3xl font-bold text-foreground mb-2">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
         {/* Values */}
-        <div className="mb-16">
+        <div className="mb-20 max-w-4xl flex flex-col justify-self-center">
           <h2 className="text-3xl font-bold text-[#001964] text-center mb-12">Nos Valeurs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {values.map((value, index) => (
@@ -118,7 +96,7 @@ const APropos = () => {
         </div>
 
         {/* Team Section */}
-        <div className="bg-gradient-to-r from-[#25423d]/5 to-[#25423d]/10 rounded-lg p-8 text-center">
+        <div className="bg-gradient-to-r from-[#25423d]/10 to-[#25423d]/5 rounded-lg p-8 text-center mb-16">
           <h2 className="text-3xl font-bold text-[#001964] mb-4">
             Une équipe dédiée à votre service
           </h2>
