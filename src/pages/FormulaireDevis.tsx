@@ -211,7 +211,7 @@ const FormulaireDevis = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-xl lg:text-2xl text-[#001964]">Demande de devis</CardTitle>
-            <CardDescription className="text-sm lg:text-base">
+            <CardDescription className="text-lg italic">
               Remplissez le formulaire ci-dessous et nous vous recontacterons rapidement.
             </CardDescription>
           </CardHeader>
@@ -219,7 +219,7 @@ const FormulaireDevis = () => {
             <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm lg:text-base font-bold">Nom complet</Label>
+                  <Label htmlFor="name" className="text-lg font-bold">Nom complet</Label>
                   <Input
                     id="name"
                     name="name"
@@ -233,7 +233,7 @@ const FormulaireDevis = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm lg:text-base font-bold">Email</Label>
+                  <Label htmlFor="email" className="text-lg font-bold">Email</Label>
                   <Input
                     id="email"
                     name="email"
@@ -249,8 +249,8 @@ const FormulaireDevis = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="entreprise" className="text-sm lg:text-base font-bold">Entreprise </Label>
-                  <span className="text-sm italic text-[#636e72]">(* Si vous nous contactez pour le compte d'une entreprise)</span>
+                  <Label htmlFor="entreprise" className="text-lg font-bold">Entreprise </Label>
+                  <span className="italic text-[#636e72]">(* Si vous nous contactez pour le compte d'une entreprise)</span>
                   <Input
                     id="entreprise"
                     name="entreprise"
@@ -262,7 +262,7 @@ const FormulaireDevis = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="telephone" className="text-sm lg:text-base font-bold">Téléphone</Label>
+                  <Label htmlFor="telephone" className="text-lg font-bold">Téléphone</Label>
                   <Input
                     id="telephone"
                     name="telephone"
@@ -277,7 +277,7 @@ const FormulaireDevis = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="service" className="text-sm lg:text-base font-bold">Service souhaité</Label>
+                  <Label htmlFor="service" className="text-lg font-bold">Service souhaité</Label>
                   <Select onValueChange={handleSelectChange} value={devisData.service}>
                     <SelectTrigger className="text-sm lg:text-base">
                       <SelectValue placeholder="Sélectionnez un service" />
@@ -290,7 +290,7 @@ const FormulaireDevis = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="date" className="text-sm lg:text-base font-bold">Date souhaitée</Label>
+                  <Label htmlFor="date" className="text-lg font-bold">Date souhaitée</Label>
                   <div className="w-full flex justify-center">
                     <Input
                       id="date"
@@ -306,7 +306,7 @@ const FormulaireDevis = () => {
 
               <div className="">
                 {devisData.service !== "" && (
-                  <Label htmlFor="departure" className="text-sm lg:text-base font-bold">Informations au départ </Label>
+                  <Label htmlFor="departure" className="text-lg font-bold">Informations au départ </Label>
                 )}
                 <div className="px-4 py-2">
 
@@ -314,19 +314,19 @@ const FormulaireDevis = () => {
                   {devisData.service === "Demenagement" && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                       <div className="mb-2">
-                        <Label htmlFor="surface" className="text-sm">Surface</Label>
+                        <Label htmlFor="surface" className="text-lg">Surface</Label>
                         <Input
                           id="surface"
                           name="surface"
                           type="text"
                           value={departData.surface}
                           onChange={handleDepartInputChange}
-                          placeholder="80 m2"
+                          placeholder="en m2"
                           className="text-sm lg:text-base"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="floor" className="text-sm">N° d'étage</Label>
+                        <Label htmlFor="floor" className="text-lg">N° d'étage</Label>
                         <Input
                           id="floor"
                           name="floor"
@@ -339,14 +339,14 @@ const FormulaireDevis = () => {
                       </div>
 
                       <div className="mb-2">
-                        <Label htmlFor="rooms" className="text-sm">Nombre de pièces</Label>
+                        <Label htmlFor="rooms" className="text-lg">Nombre de pièces</Label>
                         <Input
                           id="rooms"
                           name="rooms"
                           type="text"
                           value={departData.rooms}
                           onChange={handleDepartInputChange}
-                          placeholder="4"
+                          placeholder="1"
                           className="text-sm lg:text-base"
                         />
                       </div>
@@ -354,9 +354,9 @@ const FormulaireDevis = () => {
                       {departData.floor && departData.floor !== "0" && (
                         <>
                           <div>
-                            <Label htmlFor="elevator" className="text-sm">Ascenceur</Label>
+                            <Label htmlFor="elevator" className="text-lg">Ascenceur</Label>
                             <div className="h-[40px] flex items-center justify-around">
-                              <div className="space-x-2">
+                              <div className="space-x-2 flex items-center h-[20px]">
                                 <Checkbox
                                   id="elevator"
                                   checked={departData.elevator}
@@ -374,9 +374,9 @@ const FormulaireDevis = () => {
                                 />
                                 <label
                                   htmlFor="elevator"
-                                  className="text-sm text-gray-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                  className="text-lg text-gray-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 >
-                                  Oui
+                                  Cochez si oui !
                                 </label>
                               </div>
 
@@ -404,7 +404,7 @@ const FormulaireDevis = () => {
                           </div>
 
                           <div>
-                            <Label htmlFor="departStairsSize" className="text-sm">Escalier</Label>
+                            <Label htmlFor="departStairsSize" className="text-lg">Escalier</Label>
                             <Select onValueChange={handleSelectDepartStairsChange} value={departData.stairsSize}>
                               <SelectTrigger className="text-sm lg:text-base">
                                 <SelectValue placeholder="Taille de l'escalier" />
@@ -421,7 +421,7 @@ const FormulaireDevis = () => {
 
                       <div>
 
-                        <Label htmlFor="address" className="text-sm">Adresse</Label>
+                        <Label htmlFor="address" className="text-lg">Adresse</Label>
                         <InputAdress
                           id="address"
                           name="address"
@@ -440,19 +440,19 @@ const FormulaireDevis = () => {
                   {devisData.service === "transport" && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                       <div className="mb-2">
-                        <Label htmlFor="volume" className="text-sm">Volume</Label>
+                        <Label htmlFor="volume" className="text-lg">Volume</Label>
                         <Input
                           id="volume"
                           name="volume"
                           type="text"
                           value={departData.volume}
                           onChange={handleDepartInputChange}
-                          placeholder="20 m3"
+                          placeholder="en m3"
                           className="text-sm lg:text-base"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="address" className="text-sm">Adresse</Label>
+                        <Label htmlFor="address" className="text-lg">Adresse</Label>
                         <InputAdress
                           id="address"
                           name="address"
@@ -466,36 +466,19 @@ const FormulaireDevis = () => {
                     </div>
                   )}
 
-                  {/* Nettoyage et rénovation */}
-                  {/* {(devisData.service === "nettoyage" || devisData.service === "renovation") && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
-                      <div>
-                        <Label htmlFor="address" className="text-sm">Adresse</Label>
-                        <Input
-                          id="address"
-                          name="address"
-                          type="text"
-                          value={departData.address}
-                          onChange={handleDepartInputChange}
-                          placeholder="123 Rue de Départ 75010 Paris"
-                          className="text-sm lg:text-base"
-                        />
-                      </div>
-                    </div>
-                  )} */}
                 </div>
               </div>
 
               {(devisData.service === "Demenagement" || devisData.service === "transport") && (
                 <div className="">
-                  <Label htmlFor="departure" className="text-sm lg:text-base font-bold">Informations à l'arrivée </Label>
+                  <Label htmlFor="departure" className="text-lg font-bold">Informations à l'arrivée </Label>
                   <div className="px-4 py-2">
 
                     {/* Démémnagement */}
                     {devisData.service === "Demenagement" && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                         <div className="mb-2">
-                          <Label htmlFor="floor" className="text-sm">N° d'étage</Label>
+                          <Label htmlFor="floor" className="text-lg">N° d'étage</Label>
                           <Input
                             id="floor"
                             name="floor"
@@ -510,10 +493,10 @@ const FormulaireDevis = () => {
                         {arrivalData.floor && arrivalData.floor !== "0" && (
                           <>
                             <div>
-                              <Label htmlFor="elevator" className="text-sm">Ascenceur</Label>
+                              <Label htmlFor="elevator" className="text-lg">Ascenceur</Label>
 
                               <div className="h-[40px] flex items-center justify-around">
-                                <div className="space-x-2">
+                                <div className="space-x-2 flex h-[20px] items-center">
                                   <Checkbox
                                     id="elevator"
                                     checked={arrivalData.elevator}
@@ -531,9 +514,9 @@ const FormulaireDevis = () => {
                                   />
                                   <label
                                     htmlFor="elevator"
-                                    className="text-sm text-gray-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    className="text-lg text-gray-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                   >
-                                    Oui
+                                    Cochez si oui !
                                   </label>
                                 </div>
 
@@ -561,7 +544,7 @@ const FormulaireDevis = () => {
                             </div>
 
                             <div>
-                              <Label htmlFor="arrivalStairsSize" className="text-sm">Escalier</Label>
+                              <Label htmlFor="arrivalStairsSize" className="text-lg">Escalier</Label>
                               <Select onValueChange={handleSelectArrivalStairsChange} value={arrivalData.stairsSize}>
                                 <SelectTrigger className="text-sm lg:text-base">
                                   <SelectValue placeholder="Taille de l'escalier" />
@@ -577,7 +560,7 @@ const FormulaireDevis = () => {
                         )}
 
                         <div>
-                          <Label htmlFor="address" className="text-sm">Adresse</Label>
+                          <Label htmlFor="address" className="text-lg">Adresse</Label>
                           <InputAdress
                             id="address"
                             name="address"
@@ -595,7 +578,7 @@ const FormulaireDevis = () => {
                     {devisData.service === "transport" && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                         <div className="mb-2">
-                          <Label htmlFor="entreprise" className="text-sm lg:text-base font-bold">Entreprise </Label>
+                          <Label htmlFor="entreprise" className="text-lg">Entreprise </Label>
                           <Input
                             id="entreprise"
                             name="entreprise"
@@ -608,7 +591,7 @@ const FormulaireDevis = () => {
                         </div>
 
                         <div>
-                          <Label htmlFor="contactName" className="text-sm lg:text-base font-bold">Nom du contact</Label>
+                          <Label htmlFor="contactName" className="text-lg">Nom du contact</Label>
                           <Input
                             id="contactName"
                             name="contactName"
@@ -622,7 +605,7 @@ const FormulaireDevis = () => {
                         </div>
 
                         <div>
-                          <Label htmlFor="address" className="text-sm">Adresse</Label>
+                          <Label htmlFor="address" className="text-lg">Adresse</Label>
                           <InputAdress
                             id="address"
                             name="address"
@@ -635,7 +618,7 @@ const FormulaireDevis = () => {
                         </div>
 
                         <div>
-                          <Label htmlFor="arrivalDate" className="text-sm lg:text-base font-bold">Date d'arrivée souhaitée</Label>
+                          <Label htmlFor="arrivalDate" className="text-lg">Date d'arrivée souhaitée</Label>
                           <div className="w-full flex justify-center">
                             <Input
                               id="arrivalDate"
@@ -653,9 +636,9 @@ const FormulaireDevis = () => {
                   </div>
                 </div>
               )}
-              <Button type="submit" className="w-full bg-[#001964] hover:bg-[#001964]/90 text-sm lg:text-base" size="lg">
+              <Button type="submit" className="w-full bg-[#001964] hover:bg-[#001964]/90 text-lg" size="lg">
                 <Send className="mr-2 h-4 w-4" />
-                Envoyer le message
+                Envoyer la demande
               </Button>
             </form>
           </CardContent>

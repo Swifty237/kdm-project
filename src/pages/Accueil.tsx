@@ -267,8 +267,8 @@ const Accueil = () => {
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-[#001964] rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4">
                   <HandCoins className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
-                <h3 className="font-bold text-[#001964] mb-2 text-base lg:text-lg">Formule économique</h3>
-                <p className="text-gray-700 text-xs lg:text-sm text-justify">
+                <h3 className="font-bold text-[#001964] mb-2 text-xl">Formule économique</h3>
+                <p className="text-gray-700 text-lg text-justify">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque iure culpa adipisci velit vero, numquam tempora veniam debitis assumenda quo!
                 </p>
               </CardContent>
@@ -280,8 +280,8 @@ const Accueil = () => {
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-[#001964] rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4">
                   <Award className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
-                <h3 className="font-bold text-[#001964] mb-2 text-base lg:text-lg">Service de qualité</h3>
-                <p className="text-gray-700 text-xs lg:text-sm text-justify">
+                <h3 className="font-bold text-[#001964] mb-2 text-base text-xl">Service de qualité</h3>
+                <p className="text-gray-700 text-lg text-justify">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque iure culpa adipisci velit vero, numquam tempora veniam debitis assumenda quo!
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
@@ -294,8 +294,8 @@ const Accueil = () => {
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-[#001964] rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4">
                   <Handshake className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
-                <h3 className="font-bold text-[#001964] mb-2 text-base lg:text-lg">Equipe courtoise & proféssionnelle</h3>
-                <p className="text-gray-700 text-xs lg:text-sm text-justify">
+                <h3 className="font-bold text-[#001964] mb-2 text-xl">Equipe courtoise & proféssionnelle</h3>
+                <p className="text-gray-700 text-lg text-justify">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque iure culpa adipisci velit vero.
                 </p>
               </CardContent>

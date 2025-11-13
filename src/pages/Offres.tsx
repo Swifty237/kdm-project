@@ -35,7 +35,7 @@ const Offres = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#001964] my-4">
-              Service de déménagement
+              Déménagement
             </h1>
           </div>
         </div>
