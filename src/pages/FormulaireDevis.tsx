@@ -208,7 +208,7 @@ const FormulaireDevis = () => {
   return (
     <div className="max-w-6xl mx-auto">
       <section className="py-8 lg:py-16 px-4 sm:px-8 lg:px-16 mt-8">
-        <Card>
+        <Card className="shadow-lg">
           <CardHeader>
             <CardTitle className="text-xl lg:text-2xl text-[#001964]">Demande de devis</CardTitle>
             <CardDescription className="text-lg italic">
