@@ -1,17 +1,21 @@
+import { useEffect, useState } from "react";
+import Navigation from "./Navigation";
+import Footer from "./Footer";
 
-import { ReactNode } from 'react';
-import Navigation from './Navigation';
-import Footer from './Footer';
+const Layout = ({ children }) => {
+  const [navHeight, setNavHeight] = useState(0);
 
-interface LayoutProps {
-  children: ReactNode;
-}
+  useEffect(() => {
+    const nav = document.getElementById("main-nav");
+    if (nav) {
+      setNavHeight(nav.offsetHeight);
+    }
+  }, []);
 
-const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      <main className="flex-1">
+      <main className="" style={{ paddingTop: navHeight }}>
         {children}
       </main>
       <Footer />

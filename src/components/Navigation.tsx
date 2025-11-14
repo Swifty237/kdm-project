@@ -1,13 +1,15 @@
 
 import { Link, useLocation } from 'react-router-dom';
 // import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, Phone, X } from 'lucide-react';
 import { HashLink } from "react-router-hash-link";
 
 const Navigation = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hasShadow, setHasShadow] = useState(false);
+
 
   const navItems = [
     { label: 'Accueil', path: '/' },
@@ -15,6 +17,9 @@ const Navigation = () => {
     { label: 'A propos', path: '/a-propos' },
     // { label: 'Contact', path: '/#contact' }
   ];
+
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const handleAnchorClick = (path: string) => {
     if (path.startsWith('#')) {
@@ -26,12 +31,45 @@ const Navigation = () => {
     setIsMenuOpen(false);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > lastScrollY && currentScroll > 80) {
+        // Scroll vers le bas -> cacher
+        setIsVisible(false);
+      } else {
+        // Scroll vers le haut -> montrer
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScroll);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    const handleShadow = () => {
+      setHasShadow(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleShadow);
+    return () => window.removeEventListener("scroll", handleShadow);
+  }, []);
+
   return (
-    <nav className="bg-background sticky top-0 z-50 backdrop-blur-sm bg-background/95 h-[12em] pt-10">
+    <nav id="main-nav" className={`
+        sticky top-0 z-50 backdrop-blur-sm transition-transform duration-300
+        ${isVisible ? "translate-y-0" : "-translate-y-full"}
+        ${hasShadow ? "shadow-md" : ""}
+      `}>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between lg:h-16">
+        <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center h-16">
+          <Link to="/">
             <img
               src="/img/Logo.png"
               alt="KDM Logo"
@@ -40,7 +78,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden lg:flex space-x-6">
             {navItems.map((item) => (
               item.path.startsWith('#') ? (
                 <button
@@ -67,7 +105,7 @@ const Navigation = () => {
 
           {/* Right side - Secondary links and CTA (Desktop) */}
           <div className="hidden lg:flex items-center space-x-6">
-            <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-lg text-muted">
+            <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-xl text-muted">
               Demander un devis
             </Link>
             <HashLink to="/#contact" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full p-4 flex items-center justify-center"
@@ -79,7 +117,7 @@ const Navigation = () => {
 
         {/* Mobile CTA and Menu button */}
         <div className="flex items-center w-full justify-between mt-12 lg:hidden">
-          <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-3 sm:px-4 text-xs sm:text-sm text-muted">
+          <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-xl text-muted mb-4">
             Devis
           </Link>
           <button
@@ -92,7 +130,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-sm">
+          <div className="lg:hidden border-t border-border backdrop-blur-sm">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item) => (
                 item.path.startsWith('#') ? (

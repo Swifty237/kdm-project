@@ -166,7 +166,7 @@ const Accueil = () => {
     <div className="flex flex-col items-center justify-center">
       {/* Hero Section */}
 
-      <section className="relative w-full h-[80vh] overflow-hidden py-16 sm:py-20 lg:py-32 px-4 sm:px-8 lg:px-32">
+      <section className="relative py-16 sm:py-20 lg:py-32 px-4 sm:px-8 lg:px-32">
 
         {/* 🔹 Arrière-plan avec effet de fondu */}
         {images.map((img, index) => (
