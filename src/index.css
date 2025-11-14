@@ -172,3 +172,18 @@
   background-position: center;
   height: 80vh;
 }
+
+/* Augmente la taille des suggestions Google Places */
+.pac-container {
+  font-size: 16px !important;
+}
+
+.pac-item {
+  font-size: 16px !important;
+  padding: 8px 12px !important;
+}
+
+.pac-item-query {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
