@@ -9,7 +9,8 @@ const Navigation = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasShadow, setHasShadow] = useState(false);
-
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const navItems = [
     { label: 'Accueil', path: '/' },
@@ -17,9 +18,6 @@ const Navigation = () => {
     { label: 'A propos', path: '/a-propos' },
     // { label: 'Contact', path: '/#contact' }
   ];
-
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   const handleAnchorClick = (path: string) => {
     if (path.startsWith('#')) {
