@@ -1,9 +1,10 @@
 
 import { Link, useLocation } from 'react-router-dom';
 // import { Button } from '@/components/ui/button';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu, Phone, X } from 'lucide-react';
 import { HashLink } from "react-router-hash-link";
+
 
 const Navigation = () => {
   const location = useLocation();
@@ -11,6 +12,9 @@ const Navigation = () => {
   const [hasShadow, setHasShadow] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  const navRef = useRef<HTMLDivElement | null>(null);
+
 
   const navItems = [
     { label: 'Accueil', path: '/' },
@@ -57,8 +61,23 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleShadow);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setIsVisible(false);     // 🔥 cacher la navigation
+        setIsMenuOpen(false);    // 🔥 fermer le menu mobile si ouvert
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+
   return (
-    <nav id="main-nav" className={`
+    <nav ref={navRef}
+      id="main-nav"
+      className={`
         sticky top-0 z-50 backdrop-blur-sm transition-transform duration-300
         ${isVisible ? "translate-y-0" : "-translate-y-full"}
         ${hasShadow ? "shadow-md" : ""}
