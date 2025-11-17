@@ -2,11 +2,84 @@
 // import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 // import { Button } from '@/components/ui/button';
 // import { Link } from 'react-router-dom';
-import { Check, Minus, Info } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Minus } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent } from '@/components/ui/card';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 const Offres = () => {
+  const [activeColumn, setActiveColumn] = useState(0);
+
+  const offers = ["Économique", "Standard", "Premium", "Premium +"];
+
+  const tableData = [
+    {
+      label: "Chargement - Transport - Livraison",
+      values: [true, true, true, true]
+    },
+    {
+      label: "Protection du mobilier sous couvertures",
+      values: [true, true, true, true]
+    },
+    {
+      label: "Protection de la literie sous housses",
+      values: [true, true, true, true]
+    },
+    {
+      label: "Protection de la HI-FI et de l'électronique",
+      values: [true, true, true, true]
+    },
+    {
+      label: "Emballage des vêtements sur cintres en penderies",
+      values: [true, true, true, true]
+    },
+    {
+      label: "Emballage et protection des objets fragiles",
+      values: [false, true, true, true]
+    },
+    {
+      label: "Emballage et protection de la vaisselle fragile",
+      values: [false, true, true, true]
+    },
+    {
+      label: "Démontage et remontage du mobilier non fixé au mur",
+      values: [false, false, true, true]
+    },
+    {
+      label: "Décrochage mural (hors électricité et vissé)",
+      values: [false, false, true, true]
+    },
+    {
+      label: "Emballage des objets non fragiles",
+      values: [false, false, true, true]
+    },
+    {
+      label: "Emballage des vêtements non sur cintres",
+      values: [false, false, true, true]
+    },
+    {
+      label: "Frais de stationnement",
+      values: [false, false, false, true]
+    },
+    {
+      label: "Ménage du lieu de départ après le déménagement",
+      values: [false, false, false, true]
+    },
+    {
+      label: "Déballage et rangement de l'ensemble des objets, du mobilier et des vêtements selon vos instructions",
+      values: [false, false, false, true]
+    },
+    {
+      label: "Enlèvement des encombrants à jeter en déchetterie",
+      values: [false, false, false, true]
+    },
+    {
+      label: "Ménage du lieu de destination après l'emménagement",
+      values: [false, false, false, true]
+    }
+  ];
+
 
   const values = [
     {
@@ -67,326 +140,100 @@ const Offres = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-[#001964] mb-8 lg:mb-16 text-center">
             Comparez nos offres
           </h2>
-          <Table>
+
+          {/* VERSION DESKTOP (affichée à partir de md) */}
+          <Table className="hidden md:table">
             <TableHeader>
               <TableRow className="border-b-2">
-                <TableHead className="text-left font-medium py-4 px-6 w-1/2 text-lg">Détails des offres</TableHead>
-                <TableHead className="text-center font-medium py-4 px-4 bg-[#4e776f]/10">
-                  <div className="text-[#273c75] font-semibold text-lg">Economique</div>
-                </TableHead>
-                <TableHead className="text-center font-medium py-4 px-4 bg-[#25423d]/10">
-                  <div className="text-[#001964] font-semibold text-lg">Standard</div>
-                </TableHead>
-                <TableHead className="text-center font-medium py-4 px-4 bg-[#2980b9]/10">
-                  <div className="text-[#2980b9] font-semibold text-lg">Premium</div>
+                <TableHead className="text-left font-medium py-4 px-6 w-1/2 text-lg">
+                  Détails des offres
                 </TableHead>
 
-                <TableHead className="text-center font-medium py-4 px-4 bg-[#2980b9]/10">
-                  <div className="text-[#2980b9] font-semibold text-lg">Premium +</div>
-                </TableHead>
+                {offers.map((offerName, idx) => (
+                  <TableHead
+                    key={idx}
+                    className="text-center font-medium py-4 px-4 bg-blue-50"
+                  >
+                    <div className="text-[#001964] font-semibold text-lg">
+                      {offerName}
+                    </div>
+                  </TableHead>
+                ))}
               </TableRow>
             </TableHeader>
+
             <TableBody>
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 text-lg">
-                  Chargement - Transport - Livraison
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
+              {tableData.map((row, rowIndex) => (
+                <TableRow key={rowIndex} className="hover:bg-gray-50">
 
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
+                  {/* Colonne 1 : Label */}
+                  <TableCell className="font-medium py-4 px-6 text-lg flex items-center gap-2">
+                    {row.label}
+                    {/* {row.info && (
+                      <Info className="h-5 w-5 text-gray-400" />
+                    )} */}
+                  </TableCell>
 
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 flex items-center gap-2 text-lg">
-                  Protection du mobilier sous couvertures
-                  <Info className="h-5 w-5 text-gray-400" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
+                  {/* Colonnes dynamiques */}
+                  {row.values.map((value, colIndex) => (
+                    <TableCell key={colIndex} className="text-center py-4 px-4">
+                      {value ? (
+                        <Check className="h-5 w-5 text-green-600 mx-auto" />
+                      ) : (
+                        <Minus className="h-5 w-5 text-gray-400 mx-auto" />
+                      )}
+                    </TableCell>
+                  ))}
 
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 text-lg">
-                  Protection de la literie sous housses
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 flex items-center gap-2 text-lg">
-                  Protection de la HI-FI et de l'électronique
-                  <Info className="h-5 w-5 text-gray-400" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 text-lg">
-                  Emballage des vêtements sur cintres en penderies
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 text-lg">
-                  Emballage et protection des objets fragiles
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 flex items-center gap-2 text-lg">
-                  Emballage et protection de la vaisselle fragile
-                  <Info className="h-5 w-5 text-gray-400" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 text-lg">
-                  Démontage et remontage du mobilier non fixé au mur
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 flex items-center gap-2 text-lg">
-                  Décrochage mural (hors électricité et vissé)
-                  <Info className="h-5 w-5 text-gray-400" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 flex items-center gap-2 text-lg">
-                  Emballage des objets non fragiles
-                  <Info className="h-5 w-5 text-gray-400" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 flex items-center gap-2 text-lg">
-                  Emballage des vêtements non sur cintres
-                  <Info className="h-5 w-5 text-gray-400" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 text-lg">
-                  Frais de stationnement
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 flex items-center gap-2 text-lg">
-                  Ménage du lieu de départ après le déménagement
-                  <Info className="h-5 w-5 text-gray-400" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 text-lg">
-                  Déballage et rangement de l'ensemble des objets, du mobilier et des vêtements selon vos instructions
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 text-lg">
-                  Enlèvement des encombrants à jeter en déchetterie
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="hover:bg-gray-50">
-                <TableCell className="font-medium py-4 px-6 flex items-center gap-2 text-lg">
-                  Ménage du lieu de destination après l'emménagement
-                  <Info className="h-5 w-5 text-gray-400" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Minus className="h-5 w-5 text-gray-400 mx-auto" />
-                </TableCell>
-                <TableCell className="text-center py-4 px-4">
-                  <Check className="h-5 w-5 text-green-600 mx-auto" />
-                </TableCell>
-              </TableRow>
-
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
+
+          <div className="md:hidden">
+            <div className="flex items-center justify-center gap-4 mt-4 md:hidden">
+              <Button
+                className="py-2 px-3 border rounded-full bg-[#bdc3c7] hover:bg-[#001964]"
+                onClick={() => setActiveColumn(prev => Math.max(0, prev - 1))}
+              >
+                <ChevronLeft />
+              </Button>
+
+              <span className="font-semibold">
+                {offers[activeColumn]}
+              </span>
+
+              <Button
+                className="py-2 px-3 border rounded-full bg-[#bdc3c7] hover:bg-[#001964]"
+                onClick={() => setActiveColumn(prev => Math.min(offers.length - 1, prev + 1))}
+              >
+                <ChevronRight />
+              </Button>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Détails</TableHead>
+                  <TableHead className="text-center">{offers[activeColumn]}</TableHead>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {tableData.map((row, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{row.label}</TableCell>
+
+                    <TableCell className="text-center">
+                      {row.values[activeColumn]
+                        ? <Check className="text-green-600 mx-auto" />
+                        : <Minus className="text-gray-400 mx-auto" />}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
         </div>
       </section>
 
