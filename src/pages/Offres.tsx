@@ -145,20 +145,22 @@ const Offres = () => {
           <Table className="hidden md:table">
             <TableHeader>
               <TableRow className="border-b-2">
-                <TableHead className="text-left font-medium py-4 px-6 w-1/2 text-lg flex items-center ">
-                  Détails des offres
-                  <div className="relative group">
-                    <Info className="h-5 w-5 text-gray-400 ms-2" />
-                    <span
-                      className=" absolute z-[54] right-1/7 -translate-x-1/2 -bottom-4
+                <TableHead className="text-left font-medium py-4 px-6 w-1/2 text-lg ">
+                  <div className="flex items-center">
+                    <span>Détails des offres</span>
+                    <div className="relative group">
+                      <Info className="h-5 w-5 text-gray-400 ms-2" />
+                      <span
+                        className=" absolute z-[555] left-[50px] -translate-x-1/2 -bottom-8
                                           whitespace-nowrap
-                                          bg-black text-white text-xs px-2 py-1 rounded
+                                          bg-black text-white text-sm px-2 py-1 rounded
                                           opacity-0 group-hover:opacity-100
                                           transition-opacity duration-200
                                         "
-                    >
-                      La prestation Premium + peut être réalisée sur 2 jours si nécessaire.
-                    </span>
+                      >
+                        La prestation Premium + peut être réalisée sur 2 jours si nécessaire.
+                      </span>
+                    </div>
                   </div>
                 </TableHead>
 
@@ -223,7 +225,24 @@ const Offres = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Détails</TableHead>
+                  <TableHead>
+                    <div className="flex items-center">
+                      <span>Détails</span>
+                      <div className="relative group">
+                        <Info className="h-5 w-5 text-gray-400 ms-2" />
+                        <span
+                          className=" absolute z-[555] left-[150px] -translate-x-1/2 -bottom-8
+                                          whitespace-nowrap
+                                          bg-black text-white text-sm px-2 py-1 rounded
+                                          opacity-0 group-hover:opacity-100
+                                          transition-opacity duration-200
+                                        "
+                        >
+                          La prestation Premium + peut être réalisée sur 2 jours si nécessaire.
+                        </span>
+                      </div>
+                    </div>
+                  </TableHead>
                   <TableHead className="text-center">{offers[activeColumn]}</TableHead>
                 </TableRow>
               </TableHeader>
