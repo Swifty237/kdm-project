@@ -60,11 +60,11 @@ const APropos = () => {
         </div>
 
         {/* Values */}
-        <div className="mb-20 max-w-4xl flex flex-col justify-self-center">
-          <h2 className="text-3xl font-bold text-[#001964] text-center mb-12">Nos Valeurs</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="mt-20 max-w-4xl flex flex-col justify-self-center">
+          <h2 className="text-3xl font-bold text-[#001964] text-center my-12">Nos Valeurs</h2>
+          <div>
             {values.map((value, index) => (
-              <Card key={index} className="hover:scale-105 transition-transform duration-300 shadow-lg">
+              <Card key={index} className="hover:scale-105 transition-transform duration-300 shadow-lg my-2">
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold text-[#001964] mb-3">{value.title}</h3>
                   <p className="text-muted-foreground text-lg">{value.description}</p>

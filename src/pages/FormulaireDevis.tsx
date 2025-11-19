@@ -10,8 +10,9 @@ import { Button } from '@/components/ui/button';
 import { Send } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import InputAdress from '@/components/InputAdress';
+import { Textarea } from '@/components/ui/textarea';
 
 const FormulaireDevis = () => {
   const { toast } = useToast();
@@ -39,6 +40,7 @@ const FormulaireDevis = () => {
     stairsSize: "",
     address: initialDevisData.arrival || "",
     contactName: "",
+    telContact: "",
     entreprise: "",
     date: initialDevisData.date || "",
   });
@@ -49,10 +51,14 @@ const FormulaireDevis = () => {
     entreprise: "",
     telephone: "",
     service: "Demenagement",
+    offer: "",
+    billingAddress: "",
+    devisNumber: "",
     departure: departData,
     arrival: arrivalData,
     date: initialDevisData.date || "",
-    archived: false
+    archived: false,
+    message: ""
   });
 
   // Synchronise les sous-objets départ/arrivée avec devisData
@@ -102,6 +108,14 @@ const FormulaireDevis = () => {
       service: value
     }));
   };
+
+  const handleSelectOfferChange = (value: string) => {
+    setDevisData(prev => ({
+      ...prev,
+      offer: value
+    }));
+  };
+
 
 
   const handleSelectDepartStairsChange = (value: string) => {
@@ -164,6 +178,7 @@ const FormulaireDevis = () => {
           stairsSize: '',
           address: '',
           contactName: '',
+          telContact: '',
           entreprise: '',
           date: ''
         })
@@ -174,6 +189,9 @@ const FormulaireDevis = () => {
           entreprise: '',
           telephone: '',
           service: '',
+          offer: '',
+          billingAddress: '',
+          devisNumber: '',
           departure: {
             surface: '',
             volume: '',
@@ -191,11 +209,13 @@ const FormulaireDevis = () => {
             stairsSize: '',
             address: '',
             contactName: '',
+            telContact: '',
             entreprise: '',
             date: ''
           },
           date: '',
-          archived: false
+          archived: false,
+          message: ''
         });
       } else {
         alert("Erreur : " + result.error);
@@ -265,13 +285,13 @@ const FormulaireDevis = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="address" className="text-lg">Adresse de facturation</Label>
+                  <Label htmlFor="billingAddress" className="text-lg font-bold">Adresse de facturation</Label>
                   <InputAdress
-                    id="address"
-                    name="address"
+                    id="billingAddress"
+                    name="billingAddress"
                     required
-                    value={departData.address}
-                    onChange={(val) => setDepartData({ ...departData, address: val })}
+                    value={devisData.billingAddress}
+                    onChange={(val) => setDevisData({ ...devisData, billingAddress: val })}
                     placeholder="Adresse de facturation"
                     className="text-sm lg:text-base"
                   />
@@ -289,9 +309,7 @@ const FormulaireDevis = () => {
                     className="text-sm lg:text-base"
                   />
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="service" className="text-lg font-bold">Service souhaité</Label>
                   <Select onValueChange={handleSelectChange} value={devisData.service}>
@@ -304,7 +322,9 @@ const FormulaireDevis = () => {
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="date" className="text-lg font-bold">Date souhaitée</Label>
                   <div className="w-full flex justify-center">
@@ -318,6 +338,27 @@ const FormulaireDevis = () => {
                     />
                   </div>
                 </div>
+
+                {devisData.service === "Demenagement" && (
+                  <div className="space-y-2">
+                    <Label htmlFor="service" className="text-lg font-bold">Formule souhaitée</Label>
+                    <Select onValueChange={handleSelectOfferChange} value={devisData.offer}>
+                      <SelectTrigger className="text-sm lg:text-base">
+                        <SelectValue placeholder="Sélectionnez une offre de service" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="economique">Économique</SelectItem>
+                        <SelectItem value="standard">Standard</SelectItem>
+                        <SelectItem value="premium">Premium</SelectItem>
+                        <SelectItem value="premium+">Premium +</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Link className="italic text-[blue] underline" to="/offres" target="_blank" rel="noopener noreferrer">
+                      Cliquez ici pour plus de détails sur nos offres !
+                    </Link>
+                  </div>
+                )}
+
               </div>
 
               <div className="">
@@ -620,6 +661,19 @@ const FormulaireDevis = () => {
                           />
                         </div>
 
+                        <div className="space-y-2">
+                          <Label htmlFor="telContact" className="text-lg">Téléphone du contact</Label>
+                          <Input
+                            id="telContact"
+                            name="telContact"
+                            type="tel"
+                            value={arrivalData.telContact}
+                            onChange={handleInputChange}
+                            placeholder="+33 1 23 45 67 89"
+                            className="text-sm lg:text-base"
+                          />
+                        </div>
+
                         <div>
                           <Label htmlFor="address" className="text-lg">Adresse</Label>
                           <InputAdress
@@ -652,6 +706,22 @@ const FormulaireDevis = () => {
                   </div>
                 </div>
               )}
+
+              <div className="grid grid-col-1">
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="text-lg font-bold">Précision(s) ou information(s) complémentaire(s)</Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    required
+                    value={devisData.message}
+                    onChange={handleInputChange}
+                    placeholder="Mobilier très lourd (ex: Piano), accès difficiles, etc..."
+                    rows={5}
+                    className="text-sm lg:text-base"
+                  />
+                </div>
+              </div>
               <Button type="submit" className="w-full bg-[#001964] hover:bg-[#001964]/90 text-lg" size="lg">
                 <Send className="mr-2 h-4 w-4" />
                 Envoyer la demande

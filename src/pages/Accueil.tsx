@@ -121,20 +121,20 @@ const Accueil = () => {
     {
       icon: <Phone className="h-6 w-6 text-white" />,
       title: "Téléphone",
-      content: "+33 1 23 45 67 89",
+      content: "+33 7 60 03 49 29",
       description: "Lun-Ven : 9h-18h"
     },
     {
       icon: <Mail className="h-6 w-6 text-white" />,
       title: "Email",
-      content: "contact@cdlm.fr",
+      content: "kdmlogistique@gmail.com",
       description: "Réponse sous 24h"
     },
     {
       icon: <MapPin className="h-6 w-6 text-white" />,
       title: "Adresse",
-      content: "123 Rue de l'Exemple",
-      description: "75000 Paris, France"
+      content: "17 Rue du Champtier",
+      description: "92500 Rueil-Malmaison, France"
     },
     {
       icon: <Clock className="h-6 w-6 text-white" />,
@@ -166,7 +166,7 @@ const Accueil = () => {
     <div className="flex flex-col items-center justify-center">
       {/* Hero Section */}
 
-      <section className="relative py-16 sm:py-20 lg:py-32 px-4 sm:px-8 lg:px-32">
+      <section className="relative pb-16 sm:py-20 lg:py-32 px-4 sm:px-8 lg:px-32">
 
         {/* 🔹 Arrière-plan avec effet de fondu */}
         {images.map((img, index) => (
@@ -436,7 +436,7 @@ const Accueil = () => {
                     <div className="text-center">
                       <MapPin className="h-6 lg:h-8 w-6 lg:w-8 mx-auto mb-2 text-[#001964]" />
                       <p className="text-sm lg:text-base">Carte interactive</p>
-                      <p className="text-xs lg:text-sm">123 Rue de l'Exemple, 75000 Paris</p>
+                      <p className="text-xs lg:text-sm">17 Rue du Champtier, 92500 Rueil-Malmaison</p>
                     </div>
                   </div>
                 </CardContent>
