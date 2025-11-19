@@ -229,7 +229,7 @@ const FormulaireDevis = () => {
                     required
                     value={devisData.name}
                     onChange={handleInputChange}
-                    placeholder="Votre nom"
+                    placeholder="Votre nom et prénom"
                     className="text-sm lg:text-base"
                   />
                 </div>
@@ -263,6 +263,20 @@ const FormulaireDevis = () => {
                     className="text-sm lg:text-base"
                   />
                 </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="address" className="text-lg">Adresse de facturation</Label>
+                  <InputAdress
+                    id="address"
+                    name="address"
+                    required
+                    value={departData.address}
+                    onChange={(val) => setDepartData({ ...departData, address: val })}
+                    placeholder="Adresse de facturation"
+                    className="text-sm lg:text-base"
+                  />
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="telephone" className="text-lg font-bold">Téléphone</Label>
                   <Input

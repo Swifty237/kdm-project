@@ -5,27 +5,20 @@ const APropos = () => {
 
   const values = [
     {
-      title: "Transparence",
-      description: "Prix clairs, délais respectés, communication constante"
+      title: "Qualité",
+      description: "Une équipe professionnelle, courtoise et attentive à vos besoins."
     },
     {
-      title: "Fiabilité",
-      description: "Service sécurisé avec assurance incluse sur tous vos achats"
+      title: "Simplicité",
+      description: "Une communication claire, constante et fluide avec nos équipes."
     },
     {
-      title: "Proximité",
-      description: "Équipe locale qui comprend vos besoins spécifiques"
-    },
-    {
-      title: "Innovation",
-      description: "Solutions de paiement adaptées au marché camerounais"
+      title: "Sérénité",
+      description: "Un service fiable, structuré et rigoureux pour une exécution sans difficulté."
     }
   ];
 
-  const team = [
-    { pic: <img src="/img/user-placeholder.jpg" alt="User placeholder" /> },
-    { pic: <img src="/img/default-placeholder-woman.jpg" alt="Woman placeholder" /> },
-  ];
+
 
   return (
     <div className="py-16">
@@ -33,10 +26,10 @@ const APropos = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-[#001964] mb-6">
-            À Propos de KDM Logistique
+            À propos de KDM LOGISTIQUE
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Commandez Dans Le Monde - Votre partenaire de confiance pour tous vos achats internationaux
+            Votre partenaire de confiance pour le déménagement et le transport de marchandises.
           </p>
         </div>
 
@@ -46,17 +39,10 @@ const APropos = () => {
             <h2 className="text-3xl font-bold text-[#001964] mb-6">Notre Histoire</h2>
             <div className="space-y-4 text-muted-foreground text-lg">
               <p>
-                CDLM est née d'un constat simple : les frais d'expédition internationale sont souvent
-                prohibitifs et les moyens de paiement inadaptés au marché camerounais.
+                KDM LOGISTIQUE est née d’un constat simple : déménager est un processus fatigant, stressant et chronophage.
               </p>
               <p>
-                Fondée en 2020, notre entreprise s'est donnée pour mission de démocratiser l'accès
-                aux achats internationaux en proposant des solutions simples, économiques et sécurisées.
-              </p>
-              <p>
-                Aujourd'hui, nous sommes fiers d'avoir aidé des centaines de clients à réaliser
-                leurs achats dans le monde entier, avec des économies pouvant aller jusqu'à 50%
-                par rapport aux transporteurs traditionnels.
+                Fondée en 2025, notre entreprise s’est donnée pour mission de décharger nos clients de cette étape exigeante afin qu’ils puissent vivre un déménagement en toute sérénité
               </p>
             </div>
           </div>
@@ -64,17 +50,10 @@ const APropos = () => {
             <h2 className="text-3xl font-bold text-[#001964] mb-6">Notre Mission</h2>
             <div className="space-y-4 text-muted-foreground text-lg">
               <p>
-                Rendre accessible à tous les Camerounais la richesse du commerce international,
-                sans les contraintes habituelles de distance et de paiement.
+                Transformer votre déménagement en une expérience simple, fluide et sereine.
               </p>
               <p>
-                Nous nous engageons à fournir un service de qualité, transparent et économique,
-                en utilisant les technologies les plus récentes pour optimiser la logistique
-                et réduire les coûts.
-              </p>
-              <p>
-                Notre vision : être le leader de l'achat international au Cameroun, reconnu
-                pour son excellence opérationnelle et sa proximité client.
+                Nous nous engageons à être à l’écoute de vos besoins, à vous fournir un service de qualité et à être un partenaire fiable qui vous accompagne à chaque étape.
               </p>
             </div>
           </div>
@@ -95,34 +74,6 @@ const APropos = () => {
           </div>
         </div>
 
-        {/* Team Section */}
-        <div className="bg-gradient-to-r from-[#25423d]/10 to-[#25423d]/5 rounded-lg p-8 text-center mb-16">
-          <h2 className="text-3xl font-bold text-[#001964] mb-4">
-            Une équipe dédiée à votre service
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 my-8">
-            {team.map((teamMember, index) => (
-              <Card
-                key={index}
-                className={`text-center pt-7 ${index === 0 ? "md:col-start-2" : ""
-                  }`}
-              >
-                <CardContent className="">
-                  <div className="">
-                    {teamMember.pic}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Notre équipe multiculturelle combine expertise logistique internationale et
-            connaissance approfondie du marché camerounais pour vous offrir le meilleur service.
-          </p>
-        </div>
       </div>
     </div>
   );

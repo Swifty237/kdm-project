@@ -19,8 +19,7 @@ const Footer = () => {
               <span>Qualité - Simplicité - Sérénité</span>
             </Link>
             <p className="text-white/80 mb-4">
-              Votre partenaire de confiance pour tous vos besoins professionnels.
-              Nous offrons des solutions innovantes et personnalisées.
+              Votre partenaire de confiance pour le déménagement et le transport de marchandises.
             </p>
           </div>
 
@@ -91,7 +90,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-white/20 mt-8 pt-8 text-center">
           <p className="text-sm text-white/70">
-            © 2025 KDM logistique. Tous droits réservés.
+            © 2025 KDM LOGISTIQUE. Tous droits réservés.
           </p>
         </div>
       </div>

@@ -267,9 +267,12 @@ const Accueil = () => {
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-[#001964] rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4">
                   <HandCoins className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
-                <h3 className="font-bold text-[#001964] mb-2 text-xl">Formule économique</h3>
+                <h3 className="font-bold text-[#001964] mb-2 text-xl">Formule économique ou premium</h3>
+                <p className="text-gray-700 text-lg text-justify mb-4">
+                  Parmi nos 4 formules, vous trouverez la prestation adaptée à vos besoins et à votre budget.
+                </p>
                 <p className="text-gray-700 text-lg text-justify">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque iure culpa adipisci velit vero, numquam tempora veniam debitis assumenda quo!
+                  De l’essentiel au tout compris : à vous de choisir !
                 </p>
               </CardContent>
             </Card>
@@ -281,9 +284,11 @@ const Accueil = () => {
                   <Award className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
                 <h3 className="font-bold text-[#001964] mb-2 text-base text-xl">Service de qualité</h3>
+                <p className="text-gray-700 text-lg text-justify mb-4">
+                  Un service rigoureux, ponctuel et à votre écoute.
+                </p>
                 <p className="text-gray-700 text-lg text-justify">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque iure culpa adipisci velit vero, numquam tempora veniam debitis assumenda quo!
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  De la première prise de contact à la livraison finale, la qualité guide chacune de nos actions.
                 </p>
               </CardContent>
             </Card>
@@ -294,9 +299,12 @@ const Accueil = () => {
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-[#001964] rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4">
                   <Handshake className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
-                <h3 className="font-bold text-[#001964] mb-2 text-xl">Equipe courtoise & proféssionnelle</h3>
+                <h3 className="font-bold text-[#001964] mb-2 text-xl">Equipe courtoise & professionnelle</h3>
+                <p className="text-gray-700 text-lg text-justify mb-4">
+                  Professionnalisme, respect et bonne humeur à chaque étape de notre prestation.
+                </p>
                 <p className="text-gray-700 text-lg text-justify">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque iure culpa adipisci velit vero.
+                  Avec nous, déménager devient une expérience fluide et agréable.
                 </p>
               </CardContent>
             </Card>
@@ -314,7 +322,7 @@ const Accueil = () => {
               <div>
                 <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-3 lg:mb-4">Envoyez une demande de devis</h3>
                 <p className="text-muted-foreground mb-3 lg:mb-4 text-lg lg:text-xl">
-                  Vous choisissez vos produits sur n'importe quelle boutique en ligne et nous transmettez le lien sur WhatsApp pour obtenir un devis sécurisé
+                  Remplissez notre formulaire en ligne, consultez instantanément une estimation indicative et transmettez-nous votre demande de devis.
                 </p>
               </div>
 
@@ -322,15 +330,15 @@ const Accueil = () => {
               <div>
                 <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-3 lg:mb-4">Validez votre devis</h3>
                 <p className="text-muted-foreground mb-3 lg:mb-4 text-lg lg:text-xl">
-                  Confirmez votre commande en réglant le devis via Orange Money, Mobile Money, virement bancaire ou PayPal, puis indiquez l'adresse de livraison souhaitée
+                  Dès réception de votre demande, nous vous adressons un devis détaillé dans les plus brefs délais pour validation et réservation de votre date de déménagement.
                 </p>
               </div>
 
               {/* Step 3 */}
               <div>
-                <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-3 lg:mb-4">On s'occupe du reste</h3>
+                <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-3 lg:mb-4">Réservez votre sérénité</h3>
                 <p className="text-muted-foreground mb-3 lg:mb-4 text-lg lg:text-xl">
-                  Dès l'arrivée de votre commande, nous vous informons immédiatement afin que vous puissiez vous organiser pour la réception.
+                  Une fois votre réservation confirmée, fini le stress, nous nous occupons du reste.
                 </p>
 
                 <div className="flex items-center justify-around w-full">
@@ -357,7 +365,7 @@ const Accueil = () => {
                   alt=""
                 />
                 <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold text-[#001964] leading-tight mb-6 lg:mb-12">
-                  Commandez en ligne sur vos sites favoris et faites vous livrer directement à domicile
+                  Obtenez votre devis rapidement et réservez votre date de déménagement.
                 </h2>
               </div>
             </div>

@@ -2,7 +2,7 @@
 // import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 // import { Button } from '@/components/ui/button';
 // import { Link } from 'react-router-dom';
-import { Check, ChevronLeft, ChevronRight, Minus } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Info, Minus } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent } from '@/components/ui/card';
 import { useState } from 'react';
@@ -60,11 +60,11 @@ const Offres = () => {
     },
     {
       label: "Frais de stationnement",
-      values: [false, false, false, true]
+      values: [false, false, true, true]
     },
     {
       label: "Ménage du lieu de départ après le déménagement",
-      values: [false, false, false, true]
+      values: [false, false, true, true]
     },
     {
       label: "Déballage et rangement de l'ensemble des objets, du mobilier et des vêtements selon vos instructions",
@@ -84,19 +84,19 @@ const Offres = () => {
   const values = [
     {
       title: "Économique",
-      description: "Chaque commande fait l'objet d'une estimation. Un devis clair est établi et vous avez une idée précise du prix final. Pas de frais cachés, ni de surprise à la livraison."
+      description: "L’essentiel au meilleur prix : un déménagement malin sans dépasser votre budget. Nos déménageurs protègent votre gros mobilier et prennent en charge l’intégralité du transport."
     },
     {
       title: "Standard",
-      description: "Chaque commande fait l'objet d'une estimation. Un devis clair est établi et vous avez une idée précise du prix final. Pas de frais cachés, ni de surprise à la livraison."
+      description: "Un accompagnement équilibré : nous nous occupons de l’intégralité du transport ainsi que de la protection du gros mobilier et des objets fragiles, vous gérez le reste de l’emballage."
     },
     {
       title: "Premium",
-      description: "Chaque commande fait l'objet d'une estimation. Un devis clair est établi et vous avez une idée précise du prix final. Pas de frais cachés, ni de surprise à la livraison."
+      description: "Le confort sans compromis : nous prenons en charge l’ensemble du déménagement, de l’emballage au déchargement, et effectuons même le ménage du logement de départ pour un déménagement totalement serein."
     },
     {
       title: "Premium avec option emménagement",
-      description: "Chaque commande fait l'objet d'une estimation. Un devis clair est établi et vous avez une idée précise du prix final. Pas de frais cachés, ni de surprise à la livraison."
+      description: "Le service clé en main ultime : en plus d’un déménagement complet, nous installons vos meubles, remettons votre nouveau logement en ordre et réalisons le ménage du nouveau logement pour une installation sans le moindre effort."
     }
   ];
 
@@ -145,8 +145,21 @@ const Offres = () => {
           <Table className="hidden md:table">
             <TableHeader>
               <TableRow className="border-b-2">
-                <TableHead className="text-left font-medium py-4 px-6 w-1/2 text-lg">
+                <TableHead className="text-left font-medium py-4 px-6 w-1/2 text-lg flex items-center ">
                   Détails des offres
+                  <div className="relative group">
+                    <Info className="h-5 w-5 text-gray-400 ms-2" />
+                    <span
+                      className=" absolute z-[54] right-1/7 -translate-x-1/2 -bottom-4
+                                          whitespace-nowrap
+                                          bg-black text-white text-xs px-2 py-1 rounded
+                                          opacity-0 group-hover:opacity-100
+                                          transition-opacity duration-200
+                                        "
+                    >
+                      La prestation Premium + peut être réalisée sur 2 jours si nécessaire.
+                    </span>
+                  </div>
                 </TableHead>
 
                 {offers.map((offerName, idx) => (
@@ -169,9 +182,6 @@ const Offres = () => {
                   {/* Colonne 1 : Label */}
                   <TableCell className="font-medium py-4 px-6 text-lg flex items-center gap-2">
                     {row.label}
-                    {/* {row.info && (
-                      <Info className="h-5 w-5 text-gray-400" />
-                    )} */}
                   </TableCell>
 
                   {/* Colonnes dynamiques */}
@@ -257,20 +267,13 @@ const Offres = () => {
           </div>
           <div className="space-y-4 text-xl text-muted-foreground mt-8">
             <p>
-              CDLM est née d'un constat simple : les frais d'expédition internationale sont souvent
-              prohibitifs et les moyens de paiement inadaptés au marché camerounais. Fondée en 2020, notre entreprise s'est donnée pour mission de démocratiser l'accès
-              aux achats internationaux en proposant des solutions simples, économiques et sécurisées.
+              Nous proposons également un service de transport de marchandises, fiable, flexible et entièrement adapté à vos besoins logistiques.
             </p>
             <p>
-              Aujourd'hui, nous sommes fiers d'avoir aidé des centaines de clients à réaliser
-              leurs achats dans le monde entier, avec des économies pouvant aller jusqu'à 50%
-              par rapport aux transporteurs traditionnels. Fondée en 2020, notre entreprise s'est donnée pour mission de démocratiser l'accès
-              aux achats internationaux en proposant des solutions simples, économiques et sécurisées.
+              Que ce soit pour un colis volumineux, du matériel professionnel ou un chargement spécifique, nous assurons une prise en charge sécurisée et une livraison dans les meilleurs délais.
             </p>
             <p>
-              Aujourd'hui, nous sommes fiers d'avoir aidé des centaines de clients à réaliser
-              leurs achats dans le monde entier, avec des économies pouvant aller jusqu'à 50%
-              par rapport aux transporteurs traditionnels.
+              Utilisez le formulaire de contact ou celui de devis pour nous faire parvenir votre besoin et nous vous transmettrons une réponse dans les plus brefs délais.
             </p>
           </div>
         </div>
