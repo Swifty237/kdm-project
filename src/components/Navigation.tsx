@@ -64,8 +64,8 @@ const Navigation = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(event.target as Node)) {
-        setIsVisible(false);     // 🔥 cacher la navigation
-        setIsMenuOpen(false);    // 🔥 fermer le menu mobile si ouvert
+        setIsVisible(false);     // cacher la navigation
+        setIsMenuOpen(false);    // fermer le menu mobile si ouvert
       }
     };
 
@@ -75,7 +75,8 @@ const Navigation = () => {
 
 
   return (
-    <nav ref={navRef}
+    <nav
+      ref={navRef}
       id="main-nav"
       className={`
         sticky top-0 z-50 backdrop-blur-sm transition-transform duration-300
@@ -125,8 +126,7 @@ const Navigation = () => {
             <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-xl text-muted">
               Demander un devis
             </Link>
-            <HashLink to="/#contact" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full p-4 flex items-center justify-center"
-            >
+            <HashLink to="/#contact" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full p-4 flex items-center justify-center">
               <Phone className="h-6 w-6 text-white" />
             </HashLink>
           </div>

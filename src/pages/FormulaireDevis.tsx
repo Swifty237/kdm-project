@@ -52,6 +52,7 @@ const FormulaireDevis = () => {
     departure: departData,
     arrival: arrivalData,
     date: initialDevisData.date || "",
+    archived: false
   });
 
   // Synchronise les sous-objets départ/arrivée avec devisData
@@ -194,6 +195,7 @@ const FormulaireDevis = () => {
             date: ''
           },
           date: '',
+          archived: false
         });
       } else {
         alert("Erreur : " + result.error);
