@@ -7,16 +7,17 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 // import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Send } from 'lucide-react';
+import { Send, X } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import InputAdress from '@/components/InputAdress';
 import { Textarea } from '@/components/ui/textarea';
 
 const FormulaireDevis = () => {
   const { toast } = useToast();
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Récupère les données transmises depuis Accueil
   const initialDevisData = location.state?.devisData || {};
@@ -133,6 +134,13 @@ const FormulaireDevis = () => {
     }));
   };
 
+  const fetchDevisNumber = async () => {
+    const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
+    const response = await fetch(`${API_URL}/api/next-number`);
+    const data = await response.json();
+    return data.devisNumber;
+  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -143,10 +151,19 @@ const FormulaireDevis = () => {
 
 
     try {
+
+      // Générer le numéro automatiquement
+      const generatedNumber = await fetchDevisNumber();
+
+      const finalDevis = {
+        ...devisData,
+        devisNumber: generatedNumber,
+      };
+
       const response = await fetch(`${API_URL}/api/devis`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(devisData),
+        body: JSON.stringify(finalDevis),
       });
 
 
@@ -229,7 +246,12 @@ const FormulaireDevis = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <section className="py-8 lg:py-16 px-4 sm:px-8 lg:px-16 mt-8">
+      <div className="flex justify-end mb-8">
+        <Button onClick={() => navigate(-1)} className="bg-gray-400 hover:bg-gray-500">
+          <X className="h-6 w-6" />
+        </Button>
+      </div>
+      <section className="pb-8 lg:pb-16 px-4 sm:px-8 lg:px-16">
         <Card className="shadow-lg">
           <CardHeader>
             <CardTitle className="text-xl lg:text-2xl text-[#001964]">Demande de devis</CardTitle>
@@ -303,6 +325,7 @@ const FormulaireDevis = () => {
                     id="telephone"
                     name="telephone"
                     type="tel"
+                    required
                     value={devisData.telephone}
                     onChange={handleInputChange}
                     placeholder="+33 1 23 45 67 89"
@@ -713,7 +736,6 @@ const FormulaireDevis = () => {
                   <Textarea
                     id="message"
                     name="message"
-                    required
                     value={devisData.message}
                     onChange={handleInputChange}
                     placeholder="Mobilier très lourd (ex: Piano), accès difficiles, etc..."
