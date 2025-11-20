@@ -174,14 +174,18 @@ const FormulaireDevis = () => {
       if (response.ok) {
         // alert("Message envoyé avec succès !");
 
-        const respNotif = await fetch(`${API_URL}/api/new-devis`, {
+        const responseNotif = await fetch(`${API_URL}/api/new-devis`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           // body: JSON.stringify(messageData),
         });
 
-        if (respNotif.ok) {
+        const resultNotif = await response.json();
+
+        if (responseNotif.ok) {
           console.log("ok")
+        } else {
+          alert("Erreur : " + resultNotif.error);
         }
 
         setDepartData({
