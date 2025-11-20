@@ -13,11 +13,13 @@ import { useToast } from '@/hooks/use-toast';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import InputAdress from '@/components/InputAdress';
 import { Textarea } from '@/components/ui/textarea';
+import ConfirmDevisDialog from '@/components/ConfirmDevisDialog';
 
 const FormulaireDevis = () => {
   const { toast } = useToast();
   const location = useLocation();
   const navigate = useNavigate();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   // Récupère les données transmises depuis Accueil
   const initialDevisData = location.state?.devisData || {};
@@ -142,16 +144,12 @@ const FormulaireDevis = () => {
   };
 
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const API_URL = import.meta.env.VITE_KDM_SERVER_URI; // pour Vite
+  const handleSubmit = async () => {
+    const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
 
     console.log('Données du formulaire:', devisData);
 
-
     try {
-
       // Générer le numéro automatiquement
       const generatedNumber = await fetchDevisNumber();
 
@@ -165,7 +163,6 @@ const FormulaireDevis = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(finalDevis),
       });
-
 
       const result = await response.json();
 
@@ -260,7 +257,13 @@ const FormulaireDevis = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
+
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              setConfirmOpen(true); // Ouvre la modal
+            }}
+              className="space-y-4 lg:space-y-6"
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-lg font-bold">Nom complet</Label>
@@ -752,6 +755,22 @@ const FormulaireDevis = () => {
           </CardContent>
         </Card>
       </section>
+
+      <ConfirmDevisDialog
+        open={confirmOpen}
+        devis={devisData}
+        title="Récapitulatif de la demande"
+        description="Veuillez vérifier vos informations avant de valider."
+        confirmText="Valider"
+        cancelText="Annuler"
+        onConfirm={async () => {
+          // Appeler handleSubmit et fermer la modal
+          await handleSubmit();
+          setConfirmOpen(false);
+        }}
+        onCancel={() => setConfirmOpen(false)}
+      />
+
     </div>
   );
 };
