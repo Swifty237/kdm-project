@@ -173,11 +173,12 @@ const FormulaireDevis = () => {
 
       if (response.ok) {
         // alert("Message envoyé avec succès !");
+        const data = { message: "Nouvelle demande de devis" }
 
         const responseNotif = await fetch(`${API_URL}/api/new-devis`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          // body: JSON.stringify(messageData),
+          body: JSON.stringify(data),
         });
 
         const resultNotif = await response.json();
