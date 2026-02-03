@@ -14,12 +14,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import InputAdress from '@/components/InputAdress';
 import { Textarea } from '@/components/ui/textarea';
 import ConfirmDevisDialog from '@/components/ConfirmDevisDialog';
+import { calculateDistance } from '@/lib/distanceCalculator';
 
 const FormulaireDevis = () => {
   const { toast } = useToast();
   const location = useLocation();
   const navigate = useNavigate();
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  // Récupérez votre clé API Google Maps depuis les variables d'environnement
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
 
   // Récupère les données transmises depuis Accueil
   const initialDevisData = location.state?.devisData || {};
@@ -61,7 +65,9 @@ const FormulaireDevis = () => {
     arrival: arrivalData,
     date: initialDevisData.date || "",
     archived: false,
-    message: ""
+    message: "",
+    estimatedAmount: "",
+    finalAmount: ""
   });
 
   // Synchronise les sous-objets départ/arrivée avec devisData
@@ -141,6 +147,150 @@ const FormulaireDevis = () => {
     const response = await fetch(`${API_URL}/api/next-number`);
     const data = await response.json();
     return data.devisNumber;
+  };
+
+  const handleEstimate = async () => {
+    // Vérifier que les adresses sont renseignées
+    if (!departData.address || !arrivalData.address) {
+      toast({
+        title: "Adresses manquantes",
+        description: "Veuillez renseigner les adresses de départ et d'arrivée",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Vérifier que la surface est renseignée pour le déménagement
+    if (devisData.service === "Demenagement" && !departData.surface) {
+      toast({
+        title: "Surface manquante",
+        description: "Veuillez renseigner la surface pour le déménagement",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Vérifier que la formule est sélectionnée pour le déménagement
+    if (devisData.service === "Demenagement" && !devisData.offer) {
+      toast({
+        title: "Formule non sélectionnée",
+        description: "Veuillez sélectionner une formule de déménagement",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      // Calculer la distance
+      const distanceData = await calculateDistance(departData.address, arrivalData.address, apiKey);
+
+      if (!distanceData || distanceData.rows[0].elements[0].status !== 'OK') {
+        toast({
+          title: "Erreur de calcul",
+          description: "Impossible de calculer la distance entre les adresses",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const distanceText = distanceData.rows[0].elements[0].distance.text;
+      const durationText = distanceData.rows[0].elements[0].duration.text;
+
+      // Extraire la distance en kilomètres (convertir "123 km" en 123)
+      const distanceKm = parseFloat(distanceText.replace(' km', '').replace(',', '.'));
+
+      let estimatedAmount = 0;
+
+      // Si c'est un service de transport
+      if (devisData.service === "transport") {
+        // Logique pour le transport (à définir selon vos besoins)
+        estimatedAmount = calculateTransportPrice(distanceKm, departData.volume);
+      }
+      // Si c'est un déménagement
+      else if (devisData.service === "Demenagement") {
+        const surface = parseFloat(departData.surface) || 0;
+
+        // Calcul basé sur la formule sélectionnée
+        estimatedAmount = calculateMovingPrice(devisData.offer, surface, distanceKm);
+      }
+
+      // Mettre à jour devisData avec le montant estimé
+      setDevisData(prev => ({
+        ...prev,
+        estimatedAmount: estimatedAmount.toFixed(2) // Format à 2 décimales
+        // Vous pouvez aussi stocker la distance et durée si besoin
+        // distance: distanceText,
+        // duration: durationText
+      }));
+
+      // Afficher un toast avec le résultat
+      toast({
+        title: "Estimation calculée",
+        description: `Distance: ${distanceText} | Durée: ${durationText} | Estimation: ${estimatedAmount}€`,
+      });
+
+    } catch (error) {
+      console.error("Erreur lors du calcul de distance:", error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors du calcul de la distance",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Fonction pour calculer le prix du déménagement
+  const calculateMovingPrice = (offer: string, surface: number, distanceKm: number): number => {
+    // Définir la base selon la formule
+    let basePrice = 0;
+
+    switch (offer) {
+      case "economique":
+        basePrice = 790;
+        break;
+      case "standard":
+        basePrice = 990;
+        break;
+      case "premium":
+        basePrice = 1790;
+        break;
+      case "premium+":
+        basePrice = 2190;
+        break;
+      default:
+        basePrice = 0;
+    }
+
+    let price = basePrice;
+
+    // Ajouter le supplément surface si > 50m²
+    if (surface > 50) {
+      price += (surface - 50) * 7;
+    }
+
+    // Ajouter le supplément distance si > 100km
+    if (distanceKm > 100) {
+      price += (distanceKm - 100) * 0.3;
+    }
+
+    // Arrondir à 2 décimales
+    return Math.round(price * 100) / 100;
+  };
+
+  // Fonction pour calculer le prix du transport (exemple simple)
+  const calculateTransportPrice = (distanceKm: number, volume: string): number => {
+    const volumeValue = parseFloat(volume) || 0;
+
+    // Exemple de calcul pour le transport
+    // Prix de base + prix au km + prix au m3
+    const basePrice = 300;
+    const pricePerKm = 1.5;
+    const pricePerM3 = 50;
+
+    const price = basePrice + (distanceKm * pricePerKm) + (volumeValue * pricePerM3);
+
+    // Arrondir à 2 décimales
+    return Math.round(price * 100) / 100;
   };
 
 
@@ -244,7 +394,9 @@ const FormulaireDevis = () => {
           },
           date: '',
           archived: false,
-          message: ''
+          message: '',
+          estimatedAmount: '',
+          finalAmount: ''
         });
       } else {
         alert("Erreur : " + result.error);
@@ -519,7 +671,7 @@ const FormulaireDevis = () => {
 
                       <div>
 
-                        <Label htmlFor="address" className="text-lg">Adresse</Label>
+                        <Label htmlFor="address" className="text-lg">Adresse complète</Label>
                         <InputAdress
                           id="address"
                           name="address"
@@ -550,7 +702,7 @@ const FormulaireDevis = () => {
                         />
                       </div>
                       <div>
-                        <Label htmlFor="address" className="text-lg">Adresse</Label>
+                        <Label htmlFor="address" className="text-lg">Adresse complète</Label>
                         <InputAdress
                           id="address"
                           name="address"
@@ -591,12 +743,12 @@ const FormulaireDevis = () => {
                         {arrivalData.floor && arrivalData.floor !== "0" && (
                           <>
                             <div>
-                              <Label htmlFor="elevator" className="text-lg">Ascenceur</Label>
+                              <Label htmlFor="arrivaElevator" className="text-lg">Ascenceur</Label>
 
                               <div className="h-[40px] flex items-center justify-around">
                                 <div className="space-x-2 flex h-[20px] items-center">
                                   <Checkbox
-                                    id="elevator"
+                                    id="arrivaElevator"
                                     checked={arrivalData.elevator}
                                     onCheckedChange={(checked) => {
                                       setArrivalData(prev => ({
@@ -611,7 +763,7 @@ const FormulaireDevis = () => {
                                     }}
                                   />
                                   <label
-                                    htmlFor="elevator"
+                                    htmlFor="arrivaElevator"
                                     className="text-lg text-gray-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                   >
                                     Cochez si oui !
@@ -658,7 +810,7 @@ const FormulaireDevis = () => {
                         )}
 
                         <div>
-                          <Label htmlFor="address" className="text-lg">Adresse</Label>
+                          <Label htmlFor="address" className="text-lg">Adresse complète</Label>
                           <InputAdress
                             id="address"
                             name="address"
@@ -716,9 +868,9 @@ const FormulaireDevis = () => {
                         </div>
 
                         <div>
-                          <Label htmlFor="address" className="text-lg">Adresse</Label>
+                          <Label htmlFor="arrivalAddress" className="text-lg">Adresse</Label>
                           <InputAdress
-                            id="address"
+                            id="arrivalAddress"
                             name="address"
                             type="text"
                             value={arrivalData.address}
@@ -762,7 +914,7 @@ const FormulaireDevis = () => {
                   />
                 </div>
               </div>
-              <Button type="submit" className="w-full bg-[#001964] hover:bg-[#001964]/90 text-lg" size="lg">
+              <Button type="submit" onClick={handleEstimate} className="w-full bg-[#001964] hover:bg-[#001964]/90 text-lg" size="lg">
                 <Send className="mr-2 h-4 w-4" />
                 Estimez votre demande
               </Button>
@@ -776,8 +928,8 @@ const FormulaireDevis = () => {
         devis={devisData}
         title="Récapitulatif de la demande"
         description="Veuillez vérifier vos informations avant de valider."
-        confirmText="Valider"
-        cancelText="Annuler"
+        confirmText="Validez et envoyez"
+        cancelText="Annulez la demande"
         onConfirm={async () => {
           // Appeler handleSubmit et fermer la modal
           await handleSubmit();

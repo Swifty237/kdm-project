@@ -20,6 +20,8 @@ interface Devis {
     billingAddress?: string;
     devisNumber?: string;
     message?: string;
+    estimatedAmount: string;
+    finalAmount: string;
     date?: string;
     departure?: {
         surface?: string;
@@ -60,8 +62,8 @@ const ConfirmDevisDialog = ({
     devis,
     title = "Récapitulatif de la demande",
     description = "Souhaitez-vous valider la demande de devis ?",
-    confirmText = "Validez et envoyez la demande",
-    cancelText = "Annulez",
+    confirmText = "Validez et envoyez",
+    cancelText = "Annulez la demande",
     onConfirm,
     onCancel,
 }: ConfirmDevisDialogProps) => {
@@ -288,8 +290,8 @@ const ConfirmDevisDialog = ({
                 <DialogFooter className="mt-4">
                     <div className="flex justify-between w-[100%]">
                         <div className="flex items-center">
-                            <h4 className="text-xl font-bold me-4">Montant devis : </h4>
-                            <span className="text-3xl font-bold text-green-500">790,00 €</span>
+                            <h4 className="text-xl font-bold me-4">Montant estimé du devis : </h4>
+                            <span className="text-3xl font-bold text-green-500">{devis.estimatedAmount} €</span>
                         </div>
                         <div className="flex justify-end gap-2">
                             <Button className="text-lg" variant="outline" onClick={onCancel}>
