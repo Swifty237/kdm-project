@@ -764,7 +764,7 @@ const FormulaireDevis = () => {
               </div>
               <Button type="submit" className="w-full bg-[#001964] hover:bg-[#001964]/90 text-lg" size="lg">
                 <Send className="mr-2 h-4 w-4" />
-                Envoyer la demande
+                Estimez votre demande
               </Button>
             </form>
           </CardContent>
