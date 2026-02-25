@@ -5,11 +5,13 @@
 import { Check, ChevronLeft, ChevronRight, Info, Minus } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent } from '@/components/ui/card';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 const Offres = () => {
   const [activeColumn, setActiveColumn] = useState(0);
+  const { toast } = useToast();
 
   const offers = ["Économique", "Standard", "Premium", "Premium +"];
 
@@ -99,6 +101,24 @@ const Offres = () => {
       description: "Le service clé en main ultime : en plus d’un déménagement complet, nous installons vos meubles, remettons votre nouveau logement en ordre et réalisons le ménage du nouveau logement pour une installation sans le moindre effort."
     }
   ];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      toast({
+        title: "🚚 Offre de lancement – Profitez-en !",
+        description: (
+          <>
+            Bénéficiez de <span className="font-bold">100 € de réduction</span> sur votre déménagement pour toute demande de devis envoyée avant le <span className="font-bold">31/03/2026</span>. <br />
+            <span className=""> 👉 La remise ne sera pas visible sur l'estimation en ligne, mais elle sera bien appliquée sur le devis final envoyé par e-mail.</span> <br />
+            <div className="flex bg-[#3498db] justify-center rounded"><span className="italic text-white">Offre valable sur toutes nos formules.</span></div>
+          </>
+        ),
+        duration: 10000,
+      });
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   return (
     <div className="flex flex-col items-center justify-center">

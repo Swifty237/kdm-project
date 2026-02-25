@@ -374,12 +374,12 @@ const Accueil = () => {
       </section>
 
       {/* Customer reviews Section */}
-      <section className="py-8 lg:py-16 px-4 sm:px-8 lg:px-16 flex flex-col items-center w-full">
+      <section className="pb-4 lg:py-10 px-4 sm:px-8 lg:px-16 flex flex-col items-center w-full">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 lg:mb-12">
-            <h2 className="text-2xl lg:text-3xl font-bold mb-8 lg:mb-12 text-[#001964]">Avis clients</h2>
-            {/* Elfsight Google Reviews | Untitled Google Reviews */}
-            <div className="elfsight-app-01c071c0-c3c8-40f9-8cd3-20a2aabb41a3" data-elfsight-app-lazy></div>
+            {/* Elfsight Google Reviews | KDM logistique */}
+            {/* <script src="https://elfsightcdn.com/platform.js" async></script> */}
+            <div className="elfsight-app-842bb9ef-d1c6-480a-9fda-f80dc1077672" data-elfsight-app-lazy></div>
           </div>
         </div>
 
