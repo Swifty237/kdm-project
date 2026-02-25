@@ -376,14 +376,14 @@ const Accueil = () => {
       {/* Customer reviews Section */}
       <section className="pb-4 lg:py-10 px-4 sm:px-8 lg:px-16 flex flex-col items-center w-full">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 lg:mb-12">
+          <div className="text-center mb-8 lg:mb-12 shadow-lg">
             {/* Elfsight Google Reviews | KDM logistique */}
             {/* <script src="https://elfsightcdn.com/platform.js" async></script> */}
             <div className="elfsight-app-842bb9ef-d1c6-480a-9fda-f80dc1077672" data-elfsight-app-lazy></div>
           </div>
         </div>
 
-        <Button className="bg-[#001964] text-white hover:bg-[#001964]/90 rounded-full px-6 lg:px-8 text-xl">
+        <Button className="shadow-lg border-2 border-[#95a5a6] text-[#95a5a6] bg-white hover:bg-white hover:border-[#001964] hover:text-[#001964] rounded-full px-6 lg:px-8 text-lg font-bold">
           Découvrez tous les avis
         </Button>
       </section>
@@ -410,7 +410,7 @@ const Accueil = () => {
                 </h3>
                 <div className="grid grid-cols-1 gap-4 lg:gap-6">
                   {contactInfo.map((info, index) => (
-                    <Card key={index}>
+                    <Card key={index} className="shadow-lg">
                       <CardContent className="p-4 lg:p-6">
                         <div className="flex items-start space-x-3 lg:space-x-4">
                           <div className="w-10 lg:w-12 h-10 lg:h-12 bg-[#001964] rounded-lg flex items-center justify-center flex-shrink-0">
@@ -429,7 +429,7 @@ const Accueil = () => {
               </div>
 
               {/* Map placeholder */}
-              <Card>
+              <Card className="shadow-lg">
                 <CardContent className="p-4 lg:p-6">
                   <h4 className="font-semibold text-[#001964] mb-3 lg:mb-4 text-sm lg:text-base">Notre localisation</h4>
                   <div className="w-full h-36 lg:h-48 bg-muted rounded-lg flex items-center justify-center">
@@ -445,7 +445,7 @@ const Accueil = () => {
 
             {/* Contact Form */}
             <div>
-              <Card>
+              <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-xl lg:text-2xl text-[#001964]">Envoyez-nous un message</CardTitle>
                   <CardDescription className="text-sm lg:text-base">

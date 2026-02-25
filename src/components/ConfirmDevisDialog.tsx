@@ -1,4 +1,4 @@
-// src/components/ConfirmDevisDialog.tsx
+import { Send, Trash2 } from 'lucide-react';
 import {
     Dialog,
     DialogContent,
@@ -292,14 +292,16 @@ const ConfirmDevisDialog = ({
                     <div className="flex justify-between w-[100%]">
                         <div className="flex items-center">
                             <h4 className="text-xl font-bold me-4">Montant estimé du devis : </h4>
-                            <span className="text-3xl font-bold text-green-500">{devis.estimatedAmount} € TTC</span>
+                            <span className="text-3xl font-bold text-[#16a085]">{devis.estimatedAmount} € TTC</span>
                         </div>
                         <div className="flex justify-end gap-2">
                             <Button className="text-lg" variant="outline" onClick={onCancel}>
-                                {cancelText}
+                                <Trash2 className="h-4 w-4 mr-1" />
+                                <span>{cancelText}</span>
                             </Button>
-                            <Button className="text-lg" variant="destructive" onClick={onConfirm}>
-                                {confirmText}
+                            <Button className="text-lg bg-[#16a085] hover:bg-[#1abc9c]" variant="destructive" onClick={onConfirm}>
+                                <Send className="h-4 w-4 mr-1" />
+                                <span>{confirmText}</span>
                             </Button>
                         </div>
                     </div>
