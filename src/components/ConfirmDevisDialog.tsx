@@ -20,6 +20,7 @@ interface Devis {
     billingAddress?: string;
     devisNumber?: string;
     message?: string;
+    distance?: string;
     estimatedAmount: string;
     finalAmount: string;
     date?: string;
@@ -168,12 +169,12 @@ const ConfirmDevisDialog = ({
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                                 <div className="flex items-center">
                                     <p className="text-lg font-bold me-8">Surface : </p>
-                                    <span>{devis.departure.surface}</span>
+                                    <span>{devis.departure.surface} m2</span>
                                 </div>
 
                                 <div className="flex items-center">
                                     <p className="text-lg font-bold me-8">Volume : </p>
-                                    <span>{devis.departure.volume || "-"}</span>
+                                    <span>{devis.departure.volume} m3</span>
                                 </div>
                             </div>
 
@@ -291,7 +292,7 @@ const ConfirmDevisDialog = ({
                     <div className="flex justify-between w-[100%]">
                         <div className="flex items-center">
                             <h4 className="text-xl font-bold me-4">Montant estimé du devis : </h4>
-                            <span className="text-3xl font-bold text-green-500">{devis.estimatedAmount} €</span>
+                            <span className="text-3xl font-bold text-green-500">{devis.estimatedAmount} € TTC</span>
                         </div>
                         <div className="flex justify-end gap-2">
                             <Button className="text-lg" variant="outline" onClick={onCancel}>

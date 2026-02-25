@@ -54,7 +54,7 @@ const Footer = () => {
                 <li>
                   <div className="flex items-center text-sm text-white/70">
                     <Phone className="h-4 w-4 mr-2" />
-                    +33 7 60 03 49 29
+                    +33 6 66 28 32 43
                   </div>
                 </li>
                 <li>
@@ -90,7 +90,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-white/20 mt-8 pt-8 text-center">
           <p className="text-sm text-white/70">
-            © 2025 KDM LOGISTIQUE. Tous droits réservés.
+            © 2026 KDM LOGISTIQUE. Tous droits réservés.
           </p>
         </div>
       </div>

@@ -42,7 +42,7 @@ const APropos = () => {
                 KDM LOGISTIQUE est née d’un constat simple : déménager est un processus fatigant, stressant et chronophage.
               </p>
               <p>
-                Fondée en 2025, notre entreprise s’est donnée pour mission de décharger nos clients de cette étape exigeante afin qu’ils puissent vivre un déménagement en toute sérénité
+                Fondée en 2025, notre entreprise s’est donnée pour mission de décharger nos clients de cette étape exigeante afin qu’ils puissent vivre un déménagement en toute sérénité.
               </p>
             </div>
           </div>

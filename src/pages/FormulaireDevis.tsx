@@ -65,9 +65,14 @@ const FormulaireDevis = () => {
     arrival: arrivalData,
     date: initialDevisData.date || "",
     archived: false,
+    inManagement: false,
     message: "",
+    distance: "",
+    duration: "",
     estimatedAmount: "",
-    finalAmount: ""
+    finalAmount: "",
+    adjustmentReason: "",
+    adjustmentAmount: "",
   });
 
   // Synchronise les sous-objets départ/arrivée avec devisData
@@ -217,10 +222,9 @@ const FormulaireDevis = () => {
       // Mettre à jour devisData avec le montant estimé
       setDevisData(prev => ({
         ...prev,
-        estimatedAmount: estimatedAmount.toFixed(2) // Format à 2 décimales
-        // Vous pouvez aussi stocker la distance et durée si besoin
-        // distance: distanceText,
-        // duration: durationText
+        estimatedAmount: estimatedAmount.toFixed(2), // Format à 2 décimales
+        distance: distanceText,
+        duration: durationText,
       }));
 
       // Afficher un toast avec le résultat
@@ -394,9 +398,14 @@ const FormulaireDevis = () => {
           },
           date: '',
           archived: false,
+          inManagement: false,
           message: '',
+          distance: '',
+          duration: '',
           estimatedAmount: '',
-          finalAmount: ''
+          finalAmount: '',
+          adjustmentReason: '',
+          adjustmentAmount: '',
         });
       } else {
         alert("Erreur : " + result.error);

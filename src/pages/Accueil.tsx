@@ -121,8 +121,8 @@ const Accueil = () => {
     {
       icon: <Phone className="h-6 w-6 text-white" />,
       title: "Téléphone",
-      content: "+33 7 60 03 49 29",
-      description: "Lun-Ven : 9h-18h"
+      content: "+33 6 66 28 32 43",
+      description: "Lun-Sam : 8h30-19h"
     },
     {
       icon: <Mail className="h-6 w-6 text-white" />,
@@ -139,7 +139,7 @@ const Accueil = () => {
     {
       icon: <Clock className="h-6 w-6 text-white" />,
       title: "Horaires",
-      content: "Lun-Ven : 9h-18h",
+      content: "Lun-Sam : 8h30-19h",
       description: "Sur rendez-vous"
     }
   ];
