@@ -202,7 +202,9 @@ const Accueil = () => {
                 Confiez nous vos cartons sans stress et nous nous occupons du reste
               </CardTitle>
               <CardDescription className="italic text-center text-2xl text-[#001964]">
-                Remplissez le formulaire ci-dessous et obtenez un devis rapidement.
+                <span>Remplissez le formulaire ci-dessous, complétez votre demande et obtenez un devis rapidement.</span>
+                <br />
+                <span className=""> (Ou cliquez sur "Demander un devis")</span>
               </CardDescription>
             </CardHeader>
             <CardContent>
