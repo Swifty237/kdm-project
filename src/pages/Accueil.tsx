@@ -33,6 +33,20 @@ const Accueil = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Dans votre composant Accueil
+  const [departureValid, setDepartureValid] = useState(false);
+  const [arrivalValid, setArrivalValid] = useState(false);
+
+  // Vérifier si le formulaire peut être soumis
+  const isDevisFormValid = () => {
+    return (
+      departureValid &&
+      arrivalValid &&
+      devisData.date &&
+      devisData.surface
+    );
+  };
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -144,7 +158,7 @@ const Accueil = () => {
     }
   ];
 
-  // 🔹 Liste des images du carrousel
+  // Liste des images du carrousel
   const images = [
     "img/demenageurs.png",
     "img/packers-and-movers.jpg",
@@ -153,7 +167,7 @@ const Accueil = () => {
     "img/livreur-de-coup-moyen-tenant-la-boite.jpg"
   ];
 
-  // 🔹 Fait défiler automatiquement les images
+  // Fait défiler automatiquement les images
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -196,27 +210,45 @@ const Accueil = () => {
               <form onSubmit={handleSubmitDevis} className="space-y-4 lg:space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                   <div className="space-y-2">
-                    <InputAdress
-                      id="departure"
-                      name="departure"
-                      required
-                      value={devisData.departure}
-                      onChange={(val) => setDevisData({ ...devisData, departure: val })}
-                      placeholder="Adresse de départ"
-                      className="text-sm lg:text-xl"
-                    />
+                    <div>
+                      <span className="text-gray-500 italic text-sm">( N°, rue, code postal, ville )</span>
+                      <InputAdress
+                        id="departure"
+                        name="departure"
+                        value={devisData.departure}
+                        onChange={(val) => setDevisData({ ...devisData, departure: val })}
+                        onValidAddress={(isValid) => setDepartureValid(isValid)}
+                        placeholder="Adresse complète de départ"
+                        className="text-sm lg:text-xl"
+                      />
+                      {/* Message d'erreur optionnel */}
+                      {devisData.departure && !departureValid && (
+                        <p className="text-yellow-600 text-xs mt-1">
+                          Veuillez sélectionner une adresse dans la liste déroulante
+                        </p>
+                      )}
+                    </div>
                   </div>
 
                   <div className="space-y-2">
-                    <InputAdress
-                      id="arrival"
-                      name="arrival"
-                      required
-                      value={devisData.arrival}
-                      onChange={(val) => setDevisData({ ...devisData, arrival: val })}
-                      placeholder="Adresse d'arrivée"
-                      className="text-sm lg:text-xl"
-                    />
+                    <div>
+                      <span className="text-gray-500 italic text-sm">( N°, rue, code postal, ville )</span>
+                      <InputAdress
+                        id="arrival"
+                        name="arrival"
+                        value={devisData.arrival}
+                        onChange={(val) => setDevisData({ ...devisData, arrival: val })}
+                        onValidAddress={(isValid) => setArrivalValid(isValid)}
+                        placeholder="Adresse complète de l'arrivée"
+                        className="text-sm lg:text-xl"
+                      />
+                      {/* Message d'erreur optionnel */}
+                      {devisData.arrival && !arrivalValid && (
+                        <p className="text-yellow-600 text-xs mt-1">
+                          Veuillez sélectionner une adresse dans la liste déroulante
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -246,7 +278,12 @@ const Accueil = () => {
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full bg-[#001964] hover:bg-[#001964]/90 text-sm lg:text-base" size="lg">
+                <Button
+                  type="submit"
+                  className="w-full bg-[#001964] hover:bg-[#001964]/90 text-sm lg:text-base"
+                  size="lg"
+                  disabled={!isDevisFormValid()} // Désactiver si adresses invalides 
+                >
                   <Send className="mr-2 h-4 w-4" />
                   C'est parti !
                 </Button>
@@ -429,7 +466,7 @@ const Accueil = () => {
               </div>
 
               {/* Map placeholder */}
-              <Card className="shadow-lg">
+              {/* <Card className="shadow-lg">
                 <CardContent className="p-4 lg:p-6">
                   <h4 className="font-semibold text-[#001964] mb-3 lg:mb-4 text-sm lg:text-base">Notre localisation</h4>
                   <div className="w-full h-36 lg:h-48 bg-muted rounded-lg flex items-center justify-center">
@@ -440,7 +477,7 @@ const Accueil = () => {
                     </div>
                   </div>
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
 
             {/* Contact Form */}
