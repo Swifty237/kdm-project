@@ -34,6 +34,21 @@ const FormulaireDevis = () => {
   // Récupère les données transmises depuis Accueil
   const initialDevisData = location.state?.devisData || {};
 
+  useEffect(() => {
+    if (billingAddressValid) {
+      clearFieldError('billingAddress');
+    }
+
+    if (departAddressValid) {
+      clearFieldError('departAddress');
+    }
+
+    if (arrivalAddressValid) {
+      clearFieldError('arrivalAddress');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [billingAddressValid, departAddressValid, arrivalAddressValid]);
+
   // États initiaux (pré-remplis si données reçues)
   const [departData, setDepartData] = useState({
     surface: initialDevisData.surface || "",
