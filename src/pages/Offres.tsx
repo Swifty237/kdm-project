@@ -290,6 +290,16 @@ const Offres = () => {
         </div>
       </section>
 
+      <div className="text-lg py-8 lg:py-16">
+        <span className="block font-bold text-xl mb-2">🚚 Offre de lancement – Profitez-en !</span>
+        Bénéficiez de <span className="font-bold">100 € de réduction</span> sur votre déménagement pour toute demande de devis envoyée avant le <span className="font-bold">31/03/2026</span>.
+        <br />
+        <span> 👉 La remise ne sera pas visible sur l'estimation en ligne, mais elle sera bien appliquée sur le devis final envoyé par e-mail.</span>
+        <div className="flex bg-[#001964] justify-center rounded mt-2 shadow-xl">
+          <span className="italic text-white">Offre valable avec toutes nos formules.</span>
+        </div>
+      </div>
+
       {/* Nos services */}
       <section className="flex flex-col items-center justify-between header-section-bg-animated px-4 sm:px-8 lg:px-32 w-full mt-16">
         <div className="max-w-6xl mx-auto">
