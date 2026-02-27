@@ -182,7 +182,7 @@ const Accueil = () => {
 
       <section className="relative pb-16 sm:py-20 lg:py-32 px-4 sm:px-8 lg:px-32">
 
-        {/* 🔹 Arrière-plan avec effet de fondu */}
+        {/* Arrière-plan avec effet de fondu */}
         {images.map((img, index) => (
           <div
             key={index}

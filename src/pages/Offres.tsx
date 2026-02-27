@@ -113,7 +113,7 @@ const Offres = () => {
             <br />
             <span> 👉 La remise ne sera pas visible sur l'estimation en ligne, mais elle sera bien appliquée sur le devis final envoyé par e-mail.</span>
             <div className="flex bg-[#001964] justify-center rounded mt-2">
-              <span className="italic text-white">Offre valable sur toutes nos formules.</span>
+              <span className="italic text-white">Offre valable avec toutes nos formules.</span>
             </div>
           </div>
         ),
