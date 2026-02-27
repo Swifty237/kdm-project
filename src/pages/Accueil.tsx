@@ -213,7 +213,7 @@ const Accueil = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                   <div className="space-y-2">
                     <div>
-                      <span className="text-gray-500 italic text-sm">( N°, rue, code postal, ville )</span>
+                      <span className="text-gray-500 italic text-lg">( N°, rue, code postal, ville )</span>
                       <InputAdress
                         id="departure"
                         name="departure"
@@ -225,7 +225,7 @@ const Accueil = () => {
                       />
                       {/* Message d'erreur optionnel */}
                       {devisData.departure && !departureValid && (
-                        <p className="text-yellow-600 text-xs mt-1">
+                        <p className="text-yellow-600 text-lg mt-1">
                           Veuillez sélectionner une adresse dans la liste déroulante
                         </p>
                       )}
@@ -234,7 +234,7 @@ const Accueil = () => {
 
                   <div className="space-y-2">
                     <div>
-                      <span className="text-gray-500 italic text-sm">( N°, rue, code postal, ville )</span>
+                      <span className="text-gray-500 italic text-lg">( N°, rue, code postal, ville )</span>
                       <InputAdress
                         id="arrival"
                         name="arrival"
@@ -246,7 +246,7 @@ const Accueil = () => {
                       />
                       {/* Message d'erreur optionnel */}
                       {devisData.arrival && !arrivalValid && (
-                        <p className="text-yellow-600 text-xs mt-1">
+                        <p className="text-yellow-600 text-lg mt-1">
                           Veuillez sélectionner une adresse dans la liste déroulante
                         </p>
                       )}
