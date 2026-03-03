@@ -72,23 +72,102 @@ const Accueil = () => {
     }));
   };
 
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   const API_URL = import.meta.env.VITE_KDM_SERVER_URI; // pour Vite
+
+  //   console.log('Données du formulaire:', messageData);
+
+
+  //   try {
+  //     const response = await fetch(`${API_URL}/api/contact`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(messageData),
+  //     });
+
+
+  //     const result = await response.json();
+
+  //     toast({
+  //       title: "Message envoyé !",
+  //       description: "Nous vous recontacterons dans les plus brefs délais.",
+  //     });
+
+  //     if (response.ok) {
+  //       // alert("Message envoyé avec succès !");
+  //       setMessageData({
+  //         nom: "",
+  //         email: "",
+  //         entreprise: "",
+  //         telephone: "",
+  //         service: "",
+  //         message: "",
+  //       });
+  //     } else {
+  //       alert("Erreur : " + result.error);
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     // alert("Erreur réseau lors de l'envoi du message.");
+  //   }
+  // };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const API_URL = import.meta.env.VITE_KDM_SERVER_URI; // pour Vite
+    const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
 
-    console.log('Données du formulaire:', messageData);
+    console.log('🔍 URL complète appelée:', `${API_URL}/api/contact`);
+    console.log('🔍 Données du formulaire:', messageData);
 
-
+    // TEST 1: Vérifier d'abord si le serveur répond avec une requête OPTIONS
     try {
+      console.log('📡 Test préflight OPTIONS...');
+      const optionsResponse = await fetch(`${API_URL}/api/contact`, {
+        method: "OPTIONS",
+        headers: {
+          "Origin": window.location.origin,
+          "Access-Control-Request-Method": "POST",
+          "Access-Control-Request-Headers": "content-type"
+        }
+      });
+      console.log('📡 Réponse OPTIONS - Status:', optionsResponse.status);
+      console.log('📡 Réponse OPTIONS - Headers:', Object.fromEntries(optionsResponse.headers));
+    } catch (optionsError) {
+      console.error('❌ Erreur OPTIONS:', optionsError);
+    }
+
+    // TEST 2: Vérifier si l'API est accessible en GET
+    try {
+      console.log('📡 Test GET /api/contact...');
+      const getResponse = await fetch(`${API_URL}/api/contact`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+      });
+      console.log('📡 Réponse GET - Status:', getResponse.status);
+      console.log('📡 Réponse GET - URL finale:', getResponse.url); // VOIR SI REDIRECTION
+    } catch (getError) {
+      console.error('❌ Erreur GET:', getError);
+    }
+
+    // Requête POST principale
+    try {
+      console.log('📡 Envoi de la requête POST principale...');
+
       const response = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(messageData),
       });
 
+      console.log('📡 Réponse POST - Status:', response.status);
+      console.log('📡 Réponse POST - URL finale:', response.url); // CRUCIAL - montre la redirection
+      console.log('📡 Réponse POST - Headers:', Object.fromEntries(response.headers));
 
       const result = await response.json();
+      console.log('📡 Réponse POST - Body:', result);
 
       toast({
         title: "Message envoyé !",
@@ -96,7 +175,6 @@ const Accueil = () => {
       });
 
       if (response.ok) {
-        // alert("Message envoyé avec succès !");
         setMessageData({
           nom: "",
           email: "",
@@ -109,8 +187,9 @@ const Accueil = () => {
         alert("Erreur : " + result.error);
       }
     } catch (err) {
-      console.error(err);
-      // alert("Erreur réseau lors de l'envoi du message.");
+      console.error('❌ Erreur catch:', err);
+      console.error('❌ Type d\'erreur:', err instanceof TypeError ? 'TypeError' : typeof err);
+      console.error('❌ Message d\'erreur:', err instanceof Error ? err.message : 'Erreur inconnue');
     }
   };
 
