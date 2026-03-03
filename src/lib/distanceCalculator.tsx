@@ -6,8 +6,9 @@ export const calculateDistance = async (
         console.log('📍 Calcul de distance:', { origin, destination });
 
         // Utilisation de votre backend proxy (plus de clé API en frontend)
+        const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
         const response = await fetch(
-            `/api/google-maps/distance?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`
+            `${API_URL}/api/google-maps/distance?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`
         );
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
