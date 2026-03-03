@@ -29,6 +29,7 @@ const FormulaireDevis = () => {
   const { errors, touched, setFieldTouched, setFieldError, clearFieldError } = useFormValidation();
 
   // Récupérez votre clé API Google Maps depuis les variables d'environnement
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
 
   // Récupère les données transmises depuis Accueil
@@ -248,10 +249,17 @@ const FormulaireDevis = () => {
     }
 
     try {
-      // Calculer la distance
-      const distanceData = await calculateDistance(departData.address, arrivalData.address, apiKey);
+      console.log('📍 Calcul de distance entre:', departData.address, 'et', arrivalData.address);
 
-      if (!distanceData || distanceData.rows[0].elements[0].status !== 'OK') {
+      // Calculer la distance - PLUS DE PARAMÈTRE API KEY
+      const distanceResult = await calculateDistance(
+        departData.address,
+        arrivalData.address
+      );
+
+      console.log('✅ Résultat distance:', distanceResult);
+
+      if (!distanceResult || distanceResult.status !== 'OK') {
         toast({
           title: "Erreur de calcul",
           description: "Impossible de calculer la distance entre les adresses",
@@ -260,9 +268,10 @@ const FormulaireDevis = () => {
         return;
       }
 
-      const distanceText = distanceData.rows[0].elements[0].distance.text;
-      const durationText = distanceData.rows[0].elements[0].duration.text;
-      const distanceKm = parseFloat(distanceText.replace(' km', '').replace(',', '.'));
+      // Utiliser les valeurs formatées directement
+      const distanceText = distanceResult.distance;      // ex: "467 km"
+      const durationText = distanceResult.duration;      // ex: "4 heures 34 min"
+      const distanceKm = distanceResult.distanceValue / 1000; // Conversion mètres → km
 
       let estimatedAmount = 0;
 
@@ -286,7 +295,7 @@ const FormulaireDevis = () => {
       });
 
     } catch (error) {
-      console.error("Erreur lors du calcul de distance:", error);
+      console.error("❌ Erreur lors du calcul de distance:", error);
       toast({
         title: "Erreur",
         description: "Une erreur est survenue lors du calcul de la distance",
