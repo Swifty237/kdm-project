@@ -9,7 +9,6 @@ export const calculateDistance = async (
         const response = await fetch(
             `/api/google-maps/distance?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`
         );
-
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
             throw new Error(
