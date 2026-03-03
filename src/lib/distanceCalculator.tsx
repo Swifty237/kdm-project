@@ -4,10 +4,10 @@ export const calculateDistance = async (
     apiKey: string
 ) => {
     try {
-        // Utilisez le proxy au lieu d'appeler directement Google
-        const response = await fetch(
-            `/api/google-maps/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}&units=metric`
-        );
+        // Appel direct à Google Maps
+        const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}&units=metric`;
+
+        const response = await fetch(url);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
