@@ -19,7 +19,7 @@ const APropos = () => {
   ];
 
   return (
-    <div className="py-16">
+    <div className="py-16 min-h-[1410px]">
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
