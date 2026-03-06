@@ -7,10 +7,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Accueil from "./pages/Accueil";
 import Offres from "./pages/Offres";
-// import Services from "./pages/Services";
 import APropos from "./pages/APropos";
 import FormulaireDevis from "./pages/FormulaireDevis";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +22,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Layout>
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Accueil />} />
               <Route path="/offres" element={<Offres />} />

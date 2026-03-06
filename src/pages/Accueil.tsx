@@ -15,6 +15,7 @@ const Accueil = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [messageData, setMessageData] = useState({
+    civility: '',
     nom: '',
     email: '',
     entreprise: '',
@@ -72,47 +73,12 @@ const Accueil = () => {
     }));
   };
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   const API_URL = import.meta.env.VITE_KDM_SERVER_URI; // pour Vite
-
-  //   console.log('Données du formulaire:', messageData);
-
-
-  //   try {
-  //     const response = await fetch(`${API_URL}/api/contact`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(messageData),
-  //     });
-
-
-  //     const result = await response.json();
-
-  //     toast({
-  //       title: "Message envoyé !",
-  //       description: "Nous vous recontacterons dans les plus brefs délais.",
-  //     });
-
-  //     if (response.ok) {
-  //       // alert("Message envoyé avec succès !");
-  //       setMessageData({
-  //         nom: "",
-  //         email: "",
-  //         entreprise: "",
-  //         telephone: "",
-  //         service: "",
-  //         message: "",
-  //       });
-  //     } else {
-  //       alert("Erreur : " + result.error);
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     // alert("Erreur réseau lors de l'envoi du message.");
-  //   }
-  // };
+  const handleCivilityChange = (value: string) => {
+    setMessageData(prev => ({
+      ...prev,
+      civility: value
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -176,6 +142,7 @@ const Accueil = () => {
 
       if (response.ok) {
         setMessageData({
+          civility: "",
           nom: "",
           email: "",
           entreprise: "",
@@ -572,8 +539,23 @@ const Accueil = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
-                      <div className="space-y-2">
+                    <div className="flex">
+                      <div className="w-[35%] me-4">
+                        <Label htmlFor="civility" className="text-sm lg:text-base">
+                          Civilité
+                        </Label>
+                        <Select onValueChange={handleCivilityChange} value={messageData.civility}>
+                          <SelectTrigger className={`text-sm lg:text-base`}>
+                            <SelectValue placeholder="Civilité" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Mr.">Mr.</SelectItem>
+                            <SelectItem value="Mme.">Mme.</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="w-full">
                         <Label htmlFor="nom" className="text-sm lg:text-base ">Nom complet *</Label>
                         <Input
                           id="nom"
@@ -586,19 +568,8 @@ const Accueil = () => {
                           className="text-sm lg:text-base"
                         />
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email" className="text-sm lg:text-base">Email *</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          required
-                          value={messageData.email}
-                          onChange={handleInputChange}
-                          placeholder="votre@email.com"
-                          className="text-sm lg:text-base"
-                        />
-                      </div>
+
+
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
@@ -629,17 +600,34 @@ const Accueil = () => {
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="service" className="text-sm lg:text-base">Service souhaité</Label>
-                      <Select onValueChange={handleSelectChange} value={messageData.service}>
-                        <SelectTrigger className="text-sm lg:text-base">
-                          <SelectValue placeholder="Sélectionnez un service" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Demenagement">Service de déménagement</SelectItem>
-                          <SelectItem value="transport">Service de transport marchandises</SelectItem>
-                        </SelectContent>
-                      </Select>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
+
+                      <div className="space-y-2">
+                        <Label htmlFor="email" className="text-sm lg:text-base">Email *</Label>
+                        <Input
+                          id="email"
+                          name="email"
+                          type="email"
+                          required
+                          value={messageData.email}
+                          onChange={handleInputChange}
+                          placeholder="votre@email.com"
+                          className="text-sm lg:text-base"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="service" className="text-sm lg:text-base">Service souhaité</Label>
+                        <Select onValueChange={handleSelectChange} value={messageData.service}>
+                          <SelectTrigger className="text-sm lg:text-base">
+                            <SelectValue placeholder="Sélectionnez un service" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Demenagement">Service de déménagement</SelectItem>
+                            <SelectItem value="transport">Service de transport marchandises</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
 
                     <div className="space-y-2">

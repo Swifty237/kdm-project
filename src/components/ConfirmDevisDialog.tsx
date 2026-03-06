@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 
 interface Devis {
     _id?: string;
+    civility: string;
     name?: string;
     email?: string;
     entreprise?: string;
@@ -40,6 +41,7 @@ interface Devis {
         elevatorSize?: string;
         stairsSize?: string;
         address?: string;
+        contactCivility?: string;
         contactName?: string;
         entreprise?: string;
         date?: string;
@@ -114,8 +116,8 @@ const ConfirmDevisDialog = ({
                         <div className="space-y-4 lg:space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                                 <div className="flex items-center">
-                                    <p className="text-lg font-bold me-8">Nom complet :</p>
-                                    <span>{devis.name}</span>
+                                    <p className="text-lg font-bold me-8">Civilité, nom et prénom :</p>
+                                    <span>{devis.civility} {devis.name}</span>
                                 </div>
 
                                 <div className="flex items-center">
@@ -131,7 +133,7 @@ const ConfirmDevisDialog = ({
                                 </div>
 
                                 <div className="flex items-center">
-                                    <p className="text-lg font-bold me-8">Adresse de facturation :</p>
+                                    <p className="text-lg font-bold me-8">A. facturation :</p>
                                     <span>{devis.billingAddress}</span>
                                 </div>
                             </div>
@@ -251,10 +253,12 @@ const ConfirmDevisDialog = ({
                                     <span>{devis.arrival.address}</span>
                                 </div>
 
-                                <div className="flex items-center">
-                                    <p className="text-lg font-bold me-8">Nom du contact à l'arrivée :</p>
-                                    <span>{devis.arrival.contactName || "-"}</span>
-                                </div>
+                                {devis.offer == "transport" && (
+                                    <div className="flex items-center">
+                                        <p className="text-lg font-bold me-8">Civilité et nom du contact à l'arrivée :</p>
+                                        <span>{devis.arrival.contactCivility} {devis.arrival.contactName || "-"}</span>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
@@ -263,12 +267,13 @@ const ConfirmDevisDialog = ({
                                     <span>{devis.arrival.entreprise || "-"}</span>
                                 </div>
 
-                                <div className="flex items-center">
-                                    <p className="text-lg font-bold me-8">Date :</p>
-                                    <span>{devis.arrival.date || "-"}</span>
-                                </div>
+                                {devis.offer == "transport" && (
+                                    <div className="flex items-center">
+                                        <p className="text-lg font-bold me-8">Date :</p>
+                                        <span>{devis.arrival.date || "-"}</span>
+                                    </div>
+                                )}
                             </div>
-
                             <div className="grid grid-cols-1 h-2"></div>
 
                             <div className="grid grid-cols-1 gap-3 lg:gap-4 border-b-2">

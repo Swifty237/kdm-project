@@ -68,6 +68,7 @@ const FormulaireDevis = () => {
     elevatorSize: "",
     stairsSize: "",
     address: initialDevisData.arrival || "",
+    contactCivility: "",
     contactName: "",
     telContact: "",
     entreprise: "",
@@ -75,6 +76,7 @@ const FormulaireDevis = () => {
   });
 
   const [devisData, setDevisData] = useState({
+    civility: "",
     name: "",
     email: "",
     entreprise: "",
@@ -111,6 +113,7 @@ const FormulaireDevis = () => {
     const newErrors: Record<string, string> = {};
 
     // Champs toujours obligatoires
+    if (!devisData.civility) newErrors.civility = "La civilité est requise";
     if (!devisData.name) newErrors.name = "Le nom est requis";
     if (!devisData.email) newErrors.email = "L'email est requis";
     if (!devisData.telephone) newErrors.telephone = "Le téléphone est requis";
@@ -148,6 +151,7 @@ const FormulaireDevis = () => {
 
     if (devisData.service === "transport") {
       if (!departData.volume) newErrors.volume = "Le volume est requis";
+      if (!arrivalData.contactCivility) newErrors.contactCivility = "Le nom du contact est requis";
       if (!arrivalData.contactName) newErrors.contactName = "Le nom du contact est requis";
       if (!arrivalData.telContact) newErrors.telContact = "Le téléphone du contact est requis";
     }
@@ -190,6 +194,23 @@ const FormulaireDevis = () => {
       clearFieldError(name);
     }
   };
+
+  const handleSelectCivility = (value: string) => {
+    setDevisData(prev => ({
+      ...prev,
+      civility: value
+    }));
+    clearFieldError('civility');
+  };
+
+  const handlecontactCivility = (value: string) => {
+    setArrivalData(prev => ({
+      ...prev,
+      contactCivility: value
+    }));
+    clearFieldError('contactCivility');
+  };
+
 
   const handleSelectChange = (value: string) => {
     setDevisData(prev => ({
@@ -360,8 +381,8 @@ const FormulaireDevis = () => {
 
         // Réinitialiser le formulaire
         setDepartData({ surface: '', volume: '', rooms: '', floor: '', elevator: false, elevatorSize: '', stairsSize: '', address: '' });
-        setArrivalData({ floor: '', elevator: false, elevatorSize: '', stairsSize: '', address: '', contactName: '', telContact: '', entreprise: '', date: '' });
-        setDevisData({ name: '', email: '', entreprise: '', telephone: '', service: '', offer: '', billingAddress: '', devisNumber: '', departure: departData, arrival: arrivalData, date: '', archived: false, inManagement: false, message: '', distance: '', duration: '', estimatedAmount: '', finalAmount: '', adjustmentReason: '', adjustmentAmount: '' });
+        setArrivalData({ floor: '', elevator: false, elevatorSize: '', stairsSize: '', address: '', contactCivility: '', contactName: '', telContact: '', entreprise: '', date: '' });
+        setDevisData({ civility: '', name: '', email: '', entreprise: '', telephone: '', service: '', offer: '', billingAddress: '', devisNumber: '', departure: departData, arrival: arrivalData, date: '', archived: false, inManagement: false, message: '', distance: '', duration: '', estimatedAmount: '', finalAmount: '', adjustmentReason: '', adjustmentAmount: '' });
       }
     } catch (err) {
       console.error(err);
@@ -405,24 +426,41 @@ const FormulaireDevis = () => {
 
               {/* Section informations client */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-lg font-bold">
-                    Nom complet
-                    <span className="text-gray-500 italic text-sm"> ( Nom, prénom ) </span>
-                  </Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={devisData.name}
-                    onChange={handleInputChange}
-                    onBlur={() => setFieldTouched('name')}
-                    placeholder="Votre nom et prénom"
-                    className={`text-sm lg:text-base ${errors.name ? 'border-red-500' : ''}`}
-                  />
-                  {errors.name && (
-                    <p className="text-red-500 text-xs mt-1">{errors.name}</p>
-                  )}
+                <div className="flex space-y-2">
+                  <div className="w-[35%] me-4 mt-2">
+                    <Label htmlFor="civility" className="text-lg font-bold">
+                      Civilité
+                    </Label>
+                    <Select onValueChange={handleSelectCivility} value={devisData.civility}>
+                      <SelectTrigger className={`text-sm lg:text-base ${errors.civility ? 'border-red-500' : ''}`}>
+                        <SelectValue placeholder="Civilité" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Mr.">Mr.</SelectItem>
+                        <SelectItem value="Mme.">Mme.</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.civility && <p className="text-red-500 text-xs mt-1">{errors.civility}</p>}
+                  </div>
+                  <div className="w-full">
+                    <Label htmlFor="name" className="text-lg font-bold">
+                      Nom complet
+                      <span className="text-gray-500 italic text-sm"> ( Nom, prénom ) </span>
+                    </Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      value={devisData.name}
+                      onChange={handleInputChange}
+                      onBlur={() => setFieldTouched('name')}
+                      placeholder="Votre nom et prénom"
+                      className={`text-sm lg:text-base ${errors.name ? 'border-red-500' : ''}`}
+                    />
+                    {errors.name && (
+                      <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="space-y-2">
@@ -715,7 +753,7 @@ const FormulaireDevis = () => {
                             placeholder="en m3"
                             className={`text-sm lg:text-base ${errors.volume && touched.volume ? 'border-red-500' : ''}`}
                           />
-                          {errors.volume && touched.volume && (
+                          {errors.volume && (
                             <p className="text-red-500 text-xs mt-1">{errors.volume}</p>
                           )}
                         </div>
@@ -872,21 +910,38 @@ const FormulaireDevis = () => {
                           />
                         </div>
 
-                        <div>
-                          <Label htmlFor="contactName" className="text-lg">Nom du contact</Label>
-                          <Input
-                            id="contactName"
-                            name="contactName"
-                            type="text"
-                            value={arrivalData.contactName}
-                            onChange={handleArrivalInputChange}
-                            onBlur={() => setFieldTouched('contactName')}
-                            placeholder="Nom du contact à l'arrivée"
-                            className={`text-sm lg:text-base ${errors.contactName && touched.contactName ? 'border-red-500' : ''}`}
-                          />
-                          {errors.contactName && touched.contactName && (
-                            <p className="text-red-500 text-xs mt-1">{errors.contactName}</p>
-                          )}
+                        <div className="flex">
+                          <div className="w-[35%] me-4">
+                            <Label htmlFor="contactCivility" className="text-lg">
+                              Civilité
+                            </Label>
+                            <Select onValueChange={handlecontactCivility} value={arrivalData.contactCivility}>
+                              <SelectTrigger className={`text-sm lg:text-base ${errors.contactCivility ? 'border-red-500' : ''}`}>
+                                <SelectValue placeholder="Civilité" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Mr.">Mr.</SelectItem>
+                                <SelectItem value="Mme.">Mme.</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            {errors.contactCivility && <p className="text-red-500 text-xs mt-1">{errors.contactCivility}</p>}
+                          </div>
+                          <div className="w-full">
+                            <Label htmlFor="contactName" className="text-lg">Nom du contact</Label>
+                            <Input
+                              id="contactName"
+                              name="contactName"
+                              type="text"
+                              value={arrivalData.contactName}
+                              onChange={handleArrivalInputChange}
+                              onBlur={() => setFieldTouched('contactName')}
+                              placeholder="Nom du contact à l'arrivée"
+                              className={`text-sm lg:text-base ${errors.contactName && touched.contactName ? 'border-red-500' : ''}`}
+                            />
+                            {errors.contactName && touched.contactName && (
+                              <p className="text-red-500 text-xs mt-1">{errors.contactName}</p>
+                            )}
+                          </div>
                         </div>
 
                         <div className="space-y-2">
