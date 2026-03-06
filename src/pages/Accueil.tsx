@@ -506,9 +506,39 @@ const Accueil = () => {
                             {info.icon}
                           </div>
                           <div>
-                            <h4 className="font-semibold text-[#001964] mb-1 text-sm lg:text-base">{info.title}</h4>
-                            <p className="text-foreground mb-1 text-sm lg:text-base">{info.content}</p>
-                            <p className="text-xs lg:text-sm text-muted-foreground">{info.description}</p>
+                            <div>
+                              <h4 className="font-semibold text-[#001964] mb-1 text-sm lg:text-base">{info.title}</h4>
+
+                              {/* Rendu conditionnel du contenu principal */}
+                              {info.title === "Téléphone" ? (
+                                <a
+                                  href={`tel:${info.content}`}
+                                  className="text-foreground mb-1 text-sm lg:text-base block hover:underline"
+                                >
+                                  {info.content}
+                                </a>
+                              ) : info.title === "Email" ? (
+                                <a
+                                  href={`mailto:${info.content}`}
+                                  className="text-foreground mb-1 text-sm lg:text-base block hover:underline"
+                                >
+                                  {info.content}
+                                </a>
+                              ) : info.title === "Adresse" ? (
+                                <a
+                                  href={`https://maps.google.com/?q=${encodeURIComponent(info.content + ', ' + info.description)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-foreground mb-1 text-sm lg:text-base block hover:underline"
+                                >
+                                  {info.content}
+                                </a>
+                              ) : (
+                                <p className="text-foreground mb-1 text-sm lg:text-base">{info.content}</p>
+                              )}
+
+                              <p className="text-xs lg:text-sm text-muted-foreground">{info.description}</p>
+                            </div>
                           </div>
                         </div>
                       </CardContent>
