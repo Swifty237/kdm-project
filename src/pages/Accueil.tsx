@@ -433,7 +433,7 @@ const Accueil = () => {
 
                   <ArrowBigRight className="h-12 w-12 text-[#001964]" />
 
-                  <HashLink to="#contact" className="bg-[#001964] hover:bg-[#001964]/90 text-white rounded-full px-4 py-2 lg:px-6 lg:text-xl"
+                  <HashLink to="#contact" className="bg-[#001964] hover:bg-[#001964]/90 text-white rounded-full px-4 py-2 lg:px-6 lg:text-xl text-center"
                   >
                     Contactez nous
                   </HashLink>
@@ -468,9 +468,13 @@ const Accueil = () => {
           </div>
         </div>
 
-        <Button className="shadow-lg border-2 border-[#95a5a6] text-[#95a5a6] bg-white hover:bg-white hover:border-[#001964] hover:text-[#001964] rounded-full px-6 lg:px-8 text-lg font-bold">
+        <a
+          className="shadow-lg border-2 border-[#95a5a6] text-[#95a5a6] bg-white hover:bg-white hover:border-[#001964] hover:text-[#001964] rounded-full px-6 lg:px-8 text-lg font-bold"
+          href="https://www.google.com/search?sca_esv=86473391cece26c1&gl=fr&hl=fr-FR&sxsrf=ANbL-n4IWec2XuTvx-92RootFGzjLFd00g:1772837944699&uds=ALYpb_ncDc7jTlmw6Mmq7NjuX5c-2gfRyShV6Ek1WIF3L5cu-mWwpsw635wlO5X6XN2qynltj8GAMR3LURrt0l7bxKYiYNXO-wZ8PuQRN5IYbN9AElvSp3-XbVswA7Cggy2FRkYpoMUBbphxyDjlk0SZhRPCGGpaGUWpSOxZBtzCDHmdEi_5sDtwtxga5f41W9PTeNPMlVWB&q=KDM+LOGISTIQUE+-+D%C3%A9m%C3%A9nagement+et+transport+routier+Avis&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOSh95gjssMtE5Ug-sXatqvEvZx9FN-PkP2m3On_SoygAdRQ_RtypeFmTP1W1XFvgVCcaxDppSt-JfwAQjzpm0YvK3ZneowX0J4SomHRXYxNXLb-jroJ5AKkTlC66FybGq0hsrJEcStiEvTF4548cIHHjNEqi&sa=X&ved=2ahUKEwjMr8D_r4yTAxWXUqQEHaICJsgQ_4MLegQIRxAJ&biw=1829&bih=923&dpr=1"
+          target="_blank"
+        >
           Découvrez tous les avis
-        </Button>
+        </a>
       </section>
 
       {/* Contact Section */}
@@ -513,19 +517,6 @@ const Accueil = () => {
                 </div>
               </div>
 
-              {/* Map placeholder */}
-              {/* <Card className="shadow-lg">
-                <CardContent className="p-4 lg:p-6">
-                  <h4 className="font-semibold text-[#001964] mb-3 lg:mb-4 text-sm lg:text-base">Notre localisation</h4>
-                  <div className="w-full h-36 lg:h-48 bg-muted rounded-lg flex items-center justify-center">
-                    <div className="text-center">
-                      <MapPin className="h-6 lg:h-8 w-6 lg:w-8 mx-auto mb-2 text-[#001964]" />
-                      <p className="text-sm lg:text-base">Carte interactive</p>
-                      <p className="text-xs lg:text-sm">17 Rue du Champtier, 92500 Rueil-Malmaison</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card> */}
             </div>
 
             {/* Contact Form */}
