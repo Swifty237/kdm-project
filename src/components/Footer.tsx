@@ -52,16 +52,16 @@ const Footer = () => {
 
               <ul className="space-y-2 w-[50%]">
                 <li>
-                  <div className="flex items-center text-sm text-white/70">
+                  <a href={`tel:+33 6 66 28 32 43`} className="flex items-center text-sm text-white/70">
                     <Phone className="h-4 w-4 mr-2" />
                     +33 6 66 28 32 43
-                  </div>
+                  </a>
                 </li>
                 <li>
-                  <div className="flex items-center text-sm text-white/70">
+                  <a href={`mailto:kdmlogistique@gmail.com`} className="flex items-center text-sm text-white/70">
                     <Mail className="h-4 w-4 mr-2" />
                     kdmlogistique@gmail.com
-                  </div>
+                  </a>
                 </li>
                 <li>
                   <HashLink to="/#contact" className="inline-block text-sm text-white hover:underline">
@@ -77,10 +77,13 @@ const Footer = () => {
               <h3 className="font-semibold text-white">Adresse</h3>
 
               <div className="space-y-2 w-[50%]">
-                <div className="flex items-start text-sm text-white/70">
+                <a
+                  href={`https://maps.google.com/?q=${encodeURIComponent("17 Rue du Champtier" + ', ' + "92500 Rueil-Malmaison, France")}`}
+                  target="_blank"
+                  rel="noopener noreferrer" className="flex items-start text-sm text-white/70">
                   <MapPin className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0" />
                   <span>17 Rue du Champtier<br />92500 Rueil-Malmaison, France</span>
-                </div>
+                </a>
 
               </div>
             </div>
