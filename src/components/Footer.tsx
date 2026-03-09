@@ -5,7 +5,7 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#001964] border-t border-white/20 mt-16">
+    <footer id="main-footer" className="bg-[#001964] border-t border-white/20 mt-16 absolute bottom-0 w-full">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Logo et description */}

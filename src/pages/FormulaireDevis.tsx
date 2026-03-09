@@ -422,7 +422,7 @@ const FormulaireDevis = () => {
               } else {
                 setConfirmOpen(true);
               }
-            }} className="space-y-4 lg:space-y-6">
+            }} className="space-y-4 lg:space-y-6 mt-8">
 
               {/* Section informations client */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">

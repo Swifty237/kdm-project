@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 const Layout = ({ children }) => {
 
   const [navHeight, setNavHeight] = useState(0);
+  const [footerHeight, setFooterHeight] = useState(0);
 
   useEffect(() => {
     const updateNavHeight = () => {
@@ -21,10 +22,27 @@ const Layout = ({ children }) => {
     return () => window.removeEventListener('resize', updateNavHeight);
   }, []);
 
+  useEffect(() => {
+    const updateFooterHeight = () => {
+      const footer = document.getElementById('main-footer');
+      if (footer) {
+        setFooterHeight(footer.offsetHeight);
+      }
+    };
+
+    updateFooterHeight();
+    window.addEventListener('resize', updateFooterHeight);
+
+    return () => window.removeEventListener('resize', updateFooterHeight);
+  }, []);
+
   return (
-    <div className="min-h-screen">
+    <div className="relative min-h-screen">
       <Navigation />
-      <main style={{ paddingTop: `${navHeight}px` }}>
+      <main style={{
+        paddingTop: `${navHeight}px`,
+        paddingBottom: `${footerHeight}px`,
+      }}>
         {children}
       </main>
       <Footer />
