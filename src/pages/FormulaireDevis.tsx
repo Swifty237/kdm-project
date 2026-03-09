@@ -312,7 +312,7 @@ const FormulaireDevis = () => {
 
       toast({
         title: "Estimation calculée",
-        description: `Distance: ${distanceText} | Durée: ${durationText} | Estimation: ${estimatedAmount}€`,
+        description: `Distance: ${distanceText} | Durée du trajet: ${durationText} | Estimation: ${estimatedAmount}€`,
       });
 
     } catch (error) {

@@ -248,9 +248,9 @@ const Accueil = () => {
                 Confiez nous vos cartons sans stress et nous nous occupons du reste
               </CardTitle>
               <CardDescription className="italic text-center text-2xl text-[#001964]">
-                <span>Remplissez le formulaire ci-dessous, complétez votre demande et obtenez un devis rapidement.</span>
+                <span>Remplissez le formulaire ci-dessous, complétez votre demande et obtenez une estimation rapidement.</span>
                 <br />
-                <span className=""> (Ou cliquez sur "Demander un devis")</span>
+                <span className=""> (Vous pouvez aussi cliquez sur "Demander un devis")</span>
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -415,7 +415,7 @@ const Accueil = () => {
               <div>
                 <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-3 lg:mb-4">Validez votre devis</h3>
                 <p className="text-muted-foreground mb-3 lg:mb-4 text-lg lg:text-xl">
-                  Dès réception de votre demande, nous vous adressons un devis détaillé dans les plus brefs délais pour validation et réservation de votre date de déménagement.
+                  Dès réception de votre demande, nous vous transmettons un devis détaillé dans les plus brefs délais pour validation et réservation de votre date de déménagement.
                 </p>
               </div>
 
@@ -463,7 +463,6 @@ const Accueil = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 lg:mb-12 shadow-lg">
             {/* Elfsight Google Reviews | KDM logistique */}
-            {/* <script src="https://elfsightcdn.com/platform.js" async></script> */}
             <div className="elfsight-app-842bb9ef-d1c6-480a-9fda-f80dc1077672" data-elfsight-app-lazy></div>
           </div>
         </div>
