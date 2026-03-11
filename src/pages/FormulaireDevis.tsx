@@ -345,7 +345,7 @@ const FormulaireDevis = () => {
     const volumeValue = parseFloat(volume) || 0;
     const basePrice = 300;
     const pricePerKm = 1.5;
-    const pricePerM3 = 50;
+    const pricePerM3 = 10;
     const price = basePrice + (distanceKm * pricePerKm) + (volumeValue * pricePerM3);
     return Math.round(price * 100) / 100;
   };
