@@ -292,12 +292,12 @@ const ConfirmDevisDialog = ({
                                     <span>{devis.arrival.entreprise || "-"}</span>
                                 </div>
 
-                                {devis.service == "transport" && (
+                                {/* {devis.service == "transport" && (
                                     <div className="flex items-center">
                                         <p className="text-lg font-bold me-8">Date d'arrivée souhaitée :</p>
                                         <span>{devis.arrival.date || "-"}</span>
                                     </div>
-                                )}
+                                )} */}
                             </div>
                             <div className="grid grid-cols-1 h-2"></div>
 

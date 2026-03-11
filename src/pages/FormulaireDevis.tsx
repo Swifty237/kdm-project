@@ -977,7 +977,7 @@ const FormulaireDevis = () => {
                           )}
                         </div>
 
-                        <div>
+                        {/* <div>
                           <Label htmlFor="arrivalDate" className="text-lg">Date d'arrivée souhaitée</Label>
                           <div className="w-full flex justify-center">
                             <Input
@@ -989,7 +989,7 @@ const FormulaireDevis = () => {
                               className="text-sm lg:text-base flex justify-center w-[46%]"
                             />
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     )}
                   </div>
