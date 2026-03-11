@@ -415,7 +415,7 @@ const Accueil = () => {
               <div>
                 <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-3 lg:mb-4">Validez votre devis</h3>
                 <p className="text-muted-foreground mb-3 lg:mb-4 text-lg lg:text-xl">
-                  Dès réception de votre demande, nous vous transmettons un devis détaillé dans les plus brefs délais pour validation et réservation de votre date de déménagement.
+                  Dès réception de votre demande, nous vous transmettrons un devis détaillé dans les plus brefs délais pour validation et réservation de votre date de déménagement.
                 </p>
               </div>
 
