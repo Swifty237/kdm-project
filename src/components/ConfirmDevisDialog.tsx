@@ -110,8 +110,11 @@ const ConfirmDevisDialog = ({
         <Dialog open={open} onOpenChange={onCancel}>
             <DialogContent className="min-w-full md:min-w-[80%] h-[70%] mx-auto">
                 <div className="overflow-y-auto">
-                    <DialogHeader className="py-8">
-                        <DialogTitle className="mb-8 text-center border-b-2 pb-8">{title}</DialogTitle>
+                    <DialogHeader className="py-8 pb-8">
+                        <div className="mb-8 text-center border-b-2">
+                            <DialogTitle>{title}</DialogTitle>
+                            <DialogDescription className="mt-3">{description}</DialogDescription>
+                        </div>
 
                         <div className="space-y-4 lg:space-y-6">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
@@ -313,23 +316,21 @@ const ConfirmDevisDialog = ({
 
                             </div>
                         </div>
-
-                        <DialogDescription className="mt-3 text-start">{description}</DialogDescription>
                     </DialogHeader>
                 </div>
 
-                <DialogFooter className="mt-4">
+                <DialogFooter className="p-4 rounded-lg bg-[#ecf0f1]">
                     <div className="lg:flex justify-between w-[100%]">
                         <div className="flex items-center">
                             <h4 className="text-xl font-bold me-4">Montant de l'estimation : </h4>
                             <span className="text-3xl font-bold text-[#16a085]">{devis.estimatedAmount} € TTC</span>
                         </div>
                         <div className="flex flex-col lg:flex-row lg:justify-end mt-4 gap-2">
-                            <Button className="text-lg" variant="outline" onClick={onCancel}>
+                            <Button className="text-lg shadow-lg" variant="outline" onClick={onCancel}>
                                 <Trash2 className="h-4 w-4 mr-1" />
                                 <span>{cancelText}</span>
                             </Button>
-                            <Button className="text-lg bg-[#16a085] hover:bg-[#1abc9c]" variant="destructive" onClick={onConfirm}>
+                            <Button className="text-lg bg-[#16a085] hover:bg-[#1abc9c] shadow-lg" variant="destructive" onClick={onConfirm}>
                                 <Send className="h-4 w-4 mr-1" />
                                 <span>{confirmText}</span>
                             </Button>
