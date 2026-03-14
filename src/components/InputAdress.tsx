@@ -9,6 +9,7 @@ interface InputAdressProps
     value: string;
     onChange: (value: string) => void;
     onValidAddress?: (isValid: boolean) => void; // Optionnel : pour remonter la validité au parent
+    defaultValid?: boolean;
 }
 
 export default function InputAdress({
@@ -16,12 +17,17 @@ export default function InputAdress({
     onChange,
     placeholder,
     onValidAddress,
+    defaultValid = false,
     ...rest
 }: InputAdressProps) {
     const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
-    const [isValidAddress, setIsValidAddress] = useState(false);
-    const [hasSelectedFromAutocomplete, setHasSelectedFromAutocomplete] = useState(false);
+    // États internes
+    const [isValidAddress, setIsValidAddress] = useState(defaultValid);
+    const [hasSelectedFromAutocomplete, setHasSelectedFromAutocomplete] = useState(defaultValid);
+
+
+    const userInteractedRef = useRef(false); // pour savoir si l'utilisateur a modifié le champ ou sélectionné une adresse
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -34,6 +40,18 @@ export default function InputAdress({
             onValidAddress(isValidAddress);
         }
     }, [isValidAddress, onValidAddress]);
+
+    // Si defaultValid change et que l'utilisateur n'a pas encore interagi, on met à jour la validité
+    useEffect(() => {
+        if (defaultValid && !userInteractedRef.current) {
+            setIsValidAddress(true);
+            setHasSelectedFromAutocomplete(true);
+        } else if (!defaultValid && !userInteractedRef.current) {
+            // Si defaultValid devient false sans interaction, on réinitialise
+            setIsValidAddress(false);
+            setHasSelectedFromAutocomplete(false);
+        }
+    }, [defaultValid]);
 
     if (!isLoaded) return <Input disabled placeholder="Chargement de Google..." />;
 
@@ -49,6 +67,8 @@ export default function InputAdress({
 
         // Vérifier qu'on a bien une adresse formatée (signe qu'une vraie adresse a été sélectionnée)
         if (place && place.formatted_address) {
+            // L'utilisateur a sélectionné une adresse dans la liste
+            userInteractedRef.current = true;
             setHasSelectedFromAutocomplete(true);
             setIsValidAddress(true);
             onChange(place.formatted_address);
@@ -57,27 +77,18 @@ export default function InputAdress({
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value;
-
-        // Si l'utilisateur modifie le champ après avoir sélectionné une adresse,
-        // on réinitialise le flag de sélection
-        if (hasSelectedFromAutocomplete) {
-            setHasSelectedFromAutocomplete(false);
-            setIsValidAddress(false);
-        }
-
+        // L'utilisateur a modifié manuellement le champ
+        userInteractedRef.current = true;
+        // On réinitialise les flags de validation
+        setHasSelectedFromAutocomplete(false);
+        setIsValidAddress(false);
         onChange(newValue);
     };
 
     const handleBlur = () => {
-        // Validation au départ du champ
         if (!hasSelectedFromAutocomplete && value.trim() !== '') {
-            // Option 1: Adresse invalide car non sélectionnée via autocomplete
+            // Si l'utilisateur n'a pas sélectionné dans l'autocomplete, l'adresse est invalide
             setIsValidAddress(false);
-
-            // Option 2: Si vous voulez quand même accepter les adresses tapées manuellement
-            // mais avec une validation stricte du format, vous pouvez implémenter
-            // une validation plus poussée ici
-
         } else if (value.trim() === '') {
             setIsValidAddress(false);
         }
@@ -85,10 +96,10 @@ export default function InputAdress({
 
     // Déterminer la classe CSS en fonction de la validité
     const inputClassName = `${value && !isValidAddress && !hasSelectedFromAutocomplete
-            ? 'border-yellow-500 focus-visible:ring-yellow-500'
-            : isValidAddress
-                ? 'border-green-500 focus-visible:ring-green-500'
-                : ''
+        ? 'border-yellow-500 focus-visible:ring-yellow-500'
+        : isValidAddress
+            ? 'border-green-500 focus-visible:ring-green-500'
+            : ''
         } ${rest.className || ''}`;
 
     return (

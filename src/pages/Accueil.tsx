@@ -166,7 +166,14 @@ const Accueil = () => {
     console.log('Données du formulaire:', devisData);
 
     // Redirige vers /devis en transmettant les infos
-    navigate("/devis", { state: { devisData } });
+    navigate("/devis", {
+      state:
+      {
+        devisData,
+        departureValid,
+        arrivalValid
+      }
+    });
 
     setDevisData({
       service: 'demenagement',

@@ -34,6 +34,8 @@ const FormulaireDevis = () => {
 
   // Récupère les données transmises depuis Accueil
   const initialDevisData = location.state?.devisData || {};
+  const initialDepartureValid = location.state?.departureValid || false;
+  const initialArrivalValid = location.state?.arrivalValid || false;
 
   useEffect(() => {
     if (billingAddressValid) {
@@ -731,6 +733,7 @@ const FormulaireDevis = () => {
                             onValidAddress={setDepartAddressValid}
                             placeholder="Adresse de départ"
                             className={`text-sm lg:text-base ${errors.departAddress ? 'border-red-500' : ''}`}
+                            defaultValid={initialDepartureValid && departData.address === initialDevisData.departure}
                           />
                           {errors.departAddress && (
                             <p className="text-red-500 text-xs mt-1">{errors.departAddress}</p>
@@ -887,6 +890,7 @@ const FormulaireDevis = () => {
                             onValidAddress={setArrivalAddressValid}
                             placeholder="Adresse d'arrivée"
                             className={`text-sm lg:text-base ${errors.arrivalAddress ? 'border-red-500' : ''}`}
+                            defaultValid={initialArrivalValid && arrivalData.address === initialDevisData.arrival}
                           />
                           {errors.arrivalAddress && (
                             <p className="text-red-500 text-xs mt-1">{errors.arrivalAddress}</p>
