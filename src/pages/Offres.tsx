@@ -77,10 +77,6 @@ const Offres = () => {
       values: [false, false, false, true]
     },
     {
-      label: "Enlèvement des encombrants à jeter en déchetterie",
-      values: [false, false, false, true]
-    },
-    {
       label: "Ménage du lieu de destination après l'emménagement",
       values: [false, false, false, true]
     }
