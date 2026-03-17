@@ -45,6 +45,10 @@ const Offres = () => {
       values: [false, true, true, true]
     },
     {
+      label: "Enlèvement des encombrants à jeter en déchetterie",
+      values: [false, true, true, true]
+    },
+    {
       label: "Démontage et remontage du mobilier non fixé au mur",
       values: [false, false, true, true]
     },
