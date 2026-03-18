@@ -347,7 +347,7 @@ const FormulaireDevis = () => {
   const calculateTransportPrice = (distanceKm: number, volume: string): number => {
     const volumeValue = parseFloat(volume) || 0;
     const basePrice = 300;
-    const pricePerKm = 1.5;
+    const pricePerKm = 3;
     const pricePerM3 = 10;
     const price = basePrice + (distanceKm * pricePerKm) + (volumeValue * pricePerM3);
     return Math.round(price * 100) / 100;
