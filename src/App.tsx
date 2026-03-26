@@ -11,6 +11,7 @@ import APropos from "./pages/APropos";
 import FormulaireDevis from "./pages/FormulaireDevis";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
+import VirtualTour from "./pages/VirtualTour";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => {
               <Route path="/offres" element={<Offres />} />
               <Route path="/a-propos" element={<APropos />} />
               <Route path="/devis" element={<FormulaireDevis />} />
+              <Route path="/virtual-tour/:token" element={<VirtualTour />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
