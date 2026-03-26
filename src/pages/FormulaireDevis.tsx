@@ -136,7 +136,7 @@ const FormulaireDevis = () => {
         if (!departData.stairsSize) newErrors.departStairsSize = "La taille de l'escalier est requise";
       }
 
-      // Validation ascenceur départ
+      // Validation ascenseur départ
       if (departData.elevator && !departData.elevatorSize) {
         newErrors.departElevatorSize = "La taille de l'ascenseur est requise";
       }
@@ -146,7 +146,7 @@ const FormulaireDevis = () => {
         if (!arrivalData.stairsSize) newErrors.arrivalStairsSize = "La taille de l'escalier est requise";
       }
 
-      // Validation ascenceur arrivée
+      // Validation ascenseur arrivée
       if (arrivalData.elevator && !arrivalData.elevatorSize) {
         newErrors.arrivalElevatorSize = "La taille de l'ascenseur est requise";
       }
@@ -332,15 +332,16 @@ const FormulaireDevis = () => {
   const calculateMovingPrice = (offer: string, surface: number, distanceKm: number): number => {
     let basePrice = 0;
     switch (offer) {
-      case "economique": basePrice = 790; break;
-      case "standard": basePrice = 990; break;
-      case "premium": basePrice = 1790; break;
+      case "economique": basePrice = 650; break;
+      case "standard": basePrice = 890; break;
+      case "premium": basePrice = 1690; break;
       case "premium+": basePrice = 2190; break;
       default: basePrice = 0;
     }
     let price = basePrice;
-    if (surface > 50) price += (surface - 50) * 7;
-    if (distanceKm > 100) price += (distanceKm - 100) * 0.3;
+    if (surface > 30) price += (surface - 30) * 7;
+    if (distanceKm > 10 && distanceKm < 100) price += (distanceKm - 10) * 0.3;
+    if (distanceKm >= 100) price += (distanceKm - 10) * 0.8;
     return Math.round(price * 100) / 100;
   };
 
@@ -666,7 +667,7 @@ const FormulaireDevis = () => {
                             {departData.floor && parseInt(departData.floor) > 0 && (
                               <>
                                 <div>
-                                  <Label htmlFor="elevator" className="text-lg">Ascenceur</Label>
+                                  <Label htmlFor="elevator" className="text-lg">Ascenseur</Label>
                                   <div className="h-[40px] flex items-center justify-around">
                                     <div className="space-x-2 flex items-center h-[20px]">
                                       <Checkbox
@@ -823,7 +824,7 @@ const FormulaireDevis = () => {
                             {arrivalData.floor && parseInt(arrivalData.floor) > 0 && (
                               <>
                                 <div>
-                                  <Label htmlFor="arrivalElevator" className="text-lg">Ascenceur</Label>
+                                  <Label htmlFor="arrivalElevator" className="text-lg">Ascenseur</Label>
                                   <div className="h-[40px] flex items-center justify-around">
                                     <div className="space-x-2 flex h-[20px] items-center">
                                       <Checkbox
