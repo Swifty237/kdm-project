@@ -83,7 +83,7 @@ const VirtualTour = () => {
                 setPhotos([]);
                 setVideos([]);
                 // Recharger les infos du devis
-                const reload = await fetch(`${API_URL}/api/virtual-tour/${token}`);
+                const reload = await fetch(`${API_URL}/api/devis/virtual-tour/${token}`);
                 const reloadData = await reload.json();
                 if (reload.ok) setDevis(reloadData);
             } else {
@@ -110,11 +110,11 @@ const VirtualTour = () => {
                     <h2 className="text-xl font-semibold mb-2">Médias déjà ajoutés</h2>
                     <div className="grid grid-cols-2 gap-2">
                         {devis.virtualTourPhotos?.map((photo, idx) => (
-                            <img key={idx} src={`${import.meta.env.VITE_KDM_SERVER_URI}/uploads/${photo.split('uploads/')[1]}`} alt={`Photo ${idx + 1}`} className="w-full h-32 object-cover rounded" />
+                            <img key={idx} src={photo} alt={`Photo ${idx + 1}`} className="w-full h-32 object-cover rounded" />
                         ))}
                         {devis.virtualTourVideos?.map((video, idx) => (
                             <video key={idx} controls className="w-full h-32 object-cover rounded">
-                                <source src={`${import.meta.env.VITE_KDM_SERVER_URI}/uploads/${video.split('uploads/')[1]}`} />
+                                <source src={video} />
                             </video>
                         ))}
                     </div>
