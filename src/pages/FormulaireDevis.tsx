@@ -1001,19 +1001,6 @@ const FormulaireDevis = () => {
                               )}
                             </div>
 
-                            {/* <div>
-                          <Label htmlFor="arrivalDate" className="text-lg">Date d'arrivée souhaitée</Label>
-                          <div className="w-full flex justify-center">
-                            <Input
-                              id="arrivalDate"
-                              name="date"
-                              type="date"
-                              value={arrivalData.date}
-                              onChange={handleArrivalInputChange}
-                              className="text-sm lg:text-base flex justify-center w-[46%]"
-                            />
-                          </div>
-                        </div> */}
                           </div>
                         )}
                       </div>
