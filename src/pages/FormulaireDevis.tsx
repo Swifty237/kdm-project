@@ -247,13 +247,6 @@ const FormulaireDevis = () => {
     clearFieldError('arrivalStairsSize');
   };
 
-  const fetchDevisNumber = async () => {
-    const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
-    const response = await fetch(`${API_URL}/api/next-number`);
-    const data = await response.json();
-    return data.devisNumber;
-  };
-
   const handleEstimate = async () => {
     // Valider le formulaire
     const formErrors = validateForm();
@@ -352,6 +345,13 @@ const FormulaireDevis = () => {
     const pricePerM3 = 10;
     const price = basePrice + (distanceKm * pricePerKm) + (volumeValue * pricePerM3);
     return Math.round(price * 100) / 100;
+  };
+
+  const fetchDevisNumber = async () => {
+    const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
+    const response = await fetch(`${API_URL}/api/next-number`);
+    const data = await response.json();
+    return data.devisNumber;
   };
 
   const handleSubmit = async () => {
