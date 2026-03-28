@@ -254,10 +254,10 @@ const Accueil = () => {
               <CardTitle className="text-4xl lg:text-5xl text-center text-[#001964]">
                 Confiez nous vos cartons sans stress et nous nous occupons du reste
               </CardTitle>
-              <CardDescription className="italic text-center text-2xl text-[#001964]">
-                <span>Remplissez le formulaire ci-dessous, complétez votre demande et obtenez une estimation rapidement.</span>
+              <CardDescription className="italic text-center text-xl text-[#001964]">
+                <span>Remplissez le formulaire ci-dessous, complétez votre demande et obtenez une estimation instantanément.</span>
                 <br />
-                <span className=""> (Vous pouvez aussi cliquez sur "Demander un devis")</span>
+                <span className=""> (Vous pouvez aussi cliquez sur "Devis instantanée")</span>
               </CardDescription>
             </CardHeader>
             <CardContent>

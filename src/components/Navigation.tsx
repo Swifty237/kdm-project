@@ -56,7 +56,7 @@ const Navigation = () => {
       `}>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between">
+        <div className="hidden lg:flex items-center justify-between">
           {/* Logo */}
           <Link to="/">
             <img
@@ -67,7 +67,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex space-x-6">
+          <div className="space-x-6">
             {navItems.map((item) => (
               item.path.startsWith('#') ? (
                 <button
@@ -93,20 +93,33 @@ const Navigation = () => {
           </div>
 
           {/* Right side - Secondary links and CTA (Desktop) */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="flex items-center space-x-6">
             <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-xl text-white">
-              Demander un devis
+              Devis instantanée
             </Link>
             <HashLink to="/#contact" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full p-4 flex items-center justify-center">
               <Phone className="h-6 w-6 text-white" />
             </HashLink>
           </div>
+        </div>
 
-          {/* Mobile CTA and Menu button */}
-          <div className="flex items-center lg:hidden space-x-2">
-            <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-4 py-2 text-white text-sm">
-              Devis
+        {/* Mobile CTA and Menu button */}
+        <div className="flex flex-col items-center lg:hidden">
+          {/* Logo */}
+          <Link to="/">
+            <img
+              src="/img/Logo.png"
+              alt="KDM Logo"
+              className="w-auto"
+            />
+          </Link>
+
+          <div className="flex pb-2 justify-between w-full">
+            {/* Right side - Secondary links and CTA (Desktop) */}
+            <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-xl text-white">
+              Devis instantanée
             </Link>
+
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 rounded-md text-muted-foreground hover:text-[#001964] hover:bg-[#001964]/5"
@@ -120,6 +133,11 @@ const Navigation = () => {
         {isMenuOpen && (
           <div className="lg:hidden border-t border-border backdrop-blur-sm mt-2">
             <div className="px-2 pt-2 pb-3 space-y-1">
+              <div className="flex justify-end">
+                <HashLink to="/#contact" className="text-white bg-[#001964] hover:bg-[#001964]/90 rounded-full p-4 flex items-center justify-center">
+                  <Phone className="h-4 w-4" />
+                </HashLink>
+              </div>
               {navItems.map((item) => (
                 item.path.startsWith('#') ? (
                   <button
