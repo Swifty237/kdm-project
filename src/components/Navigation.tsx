@@ -95,7 +95,7 @@ const Navigation = () => {
           {/* Right side - Secondary links and CTA (Desktop) */}
           <div className="flex items-center space-x-6">
             <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-xl text-white">
-              Devis instantanée
+              Devis instantané
             </Link>
             <HashLink to="/#contact" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full p-4 flex items-center justify-center">
               <Phone className="h-6 w-6 text-white" />
@@ -117,7 +117,7 @@ const Navigation = () => {
           <div className="flex pb-2 justify-between w-full">
             {/* Right side - Secondary links and CTA (Desktop) */}
             <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-xl text-white">
-              Devis instantanée
+              Devis instantané
             </Link>
 
             <button

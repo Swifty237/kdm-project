@@ -114,6 +114,7 @@ const FormulaireDevis = () => {
   // Fonction de validation globale
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
+    const today = new Date().toISOString().split('T')[0];
 
     // Champs toujours obligatoires
     if (!devisData.civility) newErrors.civility = "La civilité est requise";
@@ -121,6 +122,7 @@ const FormulaireDevis = () => {
     if (!devisData.email) newErrors.email = "L'email est requis";
     if (!devisData.telephone) newErrors.telephone = "Le téléphone est requis";
     if (!devisData.date) newErrors.date = "La date est requise";
+    if (devisData.date <= today) newErrors.date = "La date est invalide";
     if (!billingAddressValid) newErrors.billingAddress = "Adresse de facturation invalide";
     if (!departAddressValid) newErrors.departAddress = "Adresse de départ invalide";
     if (!arrivalAddressValid) newErrors.arrivalAddress = "Adresse d'arrivée invalide";
@@ -247,6 +249,29 @@ const FormulaireDevis = () => {
     clearFieldError('arrivalStairsSize');
   };
 
+  const roundToNearestTen = (value) => {
+    // Convertir en nombre (au cas où on reçoit une chaîne)
+    const num = parseFloat(value);
+    if (isNaN(num)) return "0.00";
+
+    // Partie entière
+    const integerPart = Math.floor(num);
+    // Dernier chiffre de la partie entière (unités)
+    const lastDigit = integerPart % 10;
+
+    let roundedInteger;
+    if (lastDigit < 5) {
+      // Arrondir à la dizaine inférieure
+      roundedInteger = integerPart - lastDigit;
+    } else {
+      // Arrondir à la dizaine supérieure
+      roundedInteger = integerPart + (10 - lastDigit);
+    }
+
+    // Retourner le montant avec deux décimales (toujours .00)
+    return roundedInteger.toFixed(2);
+  };
+
   const handleEstimate = async () => {
     // Valider le formulaire
     const formErrors = validateForm();
@@ -266,15 +291,12 @@ const FormulaireDevis = () => {
     }
 
     try {
-      console.log('📍 Calcul de distance entre:', departData.address, 'et', arrivalData.address);
 
       // Calculer la distance - PLUS DE PARAMÈTRE API KEY
       const distanceResult = await calculateDistance(
         departData.address,
         arrivalData.address
       );
-
-      console.log('✅ Résultat distance:', distanceResult);
 
       if (!distanceResult || distanceResult.status !== 'OK') {
         toast({
@@ -299,16 +321,18 @@ const FormulaireDevis = () => {
         estimatedAmount = calculateMovingPrice(devisData.offer, surface, distanceKm);
       }
 
+      const convertEstimatedAmount = roundToNearestTen(estimatedAmount)
+
       setDevisData(prev => ({
         ...prev,
-        estimatedAmount: estimatedAmount.toFixed(2),
+        estimatedAmount: convertEstimatedAmount,
         distance: distanceText,
         duration: durationText,
       }));
 
       toast({
         title: "Estimation calculée",
-        description: `Distance: ${distanceText} | Durée du trajet: ${durationText} | Estimation: ${estimatedAmount}€`,
+        description: `Distance: ${distanceText} | Durée du trajet: ${durationText} | Estimation: ${convertEstimatedAmount}€`,
       });
 
     } catch (error) {
@@ -572,17 +596,16 @@ const FormulaireDevis = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="date" className="text-lg font-bold">Date souhaitée</Label>
-                      <div className="w-full flex justify-center">
-                        <Input
-                          id="date"
-                          name="date"
-                          type="date"
-                          value={devisData.date}
-                          onChange={handleInputChange}
-                          onBlur={() => setFieldTouched('date')}
-                          className={`text-sm lg:text-base flex justify-center w-[46%] ${errors.date ? 'border-red-500' : ''}`}
-                        />
-                      </div>
+                      <Input
+                        id="date"
+                        name="date"
+                        type="date"
+                        value={devisData.date}
+                        onChange={handleInputChange}
+                        min={new Date().toISOString().split('T')[0]}  // ← date du jour au format YYYY-MM-DD
+                        onBlur={() => setFieldTouched('date')}
+                        className={`text-sm lg:text-base flex justify-center ${errors.date ? 'border-red-500' : ''}`}
+                      />
                       {errors.date && (
                         <p className="text-red-500 text-xs mt-1">{errors.date}</p>
                       )}

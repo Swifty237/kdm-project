@@ -40,11 +40,13 @@ const Accueil = () => {
 
   // Vérifier si le formulaire peut être soumis
   const isDevisFormValid = () => {
+    const today = new Date().toISOString().split('T')[0];
     return (
       departureValid &&
       arrivalValid &&
       devisData.date &&
-      devisData.surface
+      devisData.surface &&
+      devisData.date >= today  // ← la date ne doit pas être antérieure à aujourd’hui
     );
   };
 
@@ -257,7 +259,7 @@ const Accueil = () => {
               <CardDescription className="italic text-center text-xl text-[#001964]">
                 <span>Remplissez le formulaire ci-dessous, complétez votre demande et obtenez une estimation instantanément.</span>
                 <br />
-                <span className=""> (Vous pouvez aussi cliquez sur "Devis instantanée")</span>
+                <span className=""> (Vous pouvez aussi cliquez sur "Devis instantané")</span>
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -316,8 +318,11 @@ const Accueil = () => {
                       value={devisData.date}
                       onChange={handleDevisInputChange}
                       placeholder="Date de départ"
-                      className="text-sm lg:text-xl"
+                      className="text-sm lg:text-xl flex justify-center"
                     />
+                    {devisData.date && devisData.date < new Date().toISOString().split('T')[0] && (
+                      <p className="text-red-500 text-sm mt-1">La date est invalide.</p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -327,6 +332,7 @@ const Accueil = () => {
                       type="text"
                       value={devisData.surface}
                       onChange={handleDevisInputChange}
+                      min={new Date().toISOString().split('T')[0]}  // ← date du jour au format YYYY-MM-DD
                       placeholder="Surface en m2"
                       className="text-sm lg:text-xl"
                     />
