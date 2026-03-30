@@ -457,11 +457,6 @@ const Accueil = () => {
             {/* Right Side - Large Text */}
             <div className="text-center lg:text-right h-full order-1 lg:order-2">
               <div className="flex flex-col items-center lg:items-end justify-center">
-                <img
-                  src="/lovable-uploads/cdlm-avatar-telephone.png"
-                  className="max-w-full h-auto"
-                  alt=""
-                />
                 <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold text-[#001964] leading-tight mb-6 lg:mb-12">
                   Obtenez votre devis rapidement et réservez votre date de déménagement.
                 </h2>
