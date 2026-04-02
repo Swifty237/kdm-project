@@ -104,15 +104,24 @@ const VirtualTour = () => {
         <div className="container mx-auto p-4 max-w-2xl">
             <h1 className="text-2xl font-bold mb-4">Visite virtuelle - Devis n° {devis.devisNumber}</h1>
 
-            {/* Affichage des médias déjà existants (optionnel) */}
-            {(devis.virtualTourPhotos?.length > 0 || devis.virtualTourVideos?.length > 0) && (
+            {/* Affichage des photos */}
+            {devis.virtualTourPhotos?.length > 0 && (
                 <div className="mb-6">
-                    <h2 className="text-xl font-semibold mb-2">Médias déjà ajoutés</h2>
+                    <h2 className="text-xl font-semibold mb-2">Photos</h2>
                     <div className="grid grid-cols-2 gap-2">
-                        {devis.virtualTourPhotos?.map((photo, idx) => (
+                        {devis.virtualTourPhotos.map((photo, idx) => (
                             <img key={idx} src={photo} alt={`Photo ${idx + 1}`} className="w-full h-32 object-cover rounded" />
                         ))}
-                        {devis.virtualTourVideos?.map((video, idx) => (
+                    </div>
+                </div>
+            )}
+
+            {/* Affichage des vidéos */}
+            {devis.virtualTourVideos?.length > 0 && (
+                <div className="mb-6">
+                    <h2 className="text-xl font-semibold mb-2">Vidéos</h2>
+                    <div className="grid grid-cols-2 gap-2">
+                        {devis.virtualTourVideos.map((video, idx) => (
                             <video key={idx} controls className="w-full h-32 object-cover rounded">
                                 <source src={video} />
                             </video>
