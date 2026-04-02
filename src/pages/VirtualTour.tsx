@@ -54,7 +54,7 @@ const VirtualTour = () => {
         const maxSize = 100 * 1024 * 1024; // 100 Mo
         const oversized = files.some(f => f.size > maxSize);
         if (oversized) {
-            alert("Chaque vidéo ne doit pas dépasser 100 Mo.");
+            alert("Aucune vidéo ne doit pas dépasser 100 Mo.");
             return;
         }
         setVideos(prev => [...prev, ...files]);

@@ -110,7 +110,7 @@ const ConfirmDevisDialog = ({
         <Dialog open={open} onOpenChange={onCancel}>
             <DialogContent className="min-w-full md:min-w-[80%] h-[70%] mx-auto">
 
-                {!devis ? (
+                {!(devis && devis.estimatedAmount) ? (
                     <p className="text-center">Chargement...</p>
                 ) : (
                     <>

@@ -444,7 +444,7 @@ const Accueil = () => {
                     Pour plus d'informations.
                   </p>
 
-                  <ArrowBigRight className="h-12 w-12 text-[#001964]" />
+                  <ArrowBigRight className="h-12 w-12 text-[#001964] animate-pulse" />
 
                   <HashLink to="#contact" className="bg-[#001964] hover:bg-[#001964]/90 text-white rounded-full px-4 py-2 lg:px-6 lg:text-xl text-center"
                   >

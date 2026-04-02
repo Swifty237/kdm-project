@@ -109,7 +109,7 @@ const Offres = () => {
         description: (
           <div className="text-lg">
             <span className="block font-bold text-xl mb-2">🚚 Offre de lancement – Profitez-en !</span>
-            Bénéficiez de <span className="font-bold">100 € de réduction</span> sur votre déménagement pour toute demande de devis envoyée avant le <span className="font-bold">31/03/2026</span>.
+            Bénéficiez de <span className="font-bold">100 € de réduction</span> sur votre déménagement pour toute demande de devis envoyée avant le <span className="font-bold">30/04/2026</span>.
             <br />
             <span> 👉 La remise ne sera pas visible sur l'estimation en ligne, mais elle sera bien appliquée sur le devis final envoyé par e-mail.</span>
             <div className="flex bg-[#001964] justify-center rounded mt-2">
@@ -290,9 +290,9 @@ const Offres = () => {
         </div>
       </section>
 
-      <div className="text-lg py-8 lg:py-16 px-10">
+      <div className="text-lg py-4 lg:py-8 px-4 mx-4 shadow-lg animate-pulse">
         <span className="block font-bold text-xl mb-2">🚚 Offre de lancement – Profitez-en !</span>
-        Bénéficiez de <span className="font-bold">100 € de réduction</span> sur votre déménagement pour toute demande de devis envoyée avant le <span className="font-bold">31/03/2026</span>.
+        Bénéficiez de <span className="font-bold">100 € de réduction</span> sur votre déménagement pour toute demande de devis envoyée avant le <span className="font-bold">30/04/2026</span>.
         <br />
         <span> 👉 La remise ne sera pas visible sur l'estimation en ligne, mais elle sera bien appliquée sur le devis final envoyé par e-mail.</span>
         <div className="flex bg-[#001964] justify-center rounded mt-2 shadow-xl">
