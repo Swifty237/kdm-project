@@ -40,12 +40,6 @@ const VirtualTour = () => {
         fetchDevis();
     }, [token]);
 
-    useEffect(() => {
-        console.log("Photos : ", devis.virtualTourPhotos);
-        console.log("Videos : ", devis.virtualTourVideos);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
         if (photos.length + files.length > 20) {
