@@ -25,6 +25,7 @@ const FormulaireDevis = () => {
   const [departAddressValid, setDepartAddressValid] = useState(false);
   const [arrivalAddressValid, setArrivalAddressValid] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [calculationLoading, setCalculationLoading] = useState(false);
 
   // Hook de validation
   const { errors, touched, setFieldTouched, setFieldError, clearFieldError } = useFormValidation();
@@ -290,6 +291,8 @@ const FormulaireDevis = () => {
       return;
     }
 
+    setCalculationLoading(true)
+
     try {
 
       // Calculer la distance - PLUS DE PARAMÈTRE API KEY
@@ -304,6 +307,7 @@ const FormulaireDevis = () => {
           description: "Impossible de calculer la distance entre les adresses",
           variant: "destructive"
         });
+        setCalculationLoading(false);
         return;
       }
 
@@ -335,6 +339,8 @@ const FormulaireDevis = () => {
         description: `Distance: ${distanceText} | Durée du trajet: ${durationText} | Estimation: ${convertEstimatedAmount}€`,
       });
 
+      setCalculationLoading(false);
+
     } catch (error) {
       console.error("❌ Erreur lors du calcul de distance:", error);
       toast({
@@ -342,6 +348,8 @@ const FormulaireDevis = () => {
         description: "Une erreur est survenue lors du calcul de la distance",
         variant: "destructive"
       });
+
+      setCalculationLoading(false);
     }
   };
 
@@ -1062,6 +1070,7 @@ const FormulaireDevis = () => {
 
           <ConfirmDevisDialog
             open={confirmOpen}
+            loading={calculationLoading}
             devis={devisData}
             title="Récapitulatif de la demande"
             description="Veuillez vérifier vos informations avant de valider."

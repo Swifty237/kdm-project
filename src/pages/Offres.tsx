@@ -117,9 +117,9 @@ const Offres = () => {
             </div>
           </div>
         ),
-        duration: 10000,
+        duration: 5000,
       });
-    }, 5000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [toast]);

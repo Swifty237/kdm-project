@@ -51,6 +51,7 @@ interface Devis {
 
 interface ConfirmDevisDialogProps {
     open: boolean;
+    loading: boolean;
     devis?: Partial<Devis>;
     title?: string;
     description?: string;
@@ -62,6 +63,7 @@ interface ConfirmDevisDialogProps {
 
 const ConfirmDevisDialog = ({
     open,
+    loading,
     devis,
     title = "Récapitulatif de la demande",
     description = "Souhaitez-vous valider la demande de devis ?",
@@ -110,7 +112,7 @@ const ConfirmDevisDialog = ({
         <Dialog open={open} onOpenChange={onCancel}>
             <DialogContent className="min-w-full md:min-w-[80%] h-[70%] mx-auto">
 
-                {!(devis && devis.estimatedAmount) ? (
+                {loading ? (
                     <p className="text-center">Chargement...</p>
                 ) : (
                     <>
