@@ -228,7 +228,7 @@ const VirtualTour = () => {
                 )}
             </div>
 
-            {(devis.virtualTourPhotos?.length > 0) || (devis.virtualTourVideos?.length > 0) && (
+            {(devis.virtualTourPhotos?.length > 0 || devis.virtualTourVideos?.length > 0) && (
                 <div className="mt-8 flex justify-between items-center">
                     <span>Selectionnez les éléments que vous souhaitez supprimer.</span>
                     <Button
