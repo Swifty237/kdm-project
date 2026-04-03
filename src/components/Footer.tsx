@@ -16,9 +16,17 @@ const Footer = () => {
                 alt="CDLM Logo blanc"
                 className="h-20 bg-white rounded me-2"
               />
-              <span>Qualité - Simplicité - Sérénité</span>
+              <span className="hidden lg:block">Qualité - Simplicité - Sérénité</span>
+              <div className="grid grid-cols-2 lg:hidden">
+                <div></div>
+                <div>
+                  <p>Qualité</p>
+                  <p>Simplicité</p>
+                  <p>Sérénité</p>
+                </div>
+              </div>
             </Link>
-            <p className="text-white/80 mb-4">
+            <p className="text-white/80 mb-4 text-xl">
               Votre partenaire de confiance pour le déménagement et le transport de marchandises.
             </p>
           </div>
