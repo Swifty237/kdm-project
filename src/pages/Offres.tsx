@@ -64,10 +64,10 @@ const Offres = () => {
       label: "Emballage des vêtements non sur cintres",
       values: [false, false, true, true]
     },
-    {
-      label: "Frais de stationnement",
-      values: [false, false, true, true]
-    },
+    // {
+    //   label: "Frais de stationnement",
+    //   values: [false, false, true, true]
+    // },
     {
       label: "Ménage du lieu de départ après le déménagement",
       values: [false, false, true, true]
