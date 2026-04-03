@@ -12,6 +12,7 @@ import FormulaireDevis from "./pages/FormulaireDevis";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import VirtualTour from "./pages/VirtualTour";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => {
               <Route path="/a-propos" element={<APropos />} />
               <Route path="/devis" element={<FormulaireDevis />} />
               <Route path="/virtual-tour/:token" element={<VirtualTour />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>

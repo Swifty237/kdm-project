@@ -237,7 +237,7 @@ const Accueil = () => {
 
       <section className="relative pb-16 sm:py-20 lg:py-32 px-4 sm:px-8 lg:px-32">
 
-        {/* Arrière-plan avec effet de fondu */}
+        {/* Arrière-plan avec carrousel */}
         {images.map((img, index) => (
           <div
             key={index}
@@ -248,8 +248,7 @@ const Accueil = () => {
         ))}
 
         {/* Contenu au-dessus du carrousel */}
-        {/* <div className="relative z-10 bg-black/40 w-full h-full flex flex-col justify-center items-center text-white text-center rounded-2xl"> */}
-        <div className="relative z-10 w-full h-full flex flex-col justify-center items-center text-white text-center rounded-2xl">
+        <div className="relative z-10 text-white text-center rounded-2xl">
 
           <Card className="bg-[#ecf0f1d7] border-0 shadow-lg ">
             <CardHeader>
@@ -359,7 +358,7 @@ const Accueil = () => {
       <section className="py-8 lg:py-16 px-4 sm:px-8 lg:px-16 mt-8">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {/* Orange Money Card */}
+
             <Card className="bg-white/95 backdrop-blur-sm hover:scale-105 transition-transform duration-300 shadow-lg">
               <CardContent className="p-4 lg:p-6 text-center">
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-[#001964] rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4">
@@ -375,7 +374,6 @@ const Accueil = () => {
               </CardContent>
             </Card>
 
-            {/* Mobile Money Card */}
             <Card className="backdrop-blur-sm hover:scale-105 transition-transform duration-300 shadow-lg">
               <CardContent className="p-4 lg:p-6 text-center">
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-[#001964] rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4">
@@ -391,7 +389,6 @@ const Accueil = () => {
               </CardContent>
             </Card>
 
-            {/* PayPal Card */}
             <Card className="bg-white/95 backdrop-blur-sm hover:scale-105 transition-transform duration-300 md:col-span-2 lg:col-span-1 shadow-lg">
               <CardContent className="p-4 lg:p-6 text-center">
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-[#001964] rounded-full flex items-center justify-center mx-auto mb-3 lg:mb-4">

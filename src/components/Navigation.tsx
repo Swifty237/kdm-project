@@ -133,11 +133,6 @@ const Navigation = () => {
         {isMenuOpen && (
           <div className="lg:hidden border-t border-border backdrop-blur-sm mt-2">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <div className="flex justify-end">
-                <HashLink to="/#contact" className="text-white bg-[#001964] hover:bg-[#001964]/90 rounded-full p-4 flex items-center justify-center">
-                  <Phone className="h-4 w-4" />
-                </HashLink>
-              </div>
               {navItems.map((item) => (
                 item.path.startsWith('#') ? (
                   <button
