@@ -260,7 +260,7 @@ const VirtualTour = () => {
                         </div>
                     </div>
 
-                    <Button className="bg-green-600 hover:bg-green-600/90" onClick={handleSubmit} disabled={uploading}>
+                    <Button className="bg-[#001964] hover:bg-[#001964]/90" onClick={handleSubmit} disabled={uploading}>
                         {uploading ? (
                             <>
                                 <Loader className="animate-spin me-1" />
