@@ -6,14 +6,16 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { MapPin, Mail, Phone, Clock, Send, HandCoins, Handshake, ArrowBigRight, Award } from 'lucide-react';
+import { MapPin, Mail, Phone, Clock, Send, HandCoins, Handshake, ArrowBigRight, Award, Loader } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import InputAdress from "@/components/InputAdress";
+import { useFormValidation } from '@/hooks/useFormValidation';
 
 const Accueil = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { errors, setFieldError, clearFieldError } = useFormValidation();
   const [messageData, setMessageData] = useState({
     civility: '',
     nom: '',
@@ -37,6 +39,21 @@ const Accueil = () => {
   // Dans votre composant Accueil
   const [departureValid, setDepartureValid] = useState(false);
   const [arrivalValid, setArrivalValid] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const validateContactForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    // Champs toujours obligatoires
+    if (!messageData.civility) newErrors.civility = "La civilité est requise";
+    if (!messageData.nom) newErrors.nom = "Le nom est requis";
+    if (!messageData.email) newErrors.email = "L'email est requis";
+    if (!messageData.telephone) newErrors.telephone = "Le téléphone est requis";
+    if (!messageData.service) newErrors.service = "Le service souhaité est requis";
+    if (!messageData.message) newErrors.message = "Le message est requis";
+
+    return newErrors;
+  };
 
   // Vérifier si le formulaire peut être soumis
   const isDevisFormValid = () => {
@@ -57,6 +74,7 @@ const Accueil = () => {
       ...prev,
       [name]: value
     }));
+    clearFieldError(name);
   };
 
   const handleDevisInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -73,6 +91,7 @@ const Accueil = () => {
       ...prev,
       service: value
     }));
+    clearFieldError("service");
   };
 
   const handleCivilityChange = (value: string) => {
@@ -80,69 +99,50 @@ const Accueil = () => {
       ...prev,
       civility: value
     }));
+    clearFieldError("civility");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Valider le formulaire
+    const contactFormErrors = validateContactForm();
+
+    if (Object.keys(contactFormErrors).length > 0) {
+      // Afficher les erreurs
+      Object.entries(contactFormErrors).forEach(([field, message]) => {
+        setFieldError(field, message);
+      });
+
+      toast({
+        title: "Formulaire incomplet",
+        description: "Veuillez remplir tous les champs obligatoires",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLoading(true);
+
     const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
-
-    console.log('🔍 URL complète appelée:', `${API_URL}/api/contact`);
-    console.log('🔍 Données du formulaire:', messageData);
-
-    // TEST 1: Vérifier d'abord si le serveur répond avec une requête OPTIONS
-    try {
-      console.log('📡 Test préflight OPTIONS...');
-      const optionsResponse = await fetch(`${API_URL}/api/contact`, {
-        method: "OPTIONS",
-        headers: {
-          "Origin": window.location.origin,
-          "Access-Control-Request-Method": "POST",
-          "Access-Control-Request-Headers": "content-type"
-        }
-      });
-      console.log('📡 Réponse OPTIONS - Status:', optionsResponse.status);
-      console.log('📡 Réponse OPTIONS - Headers:', Object.fromEntries(optionsResponse.headers));
-    } catch (optionsError) {
-      console.error('❌ Erreur OPTIONS:', optionsError);
-    }
-
-    // TEST 2: Vérifier si l'API est accessible en GET
-    try {
-      console.log('📡 Test GET /api/contact...');
-      const getResponse = await fetch(`${API_URL}/api/contact`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" }
-      });
-      console.log('📡 Réponse GET - Status:', getResponse.status);
-      console.log('📡 Réponse GET - URL finale:', getResponse.url); // VOIR SI REDIRECTION
-    } catch (getError) {
-      console.error('❌ Erreur GET:', getError);
-    }
 
     // Requête POST principale
     try {
-      console.log('📡 Envoi de la requête POST principale...');
-
       const response = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(messageData),
       });
 
-      console.log('📡 Réponse POST - Status:', response.status);
-      console.log('📡 Réponse POST - URL finale:', response.url); // CRUCIAL - montre la redirection
-      console.log('📡 Réponse POST - Headers:', Object.fromEntries(response.headers));
-
       const result = await response.json();
-      console.log('📡 Réponse POST - Body:', result);
-
-      toast({
-        title: "Message envoyé !",
-        description: "Nous vous recontacterons dans les plus brefs délais.",
-      });
 
       if (response.ok) {
+
+        toast({
+          title: "Message envoyé !",
+          description: "Nous vous recontacterons dans les plus brefs délais.",
+        });
+
         setMessageData({
           civility: "",
           nom: "",
@@ -152,20 +152,29 @@ const Accueil = () => {
           service: "",
           message: "",
         });
+
+        setLoading(false)
+
       } else {
-        alert("Erreur : " + result.error);
+
+        toast({
+          title: "Erreur",
+          description: result.error,
+          variant: "destructive"
+        });
+
+        setLoading(false);
       }
     } catch (err) {
       console.error('❌ Erreur catch:', err);
       console.error('❌ Type d\'erreur:', err instanceof TypeError ? 'TypeError' : typeof err);
       console.error('❌ Message d\'erreur:', err instanceof Error ? err.message : 'Erreur inconnue');
+      setLoading(false);
     }
   };
 
   const handleSubmitDevis = (e: React.FormEvent) => {
     e.preventDefault();
-
-    console.log('Données du formulaire:', devisData);
 
     // Redirige vers /devis en transmettant les infos
     navigate("/devis", {
@@ -365,10 +374,10 @@ const Accueil = () => {
                   <HandCoins className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                 </div>
                 <h3 className="font-bold text-[#001964] mb-2 text-xl">Formule économique ou premium</h3>
-                <p className="text-gray-700 text-lg text-justify mb-4">
+                <p className="text-gray-700 text-lg text-justify mb-4 p">
                   Parmi nos 4 formules, vous trouverez la prestation adaptée à vos besoins et à votre budget.
                 </p>
-                <p className="text-gray-700 text-lg text-justify">
+                <p className="text-gray-700 text-lg text-justify p">
                   De l’essentiel au tout compris : à vous de choisir !
                 </p>
               </CardContent>
@@ -567,10 +576,10 @@ const Accueil = () => {
                     <div className="flex">
                       <div className="w-[35%] me-4">
                         <Label htmlFor="civility" className="text-sm lg:text-base">
-                          Civilité
+                          Civilité *
                         </Label>
                         <Select onValueChange={handleCivilityChange} value={messageData.civility}>
-                          <SelectTrigger className={`text-sm lg:text-base`}>
+                          <SelectTrigger className={`text-sm lg:text-base ${errors.civility ? 'border-red-500' : ''}`}>
                             <SelectValue placeholder="Civilité" />
                           </SelectTrigger>
                           <SelectContent>
@@ -578,6 +587,7 @@ const Accueil = () => {
                             <SelectItem value="Mme.">Mme.</SelectItem>
                           </SelectContent>
                         </Select>
+                        {errors.civility && <p className="text-red-500 text-xs mt-1">{errors.civility}</p>}
                       </div>
 
                       <div className="w-full">
@@ -586,12 +596,14 @@ const Accueil = () => {
                           id="nom"
                           name="nom"
                           type="text"
-                          required
                           value={messageData.nom}
                           onChange={handleInputChange}
                           placeholder="Votre nom"
-                          className="text-sm lg:text-base"
+                          className={`text-sm lg:text-base ${errors.nom ? 'border-red-500' : ''}`}
                         />
+                        {errors.nom && (
+                          <p className="text-red-500 text-xs mt-1">{errors.nom}</p>
+                        )}
                       </div>
 
 
@@ -600,7 +612,6 @@ const Accueil = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="entreprise" className="text-sm lg:text-base">Entreprise</Label> <br />
-                        <span className="text-sm italic text-[#636e72]">(* Si vous nous contactez pour le compte d'une entreprise)</span>
                         <Input
                           id="entreprise"
                           name="entreprise"
@@ -611,8 +622,9 @@ const Accueil = () => {
                           className="text-sm lg:text-base"
                         />
                       </div>
+
                       <div className="space-y-2">
-                        <Label htmlFor="telephone" className="text-sm lg:text-base">Téléphone</Label>
+                        <Label htmlFor="telephone" className="text-sm lg:text-base">Téléphone *</Label>
                         <Input
                           id="telephone"
                           name="telephone"
@@ -620,8 +632,11 @@ const Accueil = () => {
                           value={messageData.telephone}
                           onChange={handleInputChange}
                           placeholder="+33 1 23 45 67 89"
-                          className="text-sm lg:text-base"
+                          className={`text-sm lg:text-base ${errors.telephone ? 'border-red-500' : ''}`}
                         />
+                        {errors.telephone && (
+                          <p className="text-red-500 text-xs mt-1">{errors.telephone}</p>
+                        )}
                       </div>
                     </div>
 
@@ -633,18 +648,20 @@ const Accueil = () => {
                           id="email"
                           name="email"
                           type="email"
-                          required
                           value={messageData.email}
                           onChange={handleInputChange}
                           placeholder="votre@email.com"
-                          className="text-sm lg:text-base"
+                          className={`text-sm lg:text-base ${errors.email ? 'border-red-500' : ''}`}
                         />
+                        {errors.email && (
+                          <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                        )}
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="service" className="text-sm lg:text-base">Service souhaité</Label>
+                        <Label htmlFor="service" className="text-sm lg:text-base">Service souhaité *</Label>
                         <Select onValueChange={handleSelectChange} value={messageData.service}>
-                          <SelectTrigger className="text-sm lg:text-base">
+                          <SelectTrigger className={`text-sm lg:text-base ${errors.service ? 'border-red-500' : ''}`}>
                             <SelectValue placeholder="Sélectionnez un service" />
                           </SelectTrigger>
                           <SelectContent>
@@ -652,26 +669,39 @@ const Accueil = () => {
                             <SelectItem value="transport">Service de transport marchandises</SelectItem>
                           </SelectContent>
                         </Select>
+                        {errors.service && <p className="text-red-500 text-xs mt-1">{errors.service}</p>}
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message" className="text-sm lg:text-base">Message</Label>
+                      <Label htmlFor="message" className="text-sm lg:text-base">Message *</Label>
                       <Textarea
                         id="message"
                         name="message"
-                        required
                         value={messageData.message}
                         onChange={handleInputChange}
                         placeholder="Décrivez votre projet ou vos besoins..."
                         rows={5}
-                        className="text-sm lg:text-base"
+                        className={`text-sm lg:text-base ${errors.message ? 'border-red-500' : ''}`}
                       />
+                      {errors.message && (
+                        <p className="text-red-500 text-xs mt-1">{errors.message}</p>
+                      )}
                     </div>
+                    <span className="text-sm text-[#636e72]">(* Champs obligatoires)</span>
 
-                    <Button type="submit" className="w-full bg-[#001964] hover:bg-[#001964]/90 text-sm lg:text-base" size="lg">
-                      <Send className="mr-2 h-4 w-4" />
-                      Envoyer le message
+                    <Button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full bg-[#001964] hover:bg-[#001964]/90 text-sm lg:text-base"
+                      size="lg"
+                    >
+                      {loading ? <Loader className="h-4 w-4 animate-spin" /> : (
+                        <>
+                          <Send className="mr-2 h-4 w-4" />
+                          Envoyer le message
+                        </>
+                      )}
                     </Button>
                   </form>
                 </CardContent>
