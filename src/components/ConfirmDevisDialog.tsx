@@ -1,4 +1,4 @@
-import { Send, Trash2 } from 'lucide-react';
+import { Loader, Send, Trash2 } from 'lucide-react';
 import {
     Dialog,
     DialogContent,
@@ -113,7 +113,9 @@ const ConfirmDevisDialog = ({
             <DialogContent className="min-w-full md:min-w-[80%] h-[70%] mx-auto">
 
                 {loading ? (
-                    <p className="text-center">Chargement...</p>
+                    <div className="flex justify-center items-center p-8">
+                        <Loader className="h-6 w-6 animate-spin" />
+                    </div>
                 ) : (
                     <>
                         <div className="overflow-y-auto">

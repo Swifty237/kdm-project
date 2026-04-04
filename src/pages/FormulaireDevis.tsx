@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Send, X } from 'lucide-react';
+import { Loader, Send, X } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -442,7 +442,9 @@ const FormulaireDevis = () => {
   return (
     <div className="max-w-6xl mx-auto">
       {loading ? (
-        <p className="text-center">Chargement...</p>
+        <div className="flex justify-center items-center h-40 mt-8 p-8">
+          <Loader className="h-6 w-6 animate-spin" />
+        </div>
       ) : (
         <>
           <div className="flex justify-end">
