@@ -99,7 +99,12 @@ const VirtualTour = () => {
                 toast({ description: data.error || "Erreur lors de la suppression", variant: "destructive" });
             }
         } catch (err) {
-            toast({ description: "Erreur réseau", variant: "destructive" });
+            console.error("Erreur réseau:", err);
+            toast({
+                title: "Erreur réseau",
+                description: "Une erreur est survenue lors de la suppression",
+                variant: "destructive"
+            });
         } finally {
             setDeleting(false);
         }
@@ -188,16 +193,19 @@ const VirtualTour = () => {
                 const reloadData = await reload.json();
                 if (reload.ok) setDevis(reloadData);
             } else {
+                console.error("Erreur réseau:", data.error);
                 toast({
-                    description: data.error || "Erreur lors de l'upload",
+                    title: "Erreur lors de l'upload",
+                    description: data.error,
                     variant: "destructive"
                 });
                 // alert(data.error || "Erreur lors de l'upload");
             }
         } catch (err) {
+            console.error("Erreur réseau:", err);
             toast({
                 title: "Erreur reseau",
-                description: err,
+                description: "Une erreur est survenue lors de l'upload",
                 variant: "destructive"
             });
             // alert("Erreur réseau");
