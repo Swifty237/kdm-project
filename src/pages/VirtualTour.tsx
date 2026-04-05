@@ -96,7 +96,11 @@ const VirtualTour = () => {
 
             } else {
                 const data = await res.json();
-                toast({ description: data.error || "Erreur lors de la suppression", variant: "destructive" });
+                toast({
+                    title: "Erreur lors de la suppression",
+                    description: data.error,
+                    variant: "destructive"
+                });
             }
         } catch (err) {
             console.error("Erreur réseau:", err);
