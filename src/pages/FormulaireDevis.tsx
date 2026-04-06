@@ -359,8 +359,8 @@ const FormulaireDevis = () => {
     switch (offer) {
       case "economique": basePrice = 650; break;
       case "standard": basePrice = 890; break;
-      case "premium": basePrice = 1690; break;
-      case "premium+": basePrice = 2190; break;
+      case "premium": basePrice = 1290; break;
+      case "premium+": basePrice = 1790; break;
       default: basePrice = 0;
     }
     let price = basePrice;
