@@ -141,6 +141,7 @@ const Accueil = () => {
         toast({
           title: "Message envoyé !",
           description: "Nous vous recontacterons dans les plus brefs délais.",
+          className: "bg-green-600 text-white border-none",
         });
 
         setMessageData({
@@ -667,6 +668,7 @@ const Accueil = () => {
                           <SelectContent>
                             <SelectItem value="Demenagement">Service de déménagement</SelectItem>
                             <SelectItem value="transport">Service de transport marchandises</SelectItem>
+                            <SelectItem value="autre">Autres services</SelectItem>
                           </SelectContent>
                         </Select>
                         {errors.service && <p className="text-red-500 text-xs mt-1">{errors.service}</p>}
