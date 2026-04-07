@@ -110,8 +110,10 @@ const ConfirmDevisDialog = ({
 
     return (
         <Dialog open={open} onOpenChange={onCancel}>
+            {/* Balise vide obligatoire sinon => message d'erreur DialogTitle et missing Description */}
+            <DialogTitle>{ }</DialogTitle>
+            <DialogDescription>{ }</DialogDescription>
             <DialogContent className="min-w-full md:min-w-[80%] h-[70%] mx-auto">
-
                 {loading ? (
                     <div className="flex justify-center items-center p-8">
                         <Loader className="h-6 w-6 animate-spin" />

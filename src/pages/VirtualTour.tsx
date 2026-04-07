@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,6 +28,10 @@ const VirtualTour = () => {
     const [deleting, setDeleting] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [confirmDeleteMultiple, setConfirmDeleteMultiple] = useState(false);
+
+    // Refs pour les inputs file
+    const photoInputRef = useRef<HTMLInputElement>(null);
+    const videoInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const fetchDevis = async () => {
@@ -196,6 +200,11 @@ const VirtualTour = () => {
                 const reload = await fetch(`${API_URL}/api/devis/virtual-tour/${token}`);
                 const reloadData = await reload.json();
                 if (reload.ok) setDevis(reloadData);
+
+                // ✅ Vider les inputs file
+                if (photoInputRef.current) photoInputRef.current.value = '';
+                if (videoInputRef.current) videoInputRef.current.value = '';
+
             } else {
                 console.error("Erreur réseau:", data.error);
                 toast({
@@ -256,19 +265,29 @@ const VirtualTour = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="mb-4">
-                            <label className="block font-bold mb-2 text-sm">Photos (20 maximun)</label>
-                            <Input type="file" accept="image/*" multiple onChange={handlePhotoUpload} />
-                            {photos.length > 0 && (
-                                <p className="text-sm mt-1">{photos.length} photo(s) sélectionnée(s)</p>
-                            )}
+                            <label className="block font-bold mb-2 text-sm">Photos (20 maximum)</label>
+                            <Input
+                                ref={photoInputRef}
+                                type="file"
+                                accept="image/*"
+                                multiple
+                                onChange={handlePhotoUpload}
+                                className="hover:cursor-pointer hover:border-2 hover:border-black transition-colors"
+                            />
+                            {photos.length > 0 && <p className="text-sm mt-1">{photos.length} photo(s) sélectionnée(s)</p>}
                         </div>
 
                         <div className="mb-6">
-                            <label className="block font-bold mb-2 text-sm">Vidéos (10 au maximun pour 10 Mo maximum / Videos)</label>
-                            <Input type="file" accept="video/*" multiple onChange={handleVideoUpload} />
-                            {videos.length > 0 && (
-                                <p className="text-sm mt-1">{videos.length} vidéo(s) sélectionnée(s)</p>
-                            )}
+                            <label className="block font-bold mb-2 text-sm">Vidéos (10 maximum / 10 Mo max par vidéo)</label>
+                            <Input
+                                ref={videoInputRef}
+                                type="file"
+                                accept="video/*"
+                                multiple
+                                onChange={handleVideoUpload}
+                                className="hover:cursor-pointer hover:border-2 hover:border-black transition-colors"
+                            />
+                            {videos.length > 0 && <p className="text-sm mt-1">{videos.length} vidéo(s) sélectionnée(s)</p>}
                         </div>
                     </div>
 
