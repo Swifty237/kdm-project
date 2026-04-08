@@ -180,11 +180,11 @@ const VirtualTour = () => {
 
             <div className="mb-6 p-4 bg-[#ecf0f1] border border-[#ecf0f1] rounded-sm shadow-xl text-justify">
                 <h3 className="text-lg font-semibold text-[#001964] mb-2">
-                    📸 Conseils pour des médias utiles
+                    📸 Conseils pour des photos utiles
                 </h3>
                 <p className="text-[#001964] mb-2">
                     Pour que nous puissions préparer votre déménagement dans les meilleures conditions,
-                    merci de bien vouloir nous fournir des photos ou vidéos (ou les deux) des éléments suivants :
+                    merci de bien vouloir nous fournir des photos des éléments suivants :
                 </p>
                 <ul className="list-disc list-inside text-[#001964] space-y-1 mb-3 ml-2">
                     <li>Chaque pièce à déménager (angle large de préférence)</li>
@@ -192,8 +192,7 @@ const VirtualTour = () => {
                     <li>Les éventuelles difficultés : escalier étroit, ascenseur trop petit, porte ou couloir exigu, meuble très volumineux ou très lourd</li>
                 </ul>
                 <p className="text-[#001964]">
-                    <strong>Limites techniques :</strong> vous pouvez télécharger jusqu’à <strong>20 photos</strong> et <strong>5 vidéos</strong> pour un poids maximun de <strong>1 Go par video</strong>.
-                    Le temps de chargement peut parfois paraître long si vous charger plusieurs videos à la fois, il n'y a donc pas d'iquiétude à avoir dans ce cas.
+                    <strong>Limites techniques :</strong> vous pouvez télécharger jusqu’à <strong>20 photos</strong> au maximum.
                 </p>
                 <p className="text-[#001964] mt-2">
                     Merci pour votre aide, ces informations nous permettent de vous faire un devis précis et d’organiser votre déménagement en toute sérénité.
@@ -202,7 +201,7 @@ const VirtualTour = () => {
 
             <div className="flex justify-center mt-8 md:px-8">
                 <div className="p-4 border shadow-md rounded-md w-full">
-                    <h1 className="text-xl font-bold mb-4">Charger une ou plusieurs photos ou videos</h1>
+                    <h1 className="text-xl font-bold mb-4">Charger une ou plusieurs photos</h1>
 
                     <div className="mb-4">
                         <label className="block font-bold mb-2 text-sm">Photos (20 maximum)</label>
