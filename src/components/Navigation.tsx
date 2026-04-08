@@ -131,7 +131,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-border backdrop-blur-sm mt-2">
+          <div className="lg:hidden border-t border-border backdrop-blur-md mt-2 bg-[#ecf0f1] rounded-md">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item) => (
                 item.path.startsWith('#') ? (

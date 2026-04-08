@@ -1,6 +1,6 @@
 const PrivacyPolicy = () => {
     return (
-        <div className="py-16 mt-8 bg-gray-50">
+        <div className="py-16 bg-gray-50">
             <div className="max-w-6xl mx-auto">
                 <div className="bg-white shadow-2xl p-6 md:p-10">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
                         Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}
                     </p>
 
-                    <div className="prose prose-gray max-w-none space-y-6 text-gray-700">
+                    <div className="prose prose-gray max-w-none space-y-6 text-gray-700 text-justify">
                         <p>
                             La présente politique de confidentialité décrit comment la société KDM LOGISTIQUE collecte, utilise, protège et supprime les données personnelles de nos clients. Nous nous engageons à respecter votre vie privée et à protéger vos informations conformément à la réglementation en vigueur, notamment le Règlement Général sur la Protection des Données (RGPD).
                         </p>

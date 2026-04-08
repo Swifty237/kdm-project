@@ -9,31 +9,29 @@ const Layout = ({ children }) => {
   const [footerHeight, setFooterHeight] = useState(0);
 
   useEffect(() => {
-    const updateNavHeight = () => {
-      const nav = document.getElementById('main-nav');
-      if (nav) {
-        setNavHeight(nav.offsetHeight);
-      }
-    };
+    const nav = document.getElementById('main-nav');
+    if (!nav) return;
 
-    updateNavHeight();
-    window.addEventListener('resize', updateNavHeight);
+    const updateHeight = () => setNavHeight(nav.offsetHeight);
+    updateHeight();
 
-    return () => window.removeEventListener('resize', updateNavHeight);
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(nav);
+
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    const updateFooterHeight = () => {
-      const footer = document.getElementById('main-footer');
-      if (footer) {
-        setFooterHeight(footer.offsetHeight);
-      }
-    };
+    const footer = document.getElementById('main-footer');
+    if (!footer) return;
 
-    updateFooterHeight();
-    window.addEventListener('resize', updateFooterHeight);
+    const updateHeight = () => setFooterHeight(footer.offsetHeight);
+    updateHeight();
 
-    return () => window.removeEventListener('resize', updateFooterHeight);
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(footer);
+
+    return () => observer.disconnect();
   }, []);
 
   return (

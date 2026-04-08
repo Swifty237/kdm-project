@@ -134,7 +134,7 @@ const VirtualTour = () => {
 
     const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
-        const maxSize = 10 * 1024 * 1024; // 10 Mo
+        const maxSize = 100 * 1024 * 1024; // 100 Mo
         const maxCount = 10;
 
         // Vérifier la taille
@@ -142,7 +142,7 @@ const VirtualTour = () => {
         if (oversized) {
             toast({
                 title: "Attention !",
-                description: "Aucune vidéo ne doit dépasser 10 Mo.",
+                description: "Aucune vidéo ne doit dépasser 100 Mo.",
                 variant: "destructive"
             });
             // alert("Aucune vidéo ne doit dépasser 10 Mo.");
@@ -238,7 +238,7 @@ const VirtualTour = () => {
         <div className="container mx-auto p-4 max-w-6xl">
             <h1 className="text-2xl font-bold mb-4">Visite virtuelle - Devis n° {devis.devisNumber}</h1>
 
-            <div className="mb-6 p-4 bg-[#ecf0f1] border border-[#ecf0f1] rounded-sm shadow-xl">
+            <div className="mb-6 p-4 bg-[#ecf0f1] border border-[#ecf0f1] rounded-sm shadow-xl text-justify">
                 <h3 className="text-lg font-semibold text-[#001964] mb-2">
                     📸 Conseils pour des médias utiles
                 </h3>
@@ -252,7 +252,7 @@ const VirtualTour = () => {
                     <li>Les éventuelles difficultés : escalier étroit, ascenseur trop petit, porte ou couloir exigu, meuble très volumineux ou très lourd</li>
                 </ul>
                 <p className="text-[#001964]">
-                    <strong>Limites techniques :</strong> vous pouvez télécharger jusqu’à <strong>20 photos</strong> et <strong>10 vidéos</strong> pour un poids maximun de <strong>10 Mo par videos</strong>.
+                    <strong>Limites techniques :</strong> vous pouvez télécharger jusqu’à <strong>20 photos</strong> et <strong>10 vidéos</strong> pour un poids maximun de <strong>100 Mo par videos</strong>.
                 </p>
                 <p className="text-[#001964] mt-2">
                     Merci pour votre aide, ces informations nous permettent de vous faire un devis précis et d’organiser votre déménagement en toute sérénité.
