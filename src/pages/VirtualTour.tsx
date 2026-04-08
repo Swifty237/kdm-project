@@ -163,6 +163,46 @@ const VirtualTour = () => {
         setVideos(prev => [...prev, ...files]);
     };
 
+    const uploadVideoWithPresignedUrl = async (file: File, token: string) => {
+        const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
+
+        // Étape 1 : demander une URL pré-signée au backend
+        const signRes = await fetch(`${API_URL}/api/devis/virtual-tour/${token}/sign-url`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                filename: file.name,
+                filetype: file.type,
+                fileCategory: 'videos'
+            })
+        });
+        if (!signRes.ok) {
+            const errorData = await signRes.json();
+            throw new Error(errorData.error || "Erreur lors de la génération de l'URL");
+        }
+        const { signedUrl, publicUrl } = await signRes.json();
+
+        // Étape 2 : upload direct vers S3 avec un PUT
+        const uploadRes = await fetch(signedUrl, {
+            method: 'PUT',
+            body: file,
+            headers: { 'Content-Type': file.type }
+        });
+        if (!uploadRes.ok) {
+            throw new Error(`Échec de l'upload vers S3 (status ${uploadRes.status})`);
+        }
+
+        // Étape 3 : enregistrer l'URL publique dans la base de données
+        const addRes = await fetch(`${API_URL}/api/devis/virtual-tour/${token}/add-video`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ videoUrl: publicUrl })
+        });
+        if (!addRes.ok) {
+            throw new Error("Erreur lors de l'enregistrement de la vidéo");
+        }
+    };
+
     const handleSubmit = async () => {
         if (photos.length === 0 && videos.length === 0) {
             toast({
@@ -170,58 +210,57 @@ const VirtualTour = () => {
                 description: "Vous devez sélectionner au moins une photo ou une vidéo.",
                 variant: "destructive"
             });
-            // alert("Veuillez sélectionner au moins une photo ou une vidéo.");
             return;
         }
         setUploading(true);
-        const formData = new FormData();
-        photos.forEach(photo => formData.append('photos', photo));
-        videos.forEach(video => formData.append('videos', video));
+        const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
 
         try {
-            const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
-            const res = await fetch(`${API_URL}/api/devis/virtual-tour/${token}/upload`, {
-                method: 'POST',
-                body: formData,
-            });
-            const data = await res.json();
-            if (res.ok) {
-
-                toast({
-                    description: "Fichiers envoyés avec succès !",
-                    className: "bg-green-600 text-white border-none",
+            // 1. Upload des photos (méthode multipart existante)
+            if (photos.length > 0) {
+                const formData = new FormData();
+                photos.forEach(photo => formData.append('photos', photo));
+                const res = await fetch(`${API_URL}/api/devis/virtual-tour/${token}/upload`, {
+                    method: 'POST',
+                    body: formData,
                 });
-
-                // alert("Fichiers envoyés avec succès !");
-                // Optionnel : recharger les données pour afficher les fichiers uploadés
-                setPhotos([]);
-                setVideos([]);
-                // Recharger les infos du devis
-                const reload = await fetch(`${API_URL}/api/devis/virtual-tour/${token}`);
-                const reloadData = await reload.json();
-                if (reload.ok) setDevis(reloadData);
-
-                // ✅ Vider les inputs file
-                if (photoInputRef.current) photoInputRef.current.value = '';
-                if (videoInputRef.current) videoInputRef.current.value = '';
-
-            } else {
-                console.error("Erreur réseau:", data.error);
-                toast({
-                    title: "Erreur lors de l'upload",
-                    description: data.error,
-                    variant: "destructive"
-                });
-                // alert(data.error || "Erreur lors de l'upload");
+                if (!res.ok) {
+                    const data = await res.json();
+                    throw new Error(data.error || "Erreur lors de l'upload des photos");
+                }
             }
-        } catch (err) {
-            console.error("Erreur réseau:", err);
+
+            // 2. Upload des vidéos (via URLs pré-signées)
+            if (videos.length > 0) {
+                for (const video of videos) {
+                    await uploadVideoWithPresignedUrl(video, token!);
+                }
+            }
+
+            // Succès
             toast({
-                title: "Erreur reseau",
-                description: "Une erreur est survenue lors de l'upload",
+                description: "Fichiers envoyés avec succès !",
+                className: "bg-green-600 text-white border-none",
+            });
+
+            // Réinitialiser les états
+            setPhotos([]);
+            setVideos([]);
+            if (photoInputRef.current) photoInputRef.current.value = '';
+            if (videoInputRef.current) videoInputRef.current.value = '';
+
+            // Recharger les données du devis
+            const reload = await fetch(`${API_URL}/api/devis/virtual-tour/${token}`);
+            const reloadData = await reload.json();
+            if (reload.ok) setDevis(reloadData);
+
+        } catch (err) {
+            console.error("Erreur upload :", err);
+            toast({
+                title: "Erreur lors de l'upload",
+                description: err.message || "Une erreur est survenue",
                 variant: "destructive"
             });
-            // alert("Erreur réseau");
         } finally {
             setUploading(false);
         }
