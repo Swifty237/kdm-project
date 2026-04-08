@@ -134,18 +134,18 @@ const VirtualTour = () => {
 
     const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
-        const maxSize = 100 * 1024 * 1024; // 100 Mo
-        const maxCount = 10;
+        const maxSize = 1000 * 1024 * 1024; // 1000 Mo
+        const maxCount = 5;
 
         // Vérifier la taille
         const oversized = files.some(f => f.size > maxSize);
         if (oversized) {
             toast({
                 title: "Attention !",
-                description: "Aucune vidéo ne doit dépasser 100 Mo.",
+                description: "Aucune vidéo ne doit dépasser 1 Go.",
                 variant: "destructive"
             });
-            // alert("Aucune vidéo ne doit dépasser 10 Mo.");
+            // alert("Aucune vidéo ne doit dépasser 1 Go.");
             return;
         }
 
@@ -252,7 +252,7 @@ const VirtualTour = () => {
                     <li>Les éventuelles difficultés : escalier étroit, ascenseur trop petit, porte ou couloir exigu, meuble très volumineux ou très lourd</li>
                 </ul>
                 <p className="text-[#001964]">
-                    <strong>Limites techniques :</strong> vous pouvez télécharger jusqu’à <strong>20 photos</strong> et <strong>10 vidéos</strong> pour un poids maximun de <strong>100 Mo par videos</strong>.
+                    <strong>Limites techniques :</strong> vous pouvez télécharger jusqu’à <strong>20 photos</strong> et <strong>5 vidéos</strong> pour un poids maximun de <strong>1 Go par video</strong>.
                 </p>
                 <p className="text-[#001964] mt-2">
                     Merci pour votre aide, ces informations nous permettent de vous faire un devis précis et d’organiser votre déménagement en toute sérénité.
