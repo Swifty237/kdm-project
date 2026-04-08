@@ -19,19 +19,14 @@ const VirtualTour = () => {
     const [devis, setDevis] = useState<DevisVirtualTour | null>(null);
     const [loading, setLoading] = useState(true);
     const [photos, setPhotos] = useState<File[]>([]);
-    const [videos, setVideos] = useState<File[]>([]);
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState('');
     const { toast } = useToast();
     const [selectedPhotos, setSelectedPhotos] = useState<string[]>([]);
-    const [selectedVideos, setSelectedVideos] = useState<string[]>([]);
     const [deleting, setDeleting] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
-    const [confirmDeleteMultiple, setConfirmDeleteMultiple] = useState(false);
 
-    // Refs pour les inputs file
     const photoInputRef = useRef<HTMLInputElement>(null);
-    const videoInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const fetchDevis = async () => {
@@ -60,17 +55,10 @@ const VirtualTour = () => {
         );
     };
 
-    // Fonction pour gérer la sélection d'une vidéo
-    const toggleVideoSelection = (url: string) => {
-        setSelectedVideos(prev =>
-            prev.includes(url) ? prev.filter(u => u !== url) : [...prev, url]
-        );
-    };
-
     // Modifie la fonction handleDelete pour ouvrir le dialogue
     const handleDelete = () => {
-        if (selectedPhotos.length === 0 && selectedVideos.length === 0) return;
-        setConfirmOpen(true); // Ouvre le dialogue au lieu de confirm()
+        if (selectedPhotos.length === 0) return;   // plus de videos
+        setConfirmOpen(true);
     };
 
     // Nouvelle fonction qui effectue la suppression après confirmation
@@ -84,7 +72,6 @@ const VirtualTour = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     photoUrls: selectedPhotos,
-                    videoUrls: selectedVideos
                 })
             });
             if (res.ok) {
@@ -92,7 +79,6 @@ const VirtualTour = () => {
                 const reloadData = await reload.json();
                 if (reload.ok) setDevis(reloadData);
                 setSelectedPhotos([]);
-                setSelectedVideos([]);
                 toast({
                     description: "Suppression réussie !",
                     className: "bg-green-600 text-white border-none",
@@ -126,90 +112,14 @@ const VirtualTour = () => {
                 description: "Vous ne pouvez ajouter que 20 photos maximum.",
                 variant: "destructive"
             });
-            // alert("Vous ne pouvez ajouter que 20 photos maximum.");
             return;
         }
         setPhotos(prev => [...prev, ...files]);
     };
 
-    const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = Array.from(e.target.files || []);
-        const maxSize = 1000 * 1024 * 1024; // 1000 Mo
-        const maxCount = 5;
-
-        // Vérifier la taille
-        const oversized = files.some(f => f.size > maxSize);
-        if (oversized) {
-            toast({
-                title: "Attention !",
-                description: "Aucune vidéo ne doit dépasser 1 Go.",
-                variant: "destructive"
-            });
-            // alert("Aucune vidéo ne doit dépasser 1 Go.");
-            return;
-        }
-
-        // Vérifier le nombre
-        if (videos.length + files.length > maxCount) {
-            toast({
-                title: "Attention !",
-                description: `Vous ne pouvez ajouter que ${maxCount} vidéos au maximum.`,
-                variant: "destructive"
-            });
-            // alert(`Vous ne pouvez ajouter que ${maxCount} vidéos au maximum.`);
-            return;
-        }
-
-        setVideos(prev => [...prev, ...files]);
-    };
-
-    const uploadVideoWithPresignedUrl = async (file: File, token: string) => {
-        const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
-
-        // Étape 1 : demander une URL pré-signée au backend
-        const signRes = await fetch(`${API_URL}/api/devis/virtual-tour/${token}/sign-url`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                filename: file.name,
-                filetype: file.type,
-                fileCategory: 'videos'
-            })
-        });
-        if (!signRes.ok) {
-            const errorData = await signRes.json();
-            throw new Error(errorData.error || "Erreur lors de la génération de l'URL");
-        }
-        const { signedUrl, publicUrl } = await signRes.json();
-
-        // Étape 2 : upload direct vers S3 avec un PUT
-        const uploadRes = await fetch(signedUrl, {
-            method: 'PUT',
-            body: file,
-            headers: { 'Content-Type': file.type }
-        });
-        if (!uploadRes.ok) {
-            throw new Error(`Échec de l'upload vers S3 (status ${uploadRes.status})`);
-        }
-
-        // Étape 3 : enregistrer l'URL publique dans la base de données
-        const addRes = await fetch(`${API_URL}/api/devis/virtual-tour/${token}/add-video`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ videoUrl: publicUrl })
-        });
-        if (!addRes.ok) {
-            throw new Error("Erreur lors de l'enregistrement de la vidéo");
-        }
-    };
-
     const handleSubmit = async () => {
-        if (photos.length === 0 && videos.length === 0) {
-            toast({
-                title: "Attention !",
-                description: "Vous devez sélectionner au moins une photo ou une vidéo.",
-                variant: "destructive"
-            });
+        if (photos.length === 0) {   // plus de videos
+            toast({ title: "Attention !", description: "Vous devez sélectionner au moins une photo.", variant: "destructive" });
             return;
         }
         setUploading(true);
@@ -230,13 +140,6 @@ const VirtualTour = () => {
                 }
             }
 
-            // 2. Upload des vidéos (via URLs pré-signées)
-            if (videos.length > 0) {
-                for (const video of videos) {
-                    await uploadVideoWithPresignedUrl(video, token!);
-                }
-            }
-
             // Succès
             toast({
                 description: "Fichiers envoyés avec succès !",
@@ -245,9 +148,7 @@ const VirtualTour = () => {
 
             // Réinitialiser les états
             setPhotos([]);
-            setVideos([]);
             if (photoInputRef.current) photoInputRef.current.value = '';
-            if (videoInputRef.current) videoInputRef.current.value = '';
 
             // Recharger les données du devis
             const reload = await fetch(`${API_URL}/api/devis/virtual-tour/${token}`);
@@ -303,32 +204,17 @@ const VirtualTour = () => {
                 <div className="p-4 border shadow-md rounded-md w-full">
                     <h1 className="text-xl font-bold mb-4">Charger une ou plusieurs photos ou videos</h1>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="mb-4">
-                            <label className="block font-bold mb-2 text-sm">Photos (20 maximum)</label>
-                            <Input
-                                ref={photoInputRef}
-                                type="file"
-                                accept="image/*"
-                                multiple
-                                onChange={handlePhotoUpload}
-                                className="hover:cursor-pointer hover:border-2 hover:border-black transition-colors"
-                            />
-                            {photos.length > 0 && <p className="text-sm mt-1">{photos.length} photo(s) sélectionnée(s)</p>}
-                        </div>
-
-                        <div className="mb-6">
-                            <label className="block font-bold mb-2 text-sm">Vidéos (10 maximum / 10 Mo max par vidéo)</label>
-                            <Input
-                                ref={videoInputRef}
-                                type="file"
-                                accept="video/*"
-                                multiple
-                                onChange={handleVideoUpload}
-                                className="hover:cursor-pointer hover:border-2 hover:border-black transition-colors"
-                            />
-                            {videos.length > 0 && <p className="text-sm mt-1">{videos.length} vidéo(s) sélectionnée(s)</p>}
-                        </div>
+                    <div className="mb-4">
+                        <label className="block font-bold mb-2 text-sm">Photos (20 maximum)</label>
+                        <Input
+                            ref={photoInputRef}
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={handlePhotoUpload}
+                            className="hover:cursor-pointer hover:border-2 hover:border-black transition-colors"
+                        />
+                        {photos.length > 0 && <p className="text-sm mt-1">{photos.length} photo(s) sélectionnée(s)</p>}
                     </div>
 
                     <Button className="bg-[#001964] hover:bg-[#001964]/90" onClick={handleSubmit} disabled={uploading}>
@@ -368,37 +254,15 @@ const VirtualTour = () => {
                         </div>
                     </div>
                 )}
-
-                {/* Affichage des vidéos */}
-                {devis.virtualTourVideos?.length > 0 && (
-                    <div className="mb-6">
-                        <h2 className="text-xl font-semibold mb-2">Vidéos</h2>
-                        <div className="grid grid-cols-2 gap-2">
-                            {devis.virtualTourVideos.map((video, idx) => (
-                                <div key={idx} className="relative">
-                                    <video controls className="w-full h-32 object-cover rounded">
-                                        <source src={video} />
-                                    </video>
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedVideos.includes(video)}
-                                        onChange={() => toggleVideoSelection(video)}
-                                        className="absolute top-1 left-1 w-5 h-5 accent-blue-600"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
             </div>
 
-            {(devis.virtualTourPhotos?.length > 0 || devis.virtualTourVideos?.length > 0) && (
+            {(devis.virtualTourPhotos?.length > 0) && (
                 <div className="mt-8 flex justify-between items-center">
                     <span>Selectionnez les éléments que vous souhaitez supprimer.</span>
                     <Button
                         className="bg-red-500 hover:bg-red-500/90 mb-4"
                         onClick={handleDelete}
-                        disabled={deleting || (selectedPhotos.length === 0 && selectedVideos.length === 0)}
+                        disabled={deleting || (selectedPhotos.length === 0)}
                     >
 
                         {deleting ? (
@@ -420,7 +284,7 @@ const VirtualTour = () => {
             <ConfirmDialog
                 open={confirmOpen}
                 title="Supprimer les médias sélectionnés ?"
-                description={`Vous allez supprimer ${selectedPhotos.length} photo(s) et ${selectedVideos.length} vidéo(s). Cette action est irréversible.`}
+                description={`Vous allez supprimer ${selectedPhotos.length} photo(s). Cette action est irréversible.`}
                 confirmText="Supprimer"
                 cancelText="Annuler"
                 onConfirm={handleConfirmDelete}
