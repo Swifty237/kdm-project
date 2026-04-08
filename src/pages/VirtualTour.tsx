@@ -292,6 +292,7 @@ const VirtualTour = () => {
                 </ul>
                 <p className="text-[#001964]">
                     <strong>Limites techniques :</strong> vous pouvez télécharger jusqu’à <strong>20 photos</strong> et <strong>5 vidéos</strong> pour un poids maximun de <strong>1 Go par video</strong>.
+                    Le temps de chargement peut parfois paraître long si vous charger plusieurs videos à la fois, il n'y a donc pas d'iquiétude à avoir dans ce cas.
                 </p>
                 <p className="text-[#001964] mt-2">
                     Merci pour votre aide, ces informations nous permettent de vous faire un devis précis et d’organiser votre déménagement en toute sérénité.
