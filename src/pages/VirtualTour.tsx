@@ -252,10 +252,9 @@ const VirtualTour = () => {
 
             <div className="flex justify-center mt-8 md:px-8">
                 <div className="p-4 border shadow-md rounded-md w-full">
-                    <h1 className="text-xl font-bold">Charger une ou plusieurs photos</h1>
+                    <h1 className="text-xl font-bold">Charger une ou plusieurs photos (20 au maximum)</h1>
 
                     <div className="mb-4">
-                        <label className="block font-bold mb-2 text-sm">(20 maximum)</label>
                         <Input
                             ref={photoInputRef}
                             type="file"
