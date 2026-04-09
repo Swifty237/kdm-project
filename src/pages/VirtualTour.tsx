@@ -252,7 +252,7 @@ const VirtualTour = () => {
 
             <div className="flex justify-center mt-8 md:px-8">
                 <div className="p-4 border shadow-md rounded-md w-full">
-                    <h1 className="text-xl font-bold">Charger une ou plusieurs photos (20 au maximum)</h1>
+                    <h1 className="text-xl font-bold mb-2">Charger une ou plusieurs photos (20 au maximum)</h1>
 
                     <div className="mb-4">
                         <Input
