@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Loader, Send, Trash } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import ConfirmDialog from '@/components/ConfirmDialog';
+import imageCompression from 'browser-image-compression';
 
 interface DevisVirtualTour {
     _id: string;
@@ -117,43 +118,93 @@ const VirtualTour = () => {
         setPhotos(prev => [...prev, ...files]);
     };
 
+    // Nouvelle fonction : upload d'une seule photo (compressée) via URL pré-signée
+    const uploadSinglePhoto = async (file: File, token: string): Promise<string> => {
+        const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
+        // 1. Compression
+        const options = {
+            maxSizeMB: 0.5,          // taille max 0.5 Mo par photo
+            maxWidthOrHeight: 1920,  // résolution max 1920px
+            useWebWorker: true,
+            fileType: 'image/jpeg',
+        };
+        let compressedFile = file;
+        if (file.size > 1024 * 1024) { // si > 1 Mo, on compresse
+            compressedFile = await imageCompression(file, options);
+        }
+
+        // 2. Demander une URL pré-signée au backend
+        const signRes = await fetch(`${API_URL}/api/devis/virtual-tour/${token}/sign-photo`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                fileName: compressedFile.name,
+                fileType: compressedFile.type,
+            }),
+        });
+        if (!signRes.ok) {
+            const err = await signRes.json();
+            throw new Error(err.error || "Erreur signature");
+        }
+        const { signedUrl, finalUrl } = await signRes.json();
+
+        // 3. Upload direct vers S3
+        const uploadRes = await fetch(signedUrl, {
+            method: 'PUT',
+            body: compressedFile,
+            headers: { 'Content-Type': compressedFile.type },
+        });
+        if (!uploadRes.ok) {
+            throw new Error("Échec de l'upload vers S3");
+        }
+
+        // 4. Retourner l'URL finale (publique)
+        return finalUrl;
+    };
+
     const handleSubmit = async () => {
-        if (photos.length === 0) {   // plus de videos
-            toast({ title: "Attention !", description: "Vous devez sélectionner au moins une photo.", variant: "destructive" });
+        if (photos.length === 0) {
+            toast({ title: "Attention !", description: "Sélectionnez au moins une photo.", variant: "destructive" });
             return;
         }
+
         setUploading(true);
         const API_URL = import.meta.env.VITE_KDM_SERVER_URI;
 
         try {
-            // 1. Upload des photos (méthode multipart existante)
-            if (photos.length > 0) {
-                const formData = new FormData();
-                photos.forEach(photo => formData.append('photos', photo));
-                const res = await fetch(`${API_URL}/api/devis/virtual-tour/${token}/upload`, {
-                    method: 'POST',
-                    body: formData,
-                });
-                if (!res.ok) {
-                    const data = await res.json();
-                    throw new Error(data.error || "Erreur lors de l'upload des photos");
-                }
+            const uploadedUrls: string[] = [];
+
+            // Upload séquentiel (ou parallèle avec Promise.all, mais attention aux limites de connexion)
+            for (const photo of photos) {
+                const url = await uploadSinglePhoto(photo, token!);
+                uploadedUrls.push(url);
             }
 
-            // Succès
-            toast({
-                description: "Fichiers envoyés avec succès !",
-                className: "bg-green-600 text-white border-none",
+            // Confirmation au backend : enregistrer toutes ces URLs
+            const confirmRes = await fetch(`${API_URL}/api/devis/virtual-tour/${token}/confirm-upload`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ photoUrls: uploadedUrls }),
             });
 
-            // Réinitialiser les états
+            if (!confirmRes.ok) {
+                const errData = await confirmRes.json();
+                throw new Error(errData.error || "Erreur lors de l'enregistrement");
+            }
+
+            // Recharger les données du devis
+            const reloadRes = await fetch(`${API_URL}/api/devis/virtual-tour/${token}`);
+            const reloadData = await reloadRes.json();
+            if (reloadRes.ok) setDevis(reloadData);
+
+            // Réinitialiser l'état
             setPhotos([]);
             if (photoInputRef.current) photoInputRef.current.value = '';
 
-            // Recharger les données du devis
-            const reload = await fetch(`${API_URL}/api/devis/virtual-tour/${token}`);
-            const reloadData = await reload.json();
-            if (reload.ok) setDevis(reloadData);
+            toast({
+                description: `${uploadedUrls.length} photo(s) envoyée(s) avec succès !`,
+                className: "bg-green-600 text-white border-none",
+            });
 
         } catch (err) {
             console.error("Erreur upload :", err);
