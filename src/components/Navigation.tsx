@@ -51,7 +51,7 @@ const Navigation = () => {
       ref={navRef}
       id="main-nav"
       className={`
-        fixed top-0 left-0 w-full z-50 backdrop-blur-sm transition-shadow duration-300 ps-6
+        fixed top-0 left-0 w-full z-50 backdrop-blur-sm transition-shadow duration-300
         ${hasShadow ? "shadow-md bg-white/90" : "bg-white/50"}
       `}>
 
