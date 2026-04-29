@@ -104,13 +104,13 @@ const Navigation = () => {
         </div>
 
         {/* Mobile CTA and Menu button */}
-        <div className="flex flex-col items-center lg:hidden">
+        <div className="flex flex-col items-start lg:hidden">
           {/* Logo */}
           <Link to="/">
             <img
               src="/img/Logo.png"
               alt="KDM Logo"
-              className="w-auto"
+              className="h-24 w-auto"
             />
           </Link>
 

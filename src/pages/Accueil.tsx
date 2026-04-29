@@ -9,7 +9,6 @@ import { useToast } from '@/hooks/use-toast';
 import { MapPin, Mail, Phone, Clock, Send, HandCoins, Handshake, ArrowBigRight, Award, Loader } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import InputAdress from "@/components/InputAdress";
 import { useFormValidation } from '@/hooks/useFormValidation';
 
 const Accueil = () => {
@@ -26,19 +25,9 @@ const Accueil = () => {
     message: '',
   });
 
-  const [devisData, setDevisData] = useState({
-    service: 'demenagement',
-    departure: '',
-    arrival: '',
-    date: '',
-    surface: '',
-  });
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Dans votre composant Accueil
-  const [departureValid, setDepartureValid] = useState(false);
-  const [arrivalValid, setArrivalValid] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const validateContactForm = () => {
@@ -55,18 +44,6 @@ const Accueil = () => {
     return newErrors;
   };
 
-  // Vérifier si le formulaire peut être soumis
-  const isDevisFormValid = () => {
-    const today = new Date().toISOString().split('T')[0];
-    return (
-      departureValid &&
-      arrivalValid &&
-      devisData.date &&
-      devisData.surface &&
-      devisData.date >= today  // ← la date ne doit pas être antérieure à aujourd’hui
-    );
-  };
-
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -75,14 +52,6 @@ const Accueil = () => {
       [name]: value
     }));
     clearFieldError(name);
-  };
-
-  const handleDevisInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setDevisData(prev => ({
-      ...prev,
-      [name]: value
-    }));
   };
 
 
@@ -174,28 +143,6 @@ const Accueil = () => {
     }
   };
 
-  const handleSubmitDevis = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Redirige vers /devis en transmettant les infos
-    navigate("/devis", {
-      state:
-      {
-        devisData,
-        departureValid,
-        arrivalValid
-      }
-    });
-
-    setDevisData({
-      service: 'demenagement',
-      departure: '',
-      arrival: '',
-      date: '',
-      surface: '',
-    });
-  };
-
   const contactInfo = [
     {
       icon: <Phone className="h-6 w-6 text-white" />,
@@ -260,104 +207,24 @@ const Accueil = () => {
         {/* Contenu au-dessus du carrousel */}
         <div className="relative z-10 text-white text-center rounded-2xl">
 
-          <Card className="bg-[#ecf0f1d7] border-0 shadow-lg ">
+          <Card className="bg-[#ecf0f1d7] border-0 shadow-lg mt-8">
             <CardHeader>
-              <CardTitle className="text-4xl lg:text-5xl text-center text-[#001964]">
-                Confiez nous vos cartons sans stress et nous nous occupons du reste
+              <CardTitle className="text-3xl lg:text-4xl text-center text-[#001964]">
+                Confiez nous vos cartons sans stress, nous nous occupons du reste
               </CardTitle>
-              <CardDescription className="italic text-center text-xl text-[#001964]">
-                <span>Remplissez le formulaire ci-dessous, complétez votre demande et obtenez une estimation instantanément.</span>
-                <br />
-                <span className=""> (Vous pouvez aussi cliquez sur "Devis instantané")</span>
-              </CardDescription>
+
             </CardHeader>
             <CardContent>
 
-              <form onSubmit={handleSubmitDevis} className="space-y-4 lg:space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
-                  <div className="space-y-2">
-                    <div>
-                      <span className="text-gray-500 italic text-lg">( N°, rue, code postal, ville )</span>
-                      <InputAdress
-                        id="departure"
-                        name="departure"
-                        value={devisData.departure}
-                        onChange={(val) => setDevisData({ ...devisData, departure: val })}
-                        onValidAddress={(isValid) => setDepartureValid(isValid)}
-                        placeholder="Adresse complète de départ"
-                        className="text-sm lg:text-xl"
-                      />
-                      {/* Message d'erreur optionnel */}
-                      {devisData.departure && !departureValid && (
-                        <p className="text-yellow-600 text-lg mt-1">
-                          Veuillez sélectionner une adresse dans la liste déroulante
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div>
-                      <span className="text-gray-500 italic text-lg">( N°, rue, code postal, ville )</span>
-                      <InputAdress
-                        id="arrival"
-                        name="arrival"
-                        value={devisData.arrival}
-                        onChange={(val) => setDevisData({ ...devisData, arrival: val })}
-                        onValidAddress={(isValid) => setArrivalValid(isValid)}
-                        placeholder="Adresse complète de l'arrivée"
-                        className="text-sm lg:text-xl"
-                      />
-                      {/* Message d'erreur optionnel */}
-                      {devisData.arrival && !arrivalValid && (
-                        <p className="text-yellow-600 text-lg mt-1">
-                          Veuillez sélectionner une adresse dans la liste déroulante
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
-                  <div className="space-y-2">
-                    <Input
-                      id="date"
-                      name="date"
-                      type="date"
-                      value={devisData.date}
-                      onChange={handleDevisInputChange}
-                      placeholder="Date de départ"
-                      className="text-sm lg:text-xl flex justify-center"
-                    />
-                    {devisData.date && devisData.date < new Date().toISOString().split('T')[0] && (
-                      <p className="text-red-500 text-sm mt-1">La date est invalide.</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Input
-                      id="surface"
-                      name="surface"
-                      type="text"
-                      value={devisData.surface}
-                      onChange={handleDevisInputChange}
-                      min={new Date().toISOString().split('T')[0]}  // ← date du jour au format YYYY-MM-DD
-                      placeholder="Surface en m2"
-                      className="text-sm lg:text-xl"
-                    />
-                  </div>
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-[#001964] hover:bg-[#001964]/90 text-sm lg:text-base"
-                  size="lg"
-                  disabled={!isDevisFormValid()} // Désactiver si adresses invalides 
-                >
-                  <Send className="mr-2 h-4 w-4" />
-                  C'est parti !
-                </Button>
-              </form>
+              <Button
+                type="button"
+                className="w-full bg-[#001964] hover:bg-[#001964]/90 text-lg"
+                size="lg"
+                onClick={() => navigate('/devis')}
+              >
+                <Send className="mr-2" style={{ width: '1rem', height: '1rem' }} />
+                Faire mon devis instantané !
+              </Button>
 
             </CardContent>
           </Card>
@@ -422,7 +289,7 @@ const Accueil = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             {/* Left Side - Content */}
-            <div className="space-y-6 lg:space-y-8 order-2 lg:order-1">
+            <div className="space-y-6 lg:space-y-8 order-2 lg:order-1 lg:mt-20">
               {/* Step 1 */}
               <div>
                 <h3 className="text-xl lg:text-2xl font-bold text-[#001964] mb-3 lg:mb-4">Envoyez une demande de devis</h3>
@@ -464,9 +331,10 @@ const Accueil = () => {
             {/* Right Side - Large Text */}
             <div className="text-center lg:text-right h-full order-1 lg:order-2">
               <div className="flex flex-col items-center lg:items-end justify-center">
-                <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold text-[#001964] leading-tight mb-6 lg:mb-12">
-                  Obtenez votre devis rapidement et réservez votre date de déménagement.
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#001964] mb-4 lg:mb-8">
+                  Comment ça marche ?
                 </h2>
+                <h3 className="text-lg sm:text-xl lg:text-2xl w-[60%] text-muted-foreground">Obtenez votre devis rapidement et réservez votre date de déménagement.</h3>
               </div>
             </div>
           </div>
@@ -567,9 +435,9 @@ const Accueil = () => {
             <div>
               <Card className="shadow-lg">
                 <CardHeader>
-                  <CardTitle className="text-xl lg:text-2xl text-[#001964]">Envoyez-nous un message</CardTitle>
+                  <CardTitle className="text-xl lg:text-2xl text-[#001964]">Une demande particulière ? Une question ?</CardTitle>
                   <CardDescription className="text-sm lg:text-base">
-                    Remplissez le formulaire ci-dessous et nous vous recontacterons rapidement.
+                    Envoyez-nous un message en remplissant le formulaire ci-dessous et nous vous recontacterons rapidement.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
