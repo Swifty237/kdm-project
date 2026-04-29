@@ -51,7 +51,7 @@ const Navigation = () => {
       ref={navRef}
       id="main-nav"
       className={`
-        fixed top-0 left-0 w-full z-50 backdrop-blur-sm transition-shadow duration-300
+        fixed top-0 left-0 w-full z-50 backdrop-blur-sm transition-shadow duration-300 ps-6
         ${hasShadow ? "shadow-md bg-white/90" : "bg-white/50"}
       `}>
 
@@ -110,11 +110,11 @@ const Navigation = () => {
             <img
               src="/img/Logo.png"
               alt="KDM Logo"
-              className="h-24 w-auto"
+              className="h-16 w-auto"
             />
           </Link>
 
-          <div className="flex pb-2 justify-between w-full">
+          <div className="flex pb-2 justify-between w-full my-2">
             {/* Right side - Secondary links and CTA (Desktop) */}
             <Link to="/devis" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-xl text-white">
               Devis instantané

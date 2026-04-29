@@ -35,12 +35,14 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
       <Navigation />
-      <main style={{
-        paddingTop: `${navHeight}px`,
-        paddingBottom: `${footerHeight}px`,
-      }}>
+      <main
+        className=""
+        style={{
+          paddingTop: `${navHeight}px`,
+          paddingBottom: `${footerHeight}px`,
+        }}>
         {children}
       </main>
       <Footer />
