@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { MapPin, Mail, Phone, Clock, Send, HandCoins, Handshake, ArrowBigRight, Award, Loader } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormValidation } from '@/hooks/useFormValidation';
 
 const Accueil = () => {
@@ -234,6 +234,9 @@ const Accueil = () => {
       {/* Features Banner */}
       <section className="py-8 lg:py-16 px-4 sm:px-8 lg:px-16 mt-8">
         <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#001964] mb-4 lg:mb-8">
+            Pourquoi nous choisir ?
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
 
             <Card className="bg-white/95 backdrop-blur-sm hover:scale-105 transition-transform duration-300 shadow-lg">
@@ -248,6 +251,10 @@ const Accueil = () => {
                 <p className="text-gray-700 text-lg text-justify p">
                   De l’essentiel au tout compris : à vous de choisir !
                 </p>
+
+                <Link to="/offres" className="bg-[#001964] hover:bg-[#001964]/90 rounded-full px-6 py-2 text-xl text-white">
+                  voir nos offres
+                </Link>
               </CardContent>
             </Card>
 
@@ -322,7 +329,7 @@ const Accueil = () => {
 
                   <HashLink to="#contact" className="bg-[#001964] hover:bg-[#001964]/90 text-white rounded-full px-4 py-2 lg:px-6 lg:text-xl text-center"
                   >
-                    Contactez nous
+                    Contactez nous !
                   </HashLink>
                 </div>
               </div>
@@ -344,6 +351,9 @@ const Accueil = () => {
       {/* Customer reviews Section */}
       <section className="pb-4 lg:py-10 px-4 sm:px-8 lg:px-16 flex flex-col items-center w-full">
         <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#001964] mb-4 lg:mb-8">
+            Merci pour votre confiance !
+          </h2>
           <div className="text-center mb-8 lg:mb-12 shadow-lg">
             {/* Elfsight Google Reviews | KDM logistique */}
             <div className="elfsight-app-842bb9ef-d1c6-480a-9fda-f80dc1077672" data-elfsight-app-lazy></div>

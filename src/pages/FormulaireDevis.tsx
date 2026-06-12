@@ -353,21 +353,50 @@ const FormulaireDevis = () => {
     }
   };
 
-  // Fonctions de calcul (inchangées)
+  // Fonctions de calcul
   const calculateMovingPrice = (offer: string, surface: number, distanceKm: number): number => {
-    let basePrice = 0;
-    switch (offer) {
-      case "economique": basePrice = 650; break;
-      case "standard": basePrice = 890; break;
-      case "premium": basePrice = 1290; break;
-      case "premium+": basePrice = 1790; break;
-      default: basePrice = 0;
+    // Vérifier que l'offre est valide
+    const validOffers = ["economique", "standard", "premium", "premium+"];
+    if (!validOffers.includes(offer)) {
+      console.warn("Offre invalide :", offer);
+      return 0;
     }
-    let price = basePrice;
-    if (surface > 30) price += (surface - 30) * 7;
-    if (distanceKm > 10 && distanceKm < 100) price += (distanceKm - 10) * 0.3;
-    if (distanceKm >= 100) price += (distanceKm - 10) * 0.8;
-    return Math.round(price * 100) / 100;
+
+    const validOffer = offer as "economique" | "standard" | "premium" | "premium+";
+
+    const getBasePriceBySurface = (offer: typeof validOffer, surface: number): number => {
+      if (surface < 50) return basePriceTable[offer].tranche1;
+      if (surface < 80) return basePriceTable[offer].tranche2;
+      if (surface < 110) return basePriceTable[offer].tranche3;
+      if (surface < 140) return basePriceTable[offer].tranche4;
+      if (surface < 170) return basePriceTable[offer].tranche5;
+      if (surface < 200) return basePriceTable[offer].tranche6;
+      return basePriceTable[offer].tranche7;
+    };
+
+    const basePriceTable = {
+      economique: { tranche1: 200, tranche2: 300, tranche3: 400, tranche4: 500, tranche5: 600, tranche6: 700, tranche7: 800 },
+      standard: { tranche1: 300, tranche2: 400, tranche3: 500, tranche4: 600, tranche5: 700, tranche6: 800, tranche7: 900 },
+      premium: { tranche1: 400, tranche2: 500, tranche3: 600, tranche4: 700, tranche5: 800, tranche6: 900, tranche7: 1000 },
+      "premium+": { tranche1: 600, tranche2: 700, tranche3: 800, tranche4: 900, tranche5: 1000, tranche6: 1100, tranche7: 1200 },
+    };
+
+    if (!offer || surface <= 0 || distanceKm < 0) {
+      console.warn("Paramètres invalides pour calculateMovingPrice");
+      return 0;
+    }
+
+    const basePrice = getBasePriceBySurface(validOffer, surface);
+
+    let priceWithDistance: number;
+    if (distanceKm < 200) {
+      priceWithDistance = basePrice + 100 + 0.4 * distanceKm;
+    } else {
+      priceWithDistance = basePrice + 200 + 0.6 * distanceKm;
+    }
+
+    const finalPrice = priceWithDistance * 1.5;
+    return Math.round(finalPrice * 100) / 100;
   };
 
   const calculateTransportPrice = (distanceKm: number, volume: string): number => {

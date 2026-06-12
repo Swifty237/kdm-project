@@ -5,13 +5,11 @@
 import { Check, ChevronLeft, ChevronRight, Info, Minus } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent } from '@/components/ui/card';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
 
 const Offres = () => {
   const [activeColumn, setActiveColumn] = useState(0);
-  const { toast } = useToast();
 
   const offers = ["Économique", "Standard", "Premium", "Premium +"];
 
@@ -49,11 +47,11 @@ const Offres = () => {
       values: [false, true, true, true]
     },
     {
-      label: "Démontage et remontage du mobilier non fixé au mur",
-      values: [false, false, true, true]
+      label: "Démontage du mobilier non fixé au mur",
+      values: [false, true, true, true]
     },
     {
-      label: "Décrochage mural (hors électricité et vissé)",
+      label: "Remontage du mobilier non fixé au mur",
       values: [false, false, true, true]
     },
     {
@@ -101,28 +99,6 @@ const Offres = () => {
       description: "Le service clé en main ultime : en plus d’un déménagement complet, nous installons vos meubles, remettons votre nouveau logement en ordre et réalisons le ménage du nouveau logement pour une installation sans le moindre effort."
     }
   ];
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      toast({
-        title: "",
-        description: (
-          <div className="text-lg">
-            <span className="block font-bold text-xl mb-2">🚚 Offre de lancement – Profitez-en !</span>
-            Bénéficiez de <span className="font-bold">100 € de réduction</span> sur votre déménagement pour toute demande de devis envoyée avant le <span className="font-bold">30/04/2026</span>.
-            <br />
-            <span> 👉 La remise ne sera pas visible sur l'estimation en ligne, mais elle sera bien appliquée sur le devis final envoyé par e-mail.</span>
-            <div className="flex bg-[#001964] justify-center rounded mt-2">
-              <span className="italic text-white">Offre valable avec toutes nos formules.</span>
-            </div>
-          </div>
-        ),
-        duration: 5000,
-      });
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [toast]);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -289,16 +265,6 @@ const Offres = () => {
 
         </div>
       </section>
-
-      <div className="text-lg py-4 lg:py-8 px-4 mx-4 shadow-lg animate-pulse">
-        <span className="block font-bold text-xl mb-2">🚚 Offre de lancement – Profitez-en !</span>
-        Bénéficiez de <span className="font-bold">100 € de réduction</span> sur votre déménagement pour toute demande de devis envoyée avant le <span className="font-bold">30/04/2026</span>.
-        <br />
-        <span> 👉 La remise ne sera pas visible sur l'estimation en ligne, mais elle sera bien appliquée sur le devis final envoyé par e-mail.</span>
-        <div className="flex bg-[#001964] justify-center rounded mt-2 shadow-xl">
-          <span className="italic text-white">Offre valable avec toutes nos formules.</span>
-        </div>
-      </div>
 
       {/* Nos services */}
       <section className="flex flex-col items-center justify-between header-section-bg-animated px-4 sm:px-8 lg:px-32 w-full mt-16">
