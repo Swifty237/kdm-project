@@ -390,9 +390,9 @@ const FormulaireDevis = () => {
 
     let priceWithDistance: number;
     if (distanceKm < 200) {
-      priceWithDistance = basePrice + 100 + 0.4 * distanceKm;
+      priceWithDistance = basePrice + 100 + 0.4 * distanceKm * 2;
     } else {
-      priceWithDistance = basePrice + 200 + 0.6 * distanceKm;
+      priceWithDistance = basePrice + 200 + 0.6 * distanceKm * 2;
     }
 
     const finalPrice = priceWithDistance * 1.5;
