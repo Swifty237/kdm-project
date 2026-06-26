@@ -38,7 +38,7 @@ const APropos = () => {
     {
       name: "Shurgard",
       logo: "/img/partners/logo-Shurgard.png",
-      link: ""
+      link: "https://www.shurgard.com/fr-fr"
     },
     {
       name: "Creacom",
