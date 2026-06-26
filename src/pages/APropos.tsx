@@ -1,5 +1,6 @@
 
 import { Card, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 
 const APropos = () => {
 
@@ -16,6 +17,44 @@ const APropos = () => {
       title: "Sérénité",
       description: "Un service fiable, structuré et rigoureux pour une exécution sans difficulté."
     }
+  ];
+
+  const partners = [
+    {
+      name: "Europcar",
+      logo: "/img/partners/logo-Europcar.png",
+      link: "https://www.europcar.fr/"
+    },
+    // {
+    //   name: "Flycar",
+    //   logo: "/img/partners/logo-Flycar.png",
+    //   link: "https://www.fly-car.fr/"
+    // },
+    {
+      name: "FMD",
+      logo: "/img/partners/logo-FMD.png",
+      link: "https://www.fmd-sa.com/"
+    },
+    {
+      name: "Shurgard",
+      logo: "/img/partners/logo-Shurgard.png",
+      link: ""
+    },
+    {
+      name: "Creacom",
+      logo: "/img/partners/logo-Creacom.png",
+      link: "https://creacom-communication.fr/"
+    },
+    {
+      name: "Qonto",
+      logo: "/img/partners/logo-Qonto.png",
+      link: "https://qonto.com/"
+    },
+    {
+      name: "Axa",
+      logo: "/img/partners/logo-Axa.png",
+      link: "https://www.axa.fr/"
+    },
   ];
 
   return (
@@ -58,20 +97,42 @@ const APropos = () => {
         </div>
 
         {/* Values */}
-        <div className="mt-20 max-w-4xl flex flex-col justify-self-center">
-          <h2 className="text-3xl font-bold text-[#001964] text-center my-12">Nos Valeurs</h2>
-          <div>
-            {values.map((value, index) => (
-              <Card key={index} className="hover:scale-105 transition-transform duration-300 shadow-lg my-2">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-[#001964] mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground text-lg">{value.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          <div className="mt-20 max-w-4xl flex flex-col justify-self-center">
+            <h2 className="text-3xl font-bold text-[#001964] mb-6">Nos Valeurs</h2>
+            <div>
+              {values.map((value, index) => (
+                <Card key={index} className="hover:scale-105 transition-transform duration-300 shadow-lg my-2">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold text-[#001964] mb-3">{value.title}</h3>
+                    <p className="text-muted-foreground text-lg">{value.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-20 max-w-4xl flex flex-col justify-self-center">
+            <h2 className="text-3xl font-bold text-[#001964] mb-6">Nos partenaires</h2>
+            <div className="grid grid-cols-3">
+              {partners.map((value, index) => (
+                <Card key={index} className="hover:scale-105 transition-transform duration-300 shadow-lg my-4 mx-1">
+                  <CardContent className="flex justify-center h-[17vh] items-center">
+                    <Link className="" to={value.link} target="_blank">
+                      {/* <h3 className="text-xl font-bold text-[#001964]">{value.name}</h3> */}
+                      <img
+                        src={value.logo}
+                        alt="Partner logo"
+                        className="mt-5" // Ajustez la hauteur selon votre logo
+                      />
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   );

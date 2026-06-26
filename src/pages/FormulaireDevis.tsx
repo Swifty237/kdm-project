@@ -395,7 +395,7 @@ const FormulaireDevis = () => {
       priceWithDistance = basePrice + 200 + 0.6 * distanceKm * 2;
     }
 
-    const finalPrice = priceWithDistance * 1.5;
+    const finalPrice = priceWithDistance * 1.4;
     return Math.round(finalPrice * 100) / 100;
   };
 
