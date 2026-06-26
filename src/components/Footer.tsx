@@ -30,10 +30,11 @@ const Footer = () => {
               Votre partenaire de confiance pour le déménagement et le transport de marchandises.
             </p>
 
+            {/* Social networks */}
             <div className="mt-2 flex justify-around">
               <Link className="" to="https://www.facebook.com/profile.php?id=61591508306615&locale=fr_FR" target="_blank">
                 <img
-                  src="/img/networks/facebook-logo.webp"
+                  src="/img/networks/facebook-logo.png"
                   alt="Network logo"
                   className="h-20" // Ajustez la hauteur selon votre logo
                 />
@@ -41,7 +42,7 @@ const Footer = () => {
 
               <Link className="" to="https://www.instagram.com/kdmlogistique/" target="_blank">
                 <img
-                  src="/img/networks/instagram-logo.webp"
+                  src="/img/networks/instagram-logo.png"
                   alt="Network logo"
                   className="h-20" // Ajustez la hauteur selon votre logo
                 />
@@ -49,7 +50,7 @@ const Footer = () => {
 
               <Link className="" to="https://www.linkedin.com/in/kdm-logistique-sas-6783613b6" target="_blank">
                 <img
-                  src="/img/networks/linkedin-logo.webp"
+                  src="/img/networks/linkedin-logo.png"
                   alt="Network logo"
                   className="h-20" // Ajustez la hauteur selon votre logo
                 />
